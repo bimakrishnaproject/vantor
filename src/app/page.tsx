@@ -1,4 +1,3 @@
-import SplineThreeBackground from "@/components/homepage/SplineThreeBackground";
 import HeroSection from "@/components/homepage/HeroSection";
 import PositioningSection from "@/components/homepage/PositioningSection";
 import StatsSection from "@/components/homepage/StatsSection";
@@ -10,8 +9,7 @@ import FloatingCTA from "@/components/ui/FloatingCTA";
 
 export default function HomePage() {
   return (
-    <main style={{ position: "relative" }}>
-      <SplineThreeBackground />
+    <main>
       <HeroSection />
       <PositioningSection />
       <StatsSection />
