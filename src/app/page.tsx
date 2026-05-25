@@ -1,3 +1,4 @@
+import Spline from '@splinetool/react-spline/next';
 import HeroSection from "@/components/homepage/HeroSection";
 import PositioningSection from "@/components/homepage/PositioningSection";
 import StatsSection from "@/components/homepage/StatsSection";
@@ -9,7 +10,10 @@ import FloatingCTA from "@/components/ui/FloatingCTA";
 
 export default function HomePage() {
   return (
-    <>
+    <main>
+      <Spline
+        scene="https://prod.spline.design/ruX4lfWfV2czhL5t/scene.splinecode" 
+      />
       <HeroSection />
       <PositioningSection />
       <StatsSection />
@@ -18,6 +22,6 @@ export default function HomePage() {
       <CaseStudySection />
       <CTASection />
       <FloatingCTA />
-    </>
+    </main>
   );
 }

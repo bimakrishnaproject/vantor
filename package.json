@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
+    "@splinetool/react-spline": "^4.1.0",
+    "@splinetool/runtime": "^1.12.95",
     "graphql": "^16.14.0",
     "graphql-request": "^7.4.0",
     "gsap": "^3.15.0",
