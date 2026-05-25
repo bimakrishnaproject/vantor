@@ -231,7 +231,9 @@
   color: var(--text-primary);
   font-size: 2rem;
   line-height: 1;
-  transition: background var(--transition-base), color var(--transition-base),
+  transition:
+    background var(--transition-base),
+    color var(--transition-base),
     transform var(--transition-base);
 }
 
