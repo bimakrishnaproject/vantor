@@ -13,7 +13,6 @@
   border-bottom: 1px solid transparent;
   transition: background var(--transition-base), backdrop-filter var(--transition-base),
     border-color var(--transition-base), transform var(--transition-smooth);
-  transform: translateY(0);
 }
 
 .scrolled {
@@ -178,24 +177,40 @@
 .overlay {
   position: fixed;
   inset: 0;
-  z-index: 105;
+  z-index: 120;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: safe center;
-  gap: var(--space-sm);
-  padding-block: 96px;
+  align-items: flex-end;
+  justify-content: flex-start;
+  gap: 1.1rem;
+  padding: calc(80px + 1.5rem) clamp(1.25rem, 5vw, 2rem) 2rem;
   overflow-y: auto;
-  background: rgba(10, 14, 23, 0.95);
+  background: transparent;
+  isolation: isolate;
+}
+
+.overlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(10, 14, 23, 0.92), rgba(8, 12, 20, 0.98));
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
 }
 
+.overlay > * {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 320px);
+}
+
 .overlayLink {
   font-family: var(--font-heading);
-  font-size: var(--text-h3);
+  font-size: clamp(1.55rem, 4.8vw, 2.15rem);
   font-weight: 500;
-  color: var(--text-secondary);
+  letter-spacing: 0.03em;
+  color: var(--text-primary);
+  text-align: left;
   opacity: 0;
   transform: translateY(12px);
   animation: overlayLinkIn 0.4s ease forwards;
@@ -222,6 +237,7 @@
 
 .overlayCta {
   margin-top: var(--space-md);
+  justify-content: center;
 }
 
 /* ===== RESPONSIVE ===== */
