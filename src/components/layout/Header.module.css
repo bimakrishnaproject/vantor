@@ -247,8 +247,22 @@
 }
 
 .overlayCta {
-  margin-top: var(--space-md);
+  margin-top: 0.5rem;
+  align-self: center;
+  width: fit-content;
   justify-content: center;
+  gap: 0.4rem;
+  padding: 0.7rem 1rem;
+  font-size: var(--text-body-sm);
+  border: 1px solid var(--accent-primary);
+  background: var(--accent-primary);
+  color: var(--bg-primary);
+  box-shadow: none;
+}
+
+.overlayCta:hover {
+  background: #33ddff;
+  color: var(--bg-primary);
 }
 
 /* ===== RESPONSIVE ===== */
