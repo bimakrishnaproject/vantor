@@ -215,6 +215,31 @@
   width: min(100%, 320px);
 }
 
+.overlayClose {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  z-index: 2;
+  width: 2.75rem;
+  height: 2.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--glass-border);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-primary);
+  font-size: 2rem;
+  line-height: 1;
+  transition: background var(--transition-base), color var(--transition-base),
+    transform var(--transition-base);
+}
+
+.overlayClose:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: scale(1.04);
+}
+
 .overlayLink {
   font-family: var(--font-heading);
   font-size: clamp(1.55rem, 4.8vw, 2.15rem);

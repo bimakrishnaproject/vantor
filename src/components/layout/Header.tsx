@@ -92,6 +92,15 @@ export default function Header() {
 
       {menuOpen && (
         <div className={styles.overlay}>
+          <button
+            type="button"
+            className={styles.overlayClose}
+            aria-label="Close menu"
+            onClick={() => setMenuOpen(false)}
+          >
+            <span aria-hidden="true">×</span>
+          </button>
+
           {NAV_ITEMS.map((item, i) => {
             const active = isActive(item.href);
             return (
