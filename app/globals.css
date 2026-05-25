@@ -1,0 +1,303 @@
+@import "tailwindcss";
+
+/* ============================================================================
+   VANTOR VENTURES — Design System
+   ============================================================================ */
+
+@theme inline {
+  /* Color System */
+  --color-vantor-black: #0a0a0f;
+  --color-vantor-navy: #0d1117;
+  --color-vantor-charcoal: #1a1a2e;
+  --color-vantor-darkgray: #16213e;
+  --color-vantor-blue: #00d4ff;
+  --color-vantor-cyan: #00f5d4;
+  --color-vantor-silver: #c0c0c0;
+  --color-vantor-white: #f0f0f5;
+  --color-vantor-gold: #f59e0b;
+  --color-stadium-glow: #1e90ff;
+  --color-stadium-light: #4da8ff;
+  --color-vantor-muted: #6b7280;
+
+  /* Accent colors per vertical */
+  --color-accent-audio: #ff6b35;
+  --color-accent-ecommerce: #00d4ff;
+  --color-accent-mobile: #7c3aed;
+  --color-accent-casino: #f59e0b;
+  --color-accent-other: #10b981;
+
+  /* Font families */
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-outfit);
+
+  /* Custom spacing */
+  --spacing-section: 120px;
+  --spacing-section-mobile: 60px;
+
+  /* Border radius */
+  --radius-glass: 16px;
+  --radius-panel: 8px;
+  --radius-pill: 9999px;
+
+  /* Animations */
+  --animate-fade-in: fade-in 0.8s ease-out forwards;
+  --animate-slide-up: slide-up 0.8s ease-out forwards;
+  --animate-glow: glow 3s ease-in-out infinite;
+  --animate-pulse-subtle: pulse-subtle 4s ease-in-out infinite;
+  --animate-beam-sweep: beam-sweep 6s linear infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-marquee: marquee 30s linear infinite;
+
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes slide-up {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes glow {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.8; }
+  }
+  @keyframes pulse-subtle {
+    0%, 100% { opacity: 0.6; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.02); }
+  }
+  @keyframes beam-sweep {
+    0% { transform: translateX(-100%) rotate(15deg); }
+    100% { transform: translateX(200%) rotate(15deg); }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+}
+
+/* ============================================================================
+   Base Styles
+   ============================================================================ */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-vantor-black);
+  color: var(--color-vantor-white);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-vantor-navy);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-vantor-blue);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-stadium-light);
+}
+
+/* Selection color */
+::selection {
+  background: rgba(0, 212, 255, 0.3);
+  color: var(--color-vantor-white);
+}
+
+/* ============================================================================
+   Utility Classes
+   ============================================================================ */
+
+/* Noise texture overlay */
+.noise-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+
+/* Grid overlay */
+.grid-overlay {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+}
+
+/* Stadium light beams */
+.stadium-beam {
+  position: absolute;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 212, 255, 0.4) 0%,
+    rgba(0, 212, 255, 0) 100%
+  );
+  filter: blur(4px);
+  pointer-events: none;
+}
+
+.stadium-beam-wide {
+  position: absolute;
+  width: 200px;
+  height: 120%;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 212, 255, 0.08) 0%,
+    rgba(0, 212, 255, 0) 70%
+  );
+  filter: blur(40px);
+  pointer-events: none;
+  transform-origin: top center;
+}
+
+/* Glass panel effect */
+.glass-panel {
+  background: rgba(13, 17, 23, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(0, 212, 255, 0.1);
+  border-radius: var(--radius-glass);
+}
+
+.glass-panel-strong {
+  background: rgba(13, 17, 23, 0.8);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border: 1px solid rgba(0, 212, 255, 0.15);
+  border-radius: var(--radius-glass);
+}
+
+/* LED panel border */
+.led-border {
+  position: relative;
+}
+.led-border::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 212, 255, 0.4),
+    rgba(0, 245, 212, 0.1),
+    rgba(0, 212, 255, 0.4)
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Scoreboard card */
+.scoreboard-card {
+  background: linear-gradient(
+    135deg,
+    rgba(13, 17, 23, 0.9) 0%,
+    rgba(26, 26, 46, 0.9) 100%
+  );
+  border: 1px solid rgba(0, 212, 255, 0.15);
+  border-radius: var(--radius-panel);
+  position: relative;
+  overflow: hidden;
+}
+.scoreboard-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-vantor-blue),
+    transparent
+  );
+}
+
+/* Glow layers */
+.glow-blue {
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.15),
+    0 0 60px rgba(0, 212, 255, 0.05);
+}
+
+.glow-text {
+  text-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
+}
+
+/* Premium gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, #fff 0%, var(--color-vantor-blue) 50%, var(--color-vantor-cyan) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-subtle {
+  background: linear-gradient(135deg, #fff 30%, var(--color-vantor-silver) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Perspective floor grid */
+.perspective-grid {
+  position: absolute;
+  bottom: 0;
+  left: -50%;
+  width: 200%;
+  height: 50%;
+  background-image:
+    linear-gradient(rgba(0, 212, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 212, 255, 0.06) 1px, transparent 1px);
+  background-size: 80px 80px;
+  transform: perspective(500px) rotateX(60deg);
+  transform-origin: center top;
+  mask-image: linear-gradient(to top, rgba(0,0,0,0.5), transparent);
+  -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.5), transparent);
+}
+
+/* Stadium atmosphere radial */
+.stadium-atmosphere {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(0, 212, 255, 0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 20% 20%, rgba(30, 144, 255, 0.05) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 40% at 80% 20%, rgba(30, 144, 255, 0.05) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
