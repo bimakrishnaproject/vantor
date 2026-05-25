@@ -10,32 +10,30 @@ export function TeamGrid({ team }: TeamGridProps) {
       {team.map((member, i) => (
         <div
           key={i}
-          className="group glass-panel p-6 md:p-8 hover:border-vantor-blue/25 transition-all duration-300"
+          className="group relative glass-panel overflow-hidden card-3d min-h-[280px] sm:min-h-[320px] md:aspect-[3/4]"
         >
-          {/* Avatar placeholder */}
-          <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-gradient-to-br from-vantor-charcoal to-vantor-navy border border-vantor-blue/10 flex items-center justify-center mb-5 group-hover:border-vantor-blue/30 transition-colors duration-300">
-            <span className="text-vantor-blue font-display text-xl md:text-2xl font-bold">
-              {member.name
-                .split(' ')
-                .map((n) => n[0])
-                .join('')
-                .slice(0, 2)}
-            </span>
+          {/* Ambient glow on hover */}
+          <div className="absolute inset-0 bg-gradient-to-t from-vantor-blue/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+          {/* Default State: Photo & Basic Info */}
+          <div className="absolute inset-0 p-6 flex flex-col justify-end z-10 transition-transform duration-500 group-hover:-translate-y-4">
+            <div className="card-3d-inner">
+              <h4 className="font-display text-lg font-bold text-vantor-white mb-1">
+                {member.name}
+              </h4>
+              <p className="text-vantor-blue text-xs uppercase tracking-widest font-medium mb-3">
+                {member.role}
+              </p>
+            </div>
           </div>
 
-          {/* Name & Role */}
-          <h4 className="font-display text-lg font-bold text-vantor-white mb-1">
-            {member.name}
-          </h4>
-          <p className="text-vantor-blue text-xs uppercase tracking-widest font-medium mb-3">
-            {member.role}
-          </p>
-
-          {/* Bio */}
+          {/* Bio — positioned inside the card, visible on hover */}
           {member.bio && (
-            <p className="text-vantor-muted text-sm leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              {member.bio}
-            </p>
+            <div className="absolute inset-x-0 bottom-0 p-6 pt-0 z-10">
+              <p className="text-vantor-muted text-sm leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">
+                {member.bio}
+              </p>
+            </div>
           )}
         </div>
       ))}

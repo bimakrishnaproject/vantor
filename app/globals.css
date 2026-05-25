@@ -82,17 +82,40 @@
    Base Styles
    ============================================================================ */
 
-html {
-  scroll-behavior: smooth;
-}
+@layer base {
+  html {
+    scroll-behavior: initial !important; /* Lenis handles it */
+  }
+  
+  html.lenis, html.lenis body {
+    height: auto;
+  }
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+  .lenis.lenis-scrolling iframe {
+    pointer-events: none;
+  }
 
-body {
-  background-color: var(--color-vantor-black);
-  color: var(--color-vantor-white);
-  font-family: var(--font-sans);
-  overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  body {
+    background-color: var(--color-vantor-black);
+    color: var(--color-vantor-white);
+    font-family: var(--font-inter), sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  .perspective-wrapper {
+    perspective: 2000px;
+    transform-style: preserve-3d;
+    overflow-x: hidden;
+  }
 }
 
 /* Custom scrollbar */
@@ -293,6 +316,101 @@ body {
   pointer-events: none;
 }
 
+/* ============================================================================
+   3D Loading Screen Animations
+   ============================================================================ */
+
+@keyframes loader-ring-1 {
+  0% { transform: rotateX(60deg) rotateZ(0deg); }
+  100% { transform: rotateX(60deg) rotateZ(360deg); }
+}
+@keyframes loader-ring-2 {
+  0% { transform: rotateX(70deg) rotateY(0deg); }
+  100% { transform: rotateX(70deg) rotateY(360deg); }
+}
+@keyframes loader-ring-3 {
+  0% { transform: rotateX(50deg) rotateZ(0deg); }
+  100% { transform: rotateX(50deg) rotateZ(-360deg); }
+}
+
+/* ============================================================================
+   Particle Float Animations (5 unique paths for variety)
+   ============================================================================ */
+
+@keyframes particle-float-0 {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  25% { transform: translate3d(30px, -40px, 50px) scale(1.2); }
+  50% { transform: translate3d(-20px, -80px, -30px) scale(0.8); }
+  75% { transform: translate3d(10px, -30px, 20px) scale(1.1); }
+}
+@keyframes particle-float-1 {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  33% { transform: translate3d(-40px, -60px, 40px) scale(0.9); }
+  66% { transform: translate3d(25px, -20px, -50px) scale(1.3); }
+}
+@keyframes particle-float-2 {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  25% { transform: translate3d(50px, -30px, -20px) scale(1.1); }
+  50% { transform: translate3d(-30px, -70px, 60px) scale(0.7); }
+  75% { transform: translate3d(20px, -50px, -40px) scale(1.2); }
+}
+@keyframes particle-float-3 {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(-50px, -90px, 30px) scale(1.4); }
+}
+@keyframes particle-float-4 {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  20% { transform: translate3d(15px, -40px, 70px) scale(0.8); }
+  40% { transform: translate3d(-35px, -20px, -40px) scale(1.2); }
+  60% { transform: translate3d(40px, -60px, 20px) scale(0.9); }
+  80% { transform: translate3d(-10px, -30px, -60px) scale(1.1); }
+}
+
+/* ============================================================================
+   Horizontal line reveal
+   ============================================================================ */
+
+.line-reveal {
+  position: relative;
+  overflow: hidden;
+}
+.line-reveal::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-vantor-blue), transparent);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.line-reveal.is-visible::after {
+  transform: scaleX(1);
+}
+
+/* ============================================================================
+   3D Card Tilt Hover & Inner Depth
+   ============================================================================ */
+
+.card-3d {
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s ease;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+.card-3d:hover {
+  transform: rotateY(-6deg) rotateX(6deg) translateZ(15px);
+  box-shadow: 0 15px 35px -10px rgba(0, 212, 255, 0.2), 0 0 20px rgba(0, 212, 255, 0.1) inset;
+}
+.card-3d-inner {
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateZ(0);
+}
+.card-3d:hover .card-3d-inner {
+  transform: translateZ(35px);
+}
+
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -301,3 +419,86 @@ body {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ============================================================================
+   Three.js Canvas Responsive Rules
+   ============================================================================ */
+
+.scene-3d-canvas canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* ============================================================================
+   Tablet-Specific Styles (768px – 1024px)
+   ============================================================================ */
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .perspective-wrapper {
+    perspective: 1500px;
+  }
+
+  /* Reduce section padding for tablets */
+  :root {
+    --spacing-section: 80px;
+  }
+}
+
+/* ============================================================================
+   Mobile Touch Optimizations
+   ============================================================================ */
+
+@media (max-width: 767px) {
+  /* Reduce noise overlay on mobile for performance */
+  .noise-overlay {
+    opacity: 0.015;
+    background-size: 128px 128px;
+  }
+
+  /* Soften perspective effects on mobile */
+  .perspective-wrapper {
+    perspective: 1200px;
+  }
+
+  /* Reduce grid overlay density */
+  .grid-overlay {
+    background-size: 40px 40px;
+  }
+
+  /* Smaller perspective grid */
+  .perspective-grid {
+    background-size: 40px 40px;
+    height: 30%;
+  }
+}
+
+/* Touch-friendly interactive elements */
+@media (hover: none) and (pointer: coarse) {
+  a, button, [role="button"], input, select, textarea {
+    touch-action: manipulation;
+  }
+
+  /* Disable 3D card tilt on touch devices */
+  .card-3d:hover {
+    transform: none;
+    box-shadow: none;
+  }
+  .card-3d:hover .card-3d-inner {
+    transform: none;
+  }
+
+  /* Increase tap target sizes */
+  .card-3d {
+    min-height: 44px;
+  }
+}
+
+/* Safe area for modern devices (notch, home bar) */
+@supports (padding: max(0px)) {
+  body {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+}
+

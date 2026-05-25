@@ -5,6 +5,7 @@ import { SectionWrapper } from '@/components/SectionWrapper';
 import { ScoreboardMetrics } from '@/components/ScoreboardMetrics';
 import { TeamGrid } from '@/components/TeamGrid';
 import { PartnerStrip } from '@/components/PartnerStrip';
+import { AboutScene3D } from '@/components/AboutScene3D';
 
 export const metadata: Metadata = {
   title: 'About | Vantor Ventures',
@@ -18,6 +19,9 @@ export default async function AboutPage() {
   return (
     <>
       <StadiumHero hero={data.hero} />
+
+      {/* 3D Floating Orbs background for the about sections */}
+      <AboutScene3D />
 
       <SectionWrapper id="about-blurb" showGrid>
         <div className="max-w-4xl mx-auto text-center">

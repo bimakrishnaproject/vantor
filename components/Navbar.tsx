@@ -97,9 +97,10 @@ export function Navbar() {
 
       {/* Mobile Menu */}
       <div
-        className={`fixed inset-0 bg-vantor-black/98 backdrop-blur-xl z-40 flex flex-col items-center justify-center gap-6 transition-all duration-500 lg:hidden ${
+        className={`fixed inset-0 bg-vantor-black/98 backdrop-blur-xl z-40 flex flex-col items-center justify-center gap-6 transition-all duration-500 lg:hidden overflow-y-auto py-20 px-5 ${
           isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
+        style={{ paddingBottom: 'max(1.5rem, env(safe-area-inset-bottom))' }}
       >
         {navigationData.mainNav.map((item, i) => (
           <Link

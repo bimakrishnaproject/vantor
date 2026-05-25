@@ -1,4 +1,9 @@
+'use client';
+
+import { Suspense } from 'react';
 import { Button } from './Button';
+import { Scene3D } from './Scene3D';
+import { CTARings3DScene } from './CTARings3D';
 import type { CTA } from '@/types';
 
 interface CTASectionProps {
@@ -17,6 +22,13 @@ export function CTASection({ title, subtitle, cta }: CTASectionProps) {
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px]"
         style={{ background: 'radial-gradient(ellipse at center, rgba(0,212,255,0.08) 0%, transparent 60%)' }}
       />
+
+      {/* 3D Rotating Rings */}
+      <Scene3D cameraPosition={[0, 0, 5]} fov={50} style={{ zIndex: 2 }}>
+        <Suspense fallback={null}>
+          <CTARings3DScene />
+        </Suspense>
+      </Scene3D>
 
       {/* Grid */}
       <div className="grid-overlay" aria-hidden="true" />

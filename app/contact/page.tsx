@@ -3,6 +3,7 @@ import { getContactData } from '@/lib/cms';
 import { StadiumHero } from '@/components/StadiumHero';
 import { SectionWrapper } from '@/components/SectionWrapper';
 import { ContactForm } from '@/components/ContactForm';
+import { ContactScene3D } from '@/components/ContactScene3D';
 
 export const metadata: Metadata = {
   title: 'Contact | Vantor Ventures',
@@ -16,6 +17,9 @@ export default async function ContactPage() {
   return (
     <>
       <StadiumHero hero={data.hero} />
+
+      {/* 3D Wave Grid background for the contact section */}
+      <ContactScene3D />
 
       <SectionWrapper id="contact-form-section" showGrid>
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8">

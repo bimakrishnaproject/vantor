@@ -5,6 +5,10 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { FloatingCTA } from "@/components/FloatingCTA";
 import { ScrollProgressIndicator } from "@/components/ScrollProgressIndicator";
+import { LoadingScreen } from "@/components/LoadingScreen";
+import { CustomCursor } from "@/components/CustomCursor";
+import { SmoothScroll } from "@/components/SmoothScroll";
+import { ParticleFieldWrapper } from "@/components/ParticleFieldWrapper";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -60,23 +64,35 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${outfit.variable}`}>
       <body>
-        {/* Noise texture overlay */}
-        <div className="noise-overlay" aria-hidden="true" />
+        {/* Cinematic smooth scrolling provider */}
+        <SmoothScroll>
+          {/* Cinematic loading screen */}
+          <LoadingScreen />
 
-        {/* Navigation */}
-        <Navbar />
+          {/* Custom cursor with glow trail */}
+          <CustomCursor />
 
-        {/* Scroll progress */}
-        <ScrollProgressIndicator />
+          {/* Noise texture overlay */}
+          <div className="noise-overlay" aria-hidden="true" />
 
-        {/* Main content */}
-        <main className="relative">{children}</main>
+          {/* Three.js particle field — persistent across all pages */}
+          <ParticleFieldWrapper />
 
-        {/* Footer */}
-        <Footer />
+          {/* Navigation */}
+          <Navbar />
 
-        {/* Floating CTA */}
-        <FloatingCTA />
+          {/* Scroll progress */}
+          <ScrollProgressIndicator />
+
+          {/* Main content */}
+          <main className="relative perspective-wrapper">{children}</main>
+
+          {/* Footer */}
+          <Footer />
+
+          {/* Floating CTA */}
+          <FloatingCTA />
+        </SmoothScroll>
       </body>
     </html>
   );

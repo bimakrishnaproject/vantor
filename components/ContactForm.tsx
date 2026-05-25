@@ -71,7 +71,7 @@ export function ContactForm({ fields }: ContactFormProps) {
                 required={field.required}
                 value={formData[field.name] || ''}
                 onChange={(e) => handleChange(field.name, e.target.value)}
-                className="w-full bg-vantor-navy/50 border border-white/10 rounded-lg px-4 py-3 text-vantor-white text-sm focus:border-vantor-blue/50 focus:outline-none transition-colors duration-300 appearance-none cursor-pointer"
+                className="w-full bg-vantor-navy/50 border border-white/10 rounded-lg px-4 py-3 text-vantor-white text-base md:text-sm focus:border-vantor-blue/50 focus:outline-none focus:ring-1 focus:ring-vantor-blue/30 transition-colors duration-300 appearance-none cursor-pointer"
               >
                 <option value="" className="bg-vantor-navy">Select...</option>
                 {field.options?.map((opt) => (
@@ -89,7 +89,7 @@ export function ContactForm({ fields }: ContactFormProps) {
                 rows={5}
                 value={formData[field.name] || ''}
                 onChange={(e) => handleChange(field.name, e.target.value)}
-                className="w-full bg-vantor-navy/50 border border-white/10 rounded-lg px-4 py-3 text-vantor-white text-sm placeholder:text-vantor-muted/50 focus:border-vantor-blue/50 focus:outline-none transition-colors duration-300 resize-none"
+                className="w-full bg-vantor-navy/50 border border-white/10 rounded-lg px-4 py-3 text-vantor-white text-base md:text-sm placeholder:text-vantor-muted/50 focus:border-vantor-blue/50 focus:outline-none focus:ring-1 focus:ring-vantor-blue/30 transition-colors duration-300 resize-none"
               />
             ) : (
               <input
@@ -100,7 +100,7 @@ export function ContactForm({ fields }: ContactFormProps) {
                 placeholder={field.placeholder}
                 value={formData[field.name] || ''}
                 onChange={(e) => handleChange(field.name, e.target.value)}
-                className="w-full bg-vantor-navy/50 border border-white/10 rounded-lg px-4 py-3 text-vantor-white text-sm placeholder:text-vantor-muted/50 focus:border-vantor-blue/50 focus:outline-none transition-colors duration-300"
+                className="w-full bg-vantor-navy/50 border border-white/10 rounded-lg px-4 py-3 text-vantor-white text-base md:text-sm placeholder:text-vantor-muted/50 focus:border-vantor-blue/50 focus:outline-none focus:ring-1 focus:ring-vantor-blue/30 transition-colors duration-300"
               />
             )}
           </div>

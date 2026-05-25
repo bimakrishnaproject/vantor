@@ -11,7 +11,7 @@ export function ServiceCard({ service, index }: ServiceCardProps) {
     <Link
       href={`/verticals/${service.slug}`}
       id={`service-card-${service.slug}`}
-      className="group relative scoreboard-card p-6 md:p-8 overflow-hidden hover:border-vantor-blue/30 transition-all duration-500 hover:-translate-y-1"
+      className="group relative scoreboard-card card-3d p-6 md:p-8 overflow-hidden hover:border-vantor-blue/30 transition-all duration-500 hover:-translate-y-1"
       style={{ '--accent': service.accentColor } as React.CSSProperties}
     >
       {/* Accent glow on hover */}
@@ -31,20 +31,20 @@ export function ServiceCard({ service, index }: ServiceCardProps) {
       />
 
       {/* Icon */}
-      <div className="text-4xl md:text-5xl mb-4 relative z-10">{service.icon}</div>
+      <div className="text-4xl md:text-5xl mb-4 relative z-10 card-3d-inner">{service.icon}</div>
 
       {/* Title */}
-      <h3 className="font-display text-xl md:text-2xl font-bold text-vantor-white mb-2 relative z-10 group-hover:text-vantor-blue transition-colors duration-300">
+      <h3 className="font-display text-xl md:text-2xl font-bold text-vantor-white mb-2 relative z-10 group-hover:text-vantor-blue transition-colors duration-300 card-3d-inner">
         {service.title}
       </h3>
 
       {/* Tagline */}
-      <p className="text-vantor-muted text-sm leading-relaxed relative z-10 mb-6">
+      <p className="text-vantor-muted text-sm leading-relaxed relative z-10 mb-6 card-3d-inner">
         {service.tagline}
       </p>
 
       {/* Arrow CTA */}
-      <div className="flex items-center gap-2 text-vantor-blue text-sm font-medium relative z-10 opacity-0 group-hover:opacity-100 translate-x-[-10px] group-hover:translate-x-0 transition-all duration-300">
+      <div className="flex items-center gap-2 text-vantor-blue text-sm font-medium relative z-10 opacity-0 group-hover:opacity-100 translate-x-[-10px] group-hover:translate-x-0 transition-all duration-300 card-3d-inner">
         Explore
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
           <path d="M1 7H13M13 7L7 1M13 7L7 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>

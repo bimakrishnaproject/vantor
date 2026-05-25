@@ -1,8 +1,10 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useState, useEffect, Suspense } from 'react';
 import { useGSAP } from '@/hooks/useGSAP';
 import { Button } from './Button';
+import { Scene3D } from './Scene3D';
+import { DNAHelixScene } from './DNAHelix3D';
 import type { HeroContent } from '@/types';
 
 interface VerticalHeroProps {
@@ -21,6 +23,11 @@ const themeGradients: Record<string, { primary: string; secondary: string }> = {
 export function VerticalHero({ hero, visualTheme }: VerticalHeroProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const colors = themeGradients[visualTheme] || themeGradients.digital;
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
+  }, []);
 
   useGSAP((gsap) => {
     const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
@@ -45,6 +52,17 @@ export function VerticalHero({ hero, visualTheme }: VerticalHeroProps) {
       <div className="absolute top-[-10%] right-[20%] w-[400px] h-[400px] v-hero-light opacity-0"
         style={{ background: `radial-gradient(ellipse at center, ${colors.secondary} 0%, transparent 60%)` }}
       />
+
+      {/* 3D DNA Helix — theme-colored */}
+      <Scene3D
+        cameraPosition={[3, 0, 6]}
+        fov={45}
+        style={{ zIndex: 2 }}
+      >
+        <Suspense fallback={null}>
+          <DNAHelixScene visualTheme={visualTheme} isMobile={isMobile} />
+        </Suspense>
+      </Scene3D>
 
       {/* Grid */}
       <div className="grid-overlay" aria-hidden="true" />

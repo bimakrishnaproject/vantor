@@ -1,8 +1,10 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useState, useEffect, Suspense } from 'react';
 import { useGSAP } from '@/hooks/useGSAP';
 import { Button } from './Button';
+import { Scene3D } from './Scene3D';
+import { HorseModel } from './HorseHero3D';
 import type { HeroContent, Metric } from '@/types';
 
 interface StadiumHeroProps {
@@ -13,10 +15,17 @@ interface StadiumHeroProps {
 export function StadiumHero({ hero, metrics }: StadiumHeroProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
+  const titleParallaxRef = useRef<HTMLDivElement>(null);
+  const eyebrowRef = useRef<HTMLDivElement>(null);
+  const bodyRef = useRef<HTMLDivElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
+  }, []);
 
   useGSAP((gsap) => {
-    const isMobile = window.innerWidth < 768;
+    const mobile = window.innerWidth < 768;
     const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
     // Stadium lights fade in
@@ -26,40 +35,64 @@ export function StadiumHero({ hero, metrics }: StadiumHeroProps) {
       { opacity: 1, scale: 1, duration: 1.5, stagger: 0.2 }
     );
 
-    // Title reveal
+    // Eyebrow slides down
+    if (eyebrowRef.current) {
+      tl.fromTo(
+        eyebrowRef.current,
+        { opacity: 0, y: -20, letterSpacing: '0.6em' },
+        { opacity: 1, y: 0, letterSpacing: '0.3em', duration: 0.8 },
+        '-=0.8'
+      );
+    }
+
+    // Title reveal with clip-path (entrance)
     tl.fromTo(
       titleRef.current,
       { opacity: 0, y: 60, clipPath: 'inset(100% 0 0 0)' },
       { opacity: 1, y: 0, clipPath: 'inset(0% 0 0 0)', duration: 1.2 },
-      '-=0.8'
+      '-=0.5'
     );
 
-    // Content slides up
-    tl.fromTo(
-      contentRef.current?.children ? Array.from(contentRef.current.children) : [],
-      { opacity: 0, y: 30 },
-      { opacity: 1, y: 0, duration: 0.8, stagger: 0.1 },
-      '-=0.6'
-    );
+    // Body content slides up
+    if (bodyRef.current) {
+      tl.fromTo(
+        Array.from(bodyRef.current.children),
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.8, stagger: 0.12 },
+        '-=0.6'
+      );
+    }
 
-    // Scoreboard metrics pulse
-    if (metrics && !isMobile) {
+    // Scoreboard metrics stagger in with 3D rotation
+    if (metrics && !mobile) {
       tl.fromTo(
         '.scoreboard-metric',
-        { opacity: 0, scale: 0.9 },
-        { opacity: 1, scale: 1, duration: 0.6, stagger: 0.1 },
-        '-=0.4'
+        { opacity: 0, scale: 0.8, rotateX: -15 },
+        { opacity: 1, scale: 1, rotateX: 0, duration: 0.6, stagger: 0.08 },
+        '-=0.3'
       );
     }
 
     // Parallax on scroll (desktop only)
-    if (!isMobile) {
+    if (!mobile) {
       gsap.to('.hero-bg-layer', {
         y: 150,
         scrollTrigger: {
           trigger: containerRef.current,
           start: 'top top',
           end: 'bottom top',
+          scrub: 1,
+        },
+      });
+
+      // Title parallax (slower, using the wrapper)
+      gsap.to(titleParallaxRef.current, {
+        y: 80,
+        opacity: 0.3,
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: 'top top',
+          end: '60% top',
           scrub: 1,
         },
       });
@@ -113,11 +146,31 @@ export function StadiumHero({ hero, metrics }: StadiumHeroProps) {
         style={{ background: 'linear-gradient(180deg, rgba(0,212,255,0.06) 0%, transparent 60%)', filter: 'blur(40px)', transform: 'rotate(8deg)' }}
       />
 
+      {/* === 3D HORSE HERO — Three.js WebGL === */}
+      <Scene3D
+        cameraPosition={[0, 1.2, 5]}
+        fov={50}
+        style={{ zIndex: 2 }}
+      >
+        <Suspense fallback={null}>
+          <HorseModel isMobile={isMobile} />
+        </Suspense>
+      </Scene3D>
+
       {/* Perspective grid floor */}
       <div className="perspective-grid hero-bg-layer" />
 
       {/* Grid overlay */}
       <div className="grid-overlay hero-bg-layer" aria-hidden="true" />
+
+      {/* Animated beam sweep */}
+      <div
+        className="absolute top-0 left-0 w-[3px] h-full opacity-[0.15] pointer-events-none animate-beam-sweep"
+        style={{
+          background: 'linear-gradient(180deg, transparent, rgba(0,212,255,0.6), transparent)',
+          filter: 'blur(6px)',
+        }}
+      />
 
       {/* Bottom gradient fade */}
       <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-vantor-black to-transparent z-10" />
@@ -126,7 +179,7 @@ export function StadiumHero({ hero, metrics }: StadiumHeroProps) {
       <div className="relative z-20 text-center max-w-5xl mx-auto px-5 md:px-10 pt-20">
         {/* Eyebrow */}
         {hero.eyebrow && (
-          <div ref={contentRef}>
+          <div ref={eyebrowRef} className="opacity-0">
             <p className="text-vantor-blue text-xs md:text-sm font-semibold tracking-[0.3em] uppercase mb-6 md:mb-8">
               {hero.eyebrow}
             </p>
@@ -134,15 +187,18 @@ export function StadiumHero({ hero, metrics }: StadiumHeroProps) {
         )}
 
         {/* Title */}
-        <h1
-          ref={titleRef}
-          className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold leading-[0.9] mb-6 md:mb-8 gradient-text-subtle"
-        >
-          {hero.title}
-        </h1>
+        <div ref={titleParallaxRef}>
+          <h1
+            ref={titleRef}
+            className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold leading-[0.9] mb-6 md:mb-8 gradient-text-subtle"
+            style={{ transformStyle: 'preserve-3d' }}
+          >
+            {hero.title}
+          </h1>
+        </div>
 
-        {/* Subtitle & Description */}
-        <div ref={contentRef}>
+        {/* Subtitle & Description & CTAs */}
+        <div ref={bodyRef}>
           <p className="text-lg md:text-xl lg:text-2xl text-vantor-silver font-light leading-relaxed max-w-3xl mx-auto mb-4">
             {hero.subtitle}
           </p>
@@ -161,16 +217,16 @@ export function StadiumHero({ hero, metrics }: StadiumHeroProps) {
 
         {/* Scoreboard metrics strip */}
         {metrics && metrics.length > 0 && (
-          <div className="mt-16 md:mt-24 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4">
+          <div className="mt-16 md:mt-24 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4" style={{ perspective: '600px' }}>
             {metrics.slice(0, 5).map((metric, i) => (
               <div
                 key={i}
-                className="scoreboard-metric scoreboard-card p-4 md:p-5 text-center opacity-0"
+                className="scoreboard-metric scoreboard-card p-4 md:p-5 text-center opacity-0 card-3d flex flex-col justify-center"
               >
-                <div className="text-vantor-blue font-display text-2xl md:text-3xl font-bold mb-1">
+                <div className="text-vantor-blue font-display text-2xl md:text-3xl font-bold mb-1 glow-text card-3d-inner leading-tight break-words hyphens-auto px-1">
                   {metric.value}
                 </div>
-                <div className="text-vantor-muted text-[10px] md:text-xs uppercase tracking-wider font-medium">
+                <div className="text-vantor-muted text-[10px] md:text-xs uppercase tracking-wider font-medium card-3d-inner mt-1 px-1">
                   {metric.label}
                 </div>
               </div>
