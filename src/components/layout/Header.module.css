@@ -11,8 +11,11 @@
   padding: 0 var(--page-padding);
   background: transparent;
   border-bottom: 1px solid transparent;
-  transition: background var(--transition-base), backdrop-filter var(--transition-base),
-    border-color var(--transition-base), transform var(--transition-smooth);
+  transition:
+    background var(--transition-base),
+    backdrop-filter var(--transition-base),
+    border-color var(--transition-base),
+    transform var(--transition-smooth);
 }
 
 .scrolled {
@@ -116,7 +119,9 @@
   font-size: var(--text-body-sm);
   font-weight: 500;
   background: transparent;
-  transition: background var(--transition-base), color var(--transition-base);
+  transition:
+    background var(--transition-base),
+    color var(--transition-base);
 }
 
 .cta:hover {
@@ -151,7 +156,9 @@
   width: 100%;
   height: 2px;
   background: var(--text-primary);
-  transition: transform var(--transition-base), top var(--transition-base),
+  transition:
+    transform var(--transition-base),
+    top var(--transition-base),
     bottom var(--transition-base);
 }
 
@@ -193,7 +200,11 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(10, 14, 23, 0.92), rgba(8, 12, 20, 0.98));
+  background: linear-gradient(
+    180deg,
+    rgba(10, 14, 23, 0.92),
+    rgba(8, 12, 20, 0.98)
+  );
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
 }
