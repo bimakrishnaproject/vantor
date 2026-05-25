@@ -1,0 +1,80 @@
+.card {
+  --card-accent: var(--accent-primary);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  min-height: 220px;
+  background: var(--bg-card);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  transition: border-color var(--transition-base), box-shadow var(--transition-base),
+    transform var(--transition-base);
+}
+
+.card:hover {
+  transform: scale(1.02);
+  border-color: var(--card-accent);
+  box-shadow: 0 0 40px color-mix(in srgb, var(--card-accent) 18%, transparent);
+}
+
+.iconWrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  font-size: 48px;
+  line-height: 1;
+  color: var(--card-accent);
+}
+
+.iconWrap::before {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  border-radius: var(--radius-full);
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--card-accent) 35%, transparent) 0%,
+    transparent 70%
+  );
+  filter: blur(8px);
+  z-index: -1;
+}
+
+.title {
+  font-size: var(--text-h3);
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.description {
+  font-size: var(--text-body-sm);
+  color: var(--text-secondary);
+  flex: 1;
+}
+
+.arrow {
+  align-self: flex-end;
+  font-size: 1.25rem;
+  color: var(--card-accent);
+  transition: transform var(--transition-base);
+}
+
+.card:hover .arrow {
+  transform: translate(4px, -4px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card:hover {
+    transform: none;
+  }
+  .card:hover .arrow {
+    transform: none;
+  }
+}

@@ -1,0 +1,229 @@
+:root {
+  /* ===== COLOR PALETTE ===== */
+  --bg-primary: #0a0e17;
+  --bg-secondary: #101b28;
+  --bg-tertiary: #151f2e;
+  --bg-card: rgba(21, 31, 46, 0.6);
+
+  --accent-primary: #00d4ff;
+  --accent-secondary: #ff6b35;
+  --accent-gold: #f0c040;
+  --accent-glow: rgba(0, 212, 255, 0.15);
+
+  --text-primary: #f0f4f8;
+  --text-secondary: #8899aa;
+  --text-muted: #556677;
+
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --border-glow: rgba(0, 212, 255, 0.3);
+
+  --gradient-hero: linear-gradient(135deg, #0a0e17 0%, #1a1040 40%, #0a1628 100%);
+  --gradient-section: linear-gradient(180deg, #0a0e17 0%, #101b28 100%);
+  --gradient-accent: linear-gradient(135deg, #00d4ff, #0088cc);
+  --gradient-gold: linear-gradient(135deg, #f0c040, #e6a010);
+
+  /* ===== TYPOGRAPHY =====
+     --font-outfit / --font-inter are injected by next/font in layout.tsx */
+  --font-heading: var(--font-outfit), "Outfit", sans-serif;
+  --font-body: var(--font-inter), "Inter", sans-serif;
+
+  --text-hero: clamp(3rem, 8vw, 7rem);
+  --text-h1: clamp(2.5rem, 5vw, 4.5rem);
+  --text-h2: clamp(1.8rem, 3.5vw, 3rem);
+  --text-h3: clamp(1.2rem, 2vw, 1.8rem);
+  --text-body: clamp(1rem, 1.2vw, 1.25rem);
+  --text-body-sm: clamp(0.875rem, 1vw, 1rem);
+  --text-caption: 0.75rem;
+
+  /* ===== SPACING (8px base grid) ===== */
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 2rem;
+  --space-lg: 4rem;
+  --space-xl: 6rem;
+  --space-2xl: 8rem;
+  --space-3xl: 12rem;
+
+  /* ===== LAYOUT ===== */
+  --max-width: 1400px;
+  --page-padding: clamp(1.5rem, 5vw, 5.5rem);
+  --section-padding: clamp(4rem, 10vh, 8rem) 0;
+
+  /* ===== EFFECTS ===== */
+  --glass-bg: rgba(16, 27, 40, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-blur: blur(20px);
+  --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.4);
+  --shadow-glow: 0 0 40px rgba(0, 212, 255, 0.1);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 32px;
+  --radius-full: 9999px;
+
+  /* ===== TRANSITIONS ===== */
+  --transition-fast: 150ms ease;
+  --transition-base: 300ms ease;
+  --transition-smooth: 500ms cubic-bezier(0.25, 0.1, 0.25, 1);
+  --transition-spring: 600ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ===== RESET ===== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  color-scheme: dark;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+html,
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+body {
+  min-height: 100dvh;
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: var(--text-body);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ===== TYPOGRAPHY DEFAULTS ===== */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+  color: var(--text-primary);
+}
+
+h1 {
+  font-size: var(--text-h1);
+  font-weight: 300;
+  line-height: 0.9;
+}
+
+h2 {
+  font-size: var(--text-h2);
+  font-weight: 400;
+  line-height: 1;
+}
+
+h3 {
+  font-size: var(--text-h3);
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+p {
+  font-size: var(--text-body);
+  line-height: 1.7;
+}
+
+/* ===== LINKS ===== */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ===== IMAGES ===== */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* ===== FORM ELEMENTS ===== */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+/* ===== SELECTION ===== */
+::selection {
+  background: var(--accent-primary);
+  color: var(--bg-primary);
+}
+
+/* ===== FOCUS-VISIBLE ===== */
+:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* ===== CUSTOM SCROLLBAR ===== */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-primary) var(--bg-secondary);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent-primary);
+  border-radius: var(--radius-full);
+  border: 2px solid var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #33ddff;
+}
+
+/* ===== UTILITY: container ===== */
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding-inline: var(--page-padding);
+}
+
+/* ===== SITE MAIN (keeps footer at bottom, offsets fixed header) ===== */
+.site-main {
+  display: block;
+  min-height: 100dvh;
+}
+
+/* ===== CONTENT-VISIBILITY UTILITY =====
+   Apply to below-fold sections to skip rendering work until they enter
+   the viewport. Pair with a sensible contain-intrinsic-size to avoid
+   scroll-jump on layout. */
+.cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: 800px;
+}

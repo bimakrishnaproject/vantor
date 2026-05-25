@@ -1,0 +1,249 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 80px;
+  z-index: 100;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  padding: 0 var(--page-padding);
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  transition: background var(--transition-base), backdrop-filter var(--transition-base),
+    border-color var(--transition-base), transform var(--transition-smooth);
+  transform: translateY(0);
+}
+
+.scrolled {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.hidden {
+  transform: translateY(-100%);
+}
+
+/* ===== LOGO ===== */
+.logo {
+  display: flex;
+  flex-direction: column;
+  justify-self: start;
+  line-height: 1;
+}
+
+.logoMain {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.5rem;
+  letter-spacing: 0.15em;
+  color: var(--text-primary);
+}
+
+.logoSub {
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+/* ===== NAV (desktop) ===== */
+.nav {
+  display: flex;
+  gap: var(--space-md);
+  justify-self: center;
+  align-items: center;
+}
+
+.navLink {
+  position: relative;
+  font-size: var(--text-body-sm);
+  font-weight: 400;
+  color: var(--text-secondary);
+  transition: color var(--transition-base);
+  padding-bottom: 4px;
+}
+
+.navLink::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 1px;
+  background: var(--accent-primary);
+  transition: width var(--transition-base);
+}
+
+.navLink:hover {
+  color: var(--text-primary);
+}
+
+.navLink:hover::after {
+  width: 100%;
+}
+
+.navLinkActive {
+  color: var(--text-primary);
+}
+
+.activeDot {
+  position: absolute;
+  left: 50%;
+  bottom: -8px;
+  width: 4px;
+  height: 4px;
+  border-radius: var(--radius-full);
+  background: var(--accent-primary);
+  transform: translateX(-50%);
+}
+
+/* ===== CTA ===== */
+.ctaWrap {
+  justify-self: end;
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.4rem;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--accent-primary);
+  color: var(--accent-primary);
+  font-size: var(--text-body-sm);
+  font-weight: 500;
+  background: transparent;
+  transition: background var(--transition-base), color var(--transition-base);
+}
+
+.cta:hover {
+  background: var(--accent-primary);
+  color: var(--bg-primary);
+}
+
+.ctaArrow {
+  display: inline-block;
+  transition: transform var(--transition-base);
+}
+
+.cta:hover .ctaArrow {
+  transform: rotate(45deg);
+}
+
+/* ===== HAMBURGER (mobile) ===== */
+.hamburger {
+  display: none;
+  position: relative;
+  width: 28px;
+  height: 18px;
+  justify-self: end;
+  z-index: 110;
+}
+
+.hamburger::before,
+.hamburger::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--text-primary);
+  transition: transform var(--transition-base), top var(--transition-base),
+    bottom var(--transition-base);
+}
+
+.hamburger::before {
+  top: 0;
+}
+
+.hamburger::after {
+  bottom: 0;
+}
+
+.hamburgerOpen::before {
+  top: 8px;
+  transform: rotate(45deg);
+}
+
+.hamburgerOpen::after {
+  bottom: 8px;
+  transform: rotate(-45deg);
+}
+
+/* ===== MOBILE OVERLAY ===== */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 105;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: safe center;
+  gap: var(--space-sm);
+  padding-block: 96px;
+  overflow-y: auto;
+  background: rgba(10, 14, 23, 0.95);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+}
+
+.overlayLink {
+  font-family: var(--font-heading);
+  font-size: var(--text-h3);
+  font-weight: 500;
+  color: var(--text-secondary);
+  opacity: 0;
+  transform: translateY(12px);
+  animation: overlayLinkIn 0.4s ease forwards;
+  transition: color var(--transition-base);
+}
+
+/* Local keyframe — CSS Modules scope animation names, so a global
+   keyframe referenced by name here would not resolve. */
+@keyframes overlayLinkIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.overlayLink:hover,
+.overlayLinkActive {
+  color: var(--text-primary);
+}
+
+.overlayCta {
+  margin-top: var(--space-md);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1200px) {
+  .header {
+    grid-template-columns: 1fr auto;
+  }
+
+  .nav,
+  .ctaWrap {
+    display: none;
+  }
+
+  .hamburger {
+    display: block;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .overlayLink {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}

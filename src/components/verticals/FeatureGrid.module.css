@@ -1,0 +1,42 @@
+.grid {
+  --fg-accent: var(--accent-primary);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--space-md);
+}
+
+.feature {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  padding: var(--space-md);
+  background: var(--bg-card);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  transition: border-color var(--transition-base), transform var(--transition-base);
+}
+
+.feature:hover {
+  border-color: color-mix(in srgb, var(--fg-accent) 35%, transparent);
+  transform: translateY(-2px);
+}
+
+.icon {
+  font-size: 1.75rem;
+  color: var(--fg-accent);
+  margin-bottom: var(--space-xs);
+}
+
+.title {
+  font-family: var(--font-heading);
+  font-size: var(--text-h3);
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.description {
+  font-size: var(--text-body-sm);
+  color: var(--text-secondary);
+}

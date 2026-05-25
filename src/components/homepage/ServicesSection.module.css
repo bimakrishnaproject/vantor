@@ -1,0 +1,48 @@
+.section {
+  padding: var(--section-padding);
+  background: var(--bg-primary);
+}
+
+.inner {
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding-inline: var(--page-padding);
+}
+
+.heading {
+  margin-bottom: var(--space-lg);
+  text-align: center;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-md);
+}
+
+/* center the 2-card bottom row on desktop */
+.grid > :nth-child(4) { grid-column: 1 / span 1; grid-column-start: 1; }
+.grid > :nth-child(4) { grid-column-start: 1; }
+
+/* push bottom row to columns 1-2 of 3 so they sit visually centered with an empty cell */
+@supports (grid-template-areas: "a b c") {
+  .grid {
+    grid-template-areas:
+      "a b c"
+      ". d e";
+  }
+  .grid > :nth-child(1) { grid-area: a; }
+  .grid > :nth-child(2) { grid-area: b; }
+  .grid > :nth-child(3) { grid-area: c; }
+  .grid > :nth-child(4) { grid-area: d; }
+  .grid > :nth-child(5) { grid-area: e; }
+}
+
+@media (max-width: 900px) {
+  .grid { grid-template-columns: repeat(2, 1fr); grid-template-areas: none; }
+  .grid > * { grid-area: auto !important; }
+}
+
+@media (max-width: 560px) {
+  .grid { grid-template-columns: 1fr; }
+}

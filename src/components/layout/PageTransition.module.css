@@ -1,0 +1,35 @@
+.wrapper {
+  opacity: 0;
+  transform: translateY(-8px);
+  animation: pageIn 0.4s ease forwards;
+}
+
+@keyframes pageIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 0%;
+  background: var(--accent-primary);
+  z-index: 200;
+  transition: width 0.4s ease, opacity 0.2s ease;
+}
+
+.barActive {
+  width: 80%;
+}
+
+.barDone {
+  width: 100%;
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wrapper { animation: none; opacity: 1; transform: none; }
+  .bar { transition: opacity 0.1s ease; }
+}
