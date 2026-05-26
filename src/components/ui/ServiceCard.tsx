@@ -8,6 +8,7 @@ interface ServiceCardProps {
   icon: ReactNode;
   href: string;
   accentColor?: string;
+  highlight?: boolean;
 }
 
 export default function ServiceCard({
@@ -16,13 +17,19 @@ export default function ServiceCard({
   icon,
   href,
   accentColor,
+  highlight = false,
 }: ServiceCardProps) {
   const style = accentColor
     ? ({ "--card-accent": accentColor } as CSSProperties)
     : undefined;
 
   return (
-    <Link href={href} className={styles.card} style={style}>
+    <Link
+      href={href}
+      className={`${styles.card} ${highlight ? styles.highlight : ""} ecosystem-card`}
+      style={style}
+      data-highlight={highlight || undefined}
+    >
       <span className={styles.iconWrap} aria-hidden="true">
         {icon}
       </span>
