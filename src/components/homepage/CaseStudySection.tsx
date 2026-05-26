@@ -29,7 +29,7 @@ const STUDIES = [
 
 export default function CaseStudySection() {
   return (
-    <section className={styles.section}>
+    <section id="case-studies" className={styles.section}>
       <div className={styles.inner}>
         <SectionHeading label="Proven Results" title="Case Studies" />
         <div className={styles.grid}>

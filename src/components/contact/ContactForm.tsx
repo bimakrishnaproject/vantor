@@ -24,7 +24,6 @@ export default function ContactForm() {
 
   const onSubmit = async (data: FormValues) => {
     // TODO: integrate with WordPress REST API or transactional email service
-    // eslint-disable-next-line no-console
     console.log("[contact form submission]", data);
     await new Promise((r) => setTimeout(r, 600));
     setSubmitted(true);

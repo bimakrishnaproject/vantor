@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import styles from "./CaseStudyCard.module.css";
@@ -29,6 +29,12 @@ export default function CaseStudyCard({
 }: CaseStudyCardProps) {
   const visualRef = useRef<HTMLDivElement>(null);
   const frame = useRef<number | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (frame.current !== null) cancelAnimationFrame(frame.current);
+    };
+  }, []);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
     const el = visualRef.current;
