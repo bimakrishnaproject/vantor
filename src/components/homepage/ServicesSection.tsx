@@ -111,8 +111,22 @@ function CommerceIcon() {
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-      <circle cx="26" cy="48" r="4" fill="none" stroke="currentColor" strokeWidth="2.25" />
-      <circle cx="44" cy="48" r="4" fill="none" stroke="currentColor" strokeWidth="2.25" />
+      <circle
+        cx="26"
+        cy="48"
+        r="4"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2.25"
+      />
+      <circle
+        cx="44"
+        cy="48"
+        r="4"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2.25"
+      />
       <path
         d="M19 18h3l2.5 12"
         fill="none"
@@ -139,8 +153,20 @@ function MobileIcon() {
         stroke="currentColor"
         strokeWidth="2.25"
       />
-      <path d="M27 18h10" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" />
-      <path d="M27 46h10" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" />
+      <path
+        d="M27 18h10"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2.25"
+        strokeLinecap="round"
+      />
+      <path
+        d="M27 46h10"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2.25"
+        strokeLinecap="round"
+      />
       <circle cx="32" cy="39" r="2" fill="currentColor" />
     </svg>
   );
@@ -156,7 +182,13 @@ function CasinoIcon() {
         strokeWidth="2.25"
         strokeLinejoin="round"
       />
-      <path d="M32 10v44M16 20l16 10 16-10" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinejoin="round" />
+      <path
+        d="M32 10v44M16 20l16 10 16-10"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2.25"
+        strokeLinejoin="round"
+      />
       <circle cx="25" cy="24" r="1.8" fill="currentColor" />
       <circle cx="39" cy="24" r="1.8" fill="currentColor" />
       <circle cx="32" cy="34" r="1.8" fill="currentColor" />
@@ -167,7 +199,14 @@ function CasinoIcon() {
 function NetworkIcon() {
   return (
     <svg viewBox="0 0 64 64" role="img" aria-hidden="true">
-      <circle cx="32" cy="32" r="4" fill="none" stroke="currentColor" strokeWidth="2.25" />
+      <circle
+        cx="32"
+        cy="32"
+        r="4"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2.25"
+      />
       <path
         d="M32 16v8M32 40v8M16 32h8M40 32h8M21 21l5 5M38 38l5 5M43 21l-5 5M26 38l-5 5"
         fill="none"
@@ -175,10 +214,38 @@ function NetworkIcon() {
         strokeWidth="2.25"
         strokeLinecap="round"
       />
-      <circle cx="16" cy="16" r="3" fill="none" stroke="currentColor" strokeWidth="2.25" />
-      <circle cx="48" cy="16" r="3" fill="none" stroke="currentColor" strokeWidth="2.25" />
-      <circle cx="16" cy="48" r="3" fill="none" stroke="currentColor" strokeWidth="2.25" />
-      <circle cx="48" cy="48" r="3" fill="none" stroke="currentColor" strokeWidth="2.25" />
+      <circle
+        cx="16"
+        cy="16"
+        r="3"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2.25"
+      />
+      <circle
+        cx="48"
+        cy="16"
+        r="3"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2.25"
+      />
+      <circle
+        cx="16"
+        cy="48"
+        r="3"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2.25"
+      />
+      <circle
+        cx="48"
+        cy="48"
+        r="3"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2.25"
+      />
     </svg>
   );
 }

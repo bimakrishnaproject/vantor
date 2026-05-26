@@ -34,7 +34,9 @@
     linear-gradient(160deg, rgba(255, 255, 255, 0.04), transparent 55%);
   opacity: 0.88;
   pointer-events: none;
-  transition: opacity var(--transition-base), transform var(--transition-base);
+  transition:
+    opacity var(--transition-base),
+    transform var(--transition-base);
 }
 
 .card::after {
@@ -50,7 +52,9 @@
 .card:hover {
   transform: scale(1.02);
   border-color: color-mix(in srgb, var(--card-accent) 58%, white 8%);
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.36), 0 0 40px var(--card-glow);
+  box-shadow:
+    0 18px 40px rgba(0, 0, 0, 0.36),
+    0 0 40px var(--card-glow);
 }
 
 .iconWrap {
@@ -69,11 +73,22 @@
   inset: 11%;
   border-radius: 1rem;
   background:
-    radial-gradient(circle at 50% 35%, color-mix(in srgb, var(--card-accent) 48%, transparent), transparent 68%),
-    linear-gradient(145deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.03));
+    radial-gradient(
+      circle at 50% 35%,
+      color-mix(in srgb, var(--card-accent) 48%, transparent),
+      transparent 68%
+    ),
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.16),
+      rgba(255, 255, 255, 0.03)
+    );
   filter: blur(10px);
   opacity: 0.8;
-  transition: opacity var(--transition-base), transform var(--transition-base), filter var(--transition-base);
+  transition:
+    opacity var(--transition-base),
+    transform var(--transition-base),
+    filter var(--transition-base);
 }
 
 .iconGlass {
@@ -86,7 +101,11 @@
   height: 100%;
   border-radius: 1rem;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.04)),
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.18),
+      rgba(255, 255, 255, 0.04)
+    ),
     color-mix(in srgb, var(--card-accent) 10%, rgba(8, 12, 25, 0.88));
   border: 1px solid rgba(255, 255, 255, 0.12);
   backdrop-filter: blur(14px) saturate(1.1);
@@ -102,7 +121,9 @@
   width: 2.35rem;
   height: 2.35rem;
   color: var(--card-accent);
-  filter: drop-shadow(0 0 10px color-mix(in srgb, var(--card-accent) 60%, transparent));
+  filter: drop-shadow(
+    0 0 10px color-mix(in srgb, var(--card-accent) 60%, transparent)
+  );
 }
 
 .icon svg {
@@ -196,7 +217,11 @@
 }
 
 .card[data-highlighted="true"] .iconGlass {
-  border-color: color-mix(in srgb, var(--card-accent) 38%, rgba(255, 255, 255, 0.12));
+  border-color: color-mix(
+    in srgb,
+    var(--card-accent) 38%,
+    rgba(255, 255, 255, 0.12)
+  );
 }
 
 .card[data-highlighted="true"] .arrow {
