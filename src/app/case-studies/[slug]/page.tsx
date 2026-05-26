@@ -32,8 +32,7 @@ const CASE_STUDIES = [
   {
     slug: "eu-sportsbook",
     title: "EU Sportsbook Scale-Up",
-    summary:
-      "Compliance-first growth that improved FTDs while lowering CPA.",
+    summary: "Compliance-first growth that improved FTDs while lowering CPA.",
   },
   {
     slug: "latam-launch",
@@ -101,8 +100,8 @@ export default function CaseStudyPage({
           description={study.summary}
         />
         <p style={{ color: "var(--text-secondary)" }}>
-          This page is a placeholder for the full case study. Tell us what detail
-          you want to showcase and we can build out the full story.
+          This page is a placeholder for the full case study. Tell us what
+          detail you want to showcase and we can build out the full story.
         </p>
         <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
           <Button variant="primary" size="md" href="/contact">

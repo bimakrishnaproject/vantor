@@ -19,7 +19,8 @@ export function useLenis(): Lenis | null {
 export default function SmoothScroll({ children }: { children: ReactNode }) {
   const [lenis] = useState<Lenis | null>(() => {
     if (typeof window === "undefined") return null;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return null;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches)
+      return null;
 
     return new Lenis({
       duration: 1.2,

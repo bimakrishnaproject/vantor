@@ -9,9 +9,9 @@ const STUDIES = [
     category: "Audio",
     slug: "streaming-launch",
     metrics: [
-      { label: "Reach",       value: "+340%" },
-      { label: "Impressions", value: "2.1M"  },
-      { label: "CPV",         value: "$0.03" },
+      { label: "Reach", value: "+340%" },
+      { label: "Impressions", value: "2.1M" },
+      { label: "CPV", value: "$0.03" },
     ],
   },
   {
@@ -20,9 +20,9 @@ const STUDIES = [
     category: "eCommerce",
     slug: "fashion-roas",
     metrics: [
-      { label: "ROAS",    value: "4.8x"   },
-      { label: "Revenue", value: "+127%"  },
-      { label: "CPA",     value: "-62%"   },
+      { label: "ROAS", value: "4.8x" },
+      { label: "Revenue", value: "+127%" },
+      { label: "CPA", value: "-62%" },
     ],
   },
 ];
