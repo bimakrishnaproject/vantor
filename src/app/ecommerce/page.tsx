@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import { JsonLd, serviceSchema, breadcrumbSchema } from "@/lib/structured-data";
 import { getVerticalPageBySlug } from "@/lib/cms";
 import VerticalHero from "@/components/verticals/VerticalHero";
+import VerticalHeroVisual from "@/components/verticals/VerticalHeroVisual";
 import VerticalSection from "@/components/verticals/VerticalSection";
 import VerticalCTA from "@/components/verticals/VerticalCTA";
 import FeatureGrid from "@/components/verticals/FeatureGrid";
 import ProcessFlow from "@/components/verticals/ProcessFlow";
-import EcommerceVisual, { EcommerceBackground } from "@/components/verticals/EcommerceVisual";
 import MetricRow from "@/components/ui/MetricRow";
 import CaseStudyCard from "@/components/ui/CaseStudyCard";
 
@@ -34,8 +34,7 @@ export default async function EcommercePage() {
         headline={data.hero.headline}
         description={data.hero.description}
         accentColor={ACCENT}
-        backgroundEffect={<EcommerceBackground />}
-        visual={<EcommerceVisual />}
+        visual={<VerticalHeroVisual slug="ecommerce" />}
         ctaText={data.hero.ctaText}
       />
 

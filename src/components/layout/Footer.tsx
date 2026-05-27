@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { NAV_ITEMS, SERVICE_ITEMS } from "@/lib/navigation";
+import BrandLogo from "@/components/ui/BrandLogo";
 import styles from "./Footer.module.css";
 
 const SOCIAL_LINKS = [
@@ -42,10 +43,7 @@ export default function Footer() {
         <div className={styles.top}>
           {/* Company */}
           <div>
-            <Link href="/" aria-label="Vantor Ventures home">
-              <span className={styles.logoMain}>VANTOR</span>
-              <span className={styles.logoSub}>VENTURES</span>
-            </Link>
+            <BrandLogo width={180} height={50} className={styles.logo} />
             <p className={styles.tagline}>
               Premium media buying ecosystem delivering performance at scale.
             </p>

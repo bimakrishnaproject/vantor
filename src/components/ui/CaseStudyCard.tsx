@@ -58,25 +58,32 @@ export default function CaseStudyCard({
     el.style.setProperty("--img-y", "0px");
   };
 
+  const imgSrc = image || 
+    (slug === "audio-campaign" ? "https://images.unsplash.com/photo-1516280440502-610111584dfc?auto=format&fit=crop&w=800&q=80" :
+     slug === "ecommerce-scaling" ? "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=800&q=80" :
+     slug === "mobile-acquisition" ? "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80" :
+     slug === "casino-compliance" ? "https://images.unsplash.com/photo-1596838132731-3301c3fd4317?auto=format&fit=crop&w=800&q=80" :
+     slug === "fashion-roas" ? "https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&w=800&q=80" :
+     "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80");
+
   return (
     <Link
       href={`/case-studies/${slug}`}
-      className={styles.card}
+      className={`${styles.card} card-3d`}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
       <div className={styles.media}>
         <span className={styles.badge}>{category}</span>
         <div ref={visualRef} className={styles.visual}>
-          {image && (
-            <Image
-              src={image}
-              alt={title}
-              fill
-              className={styles.image}
-              sizes="(max-width: 768px) 100vw, 50vw"
-            />
-          )}
+          <Image
+            src={imgSrc}
+            alt={title}
+            fill
+            className={styles.image}
+            sizes="(max-width: 768px) 100vw, 50vw"
+            style={{ objectFit: "cover" }}
+          />
         </div>
       </div>
       <div className={styles.body}>

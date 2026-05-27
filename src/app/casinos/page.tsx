@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { JsonLd, serviceSchema, breadcrumbSchema } from "@/lib/structured-data";
 import { getVerticalPageBySlug } from "@/lib/cms";
 import VerticalHero from "@/components/verticals/VerticalHero";
+import VerticalHeroVisual from "@/components/verticals/VerticalHeroVisual";
 import VerticalSection from "@/components/verticals/VerticalSection";
 import VerticalCTA from "@/components/verticals/VerticalCTA";
 import FeatureGrid from "@/components/verticals/FeatureGrid";
@@ -28,6 +29,7 @@ export default async function CasinosPage() {
         description={data.hero.description}
         accentColor={ACCENT}
         ctaText={data.hero.ctaText}
+        visual={<VerticalHeroVisual slug="casinos" />}
       />
 
       <VerticalSection

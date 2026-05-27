@@ -2,17 +2,17 @@ import type { Metadata } from "next";
 import { JsonLd, serviceSchema, breadcrumbSchema } from "@/lib/structured-data";
 import { getVerticalPageBySlug } from "@/lib/cms";
 import VerticalHero from "@/components/verticals/VerticalHero";
+import VerticalHeroVisual from "@/components/verticals/VerticalHeroVisual";
 import VerticalSection from "@/components/verticals/VerticalSection";
 import VerticalCTA from "@/components/verticals/VerticalCTA";
 import FeatureGrid from "@/components/verticals/FeatureGrid";
 import ProcessFlow from "@/components/verticals/ProcessFlow";
-import WaveformAnimation from "@/components/verticals/WaveformAnimation";
 import StatCard from "@/components/ui/StatCard";
 import CaseStudyCard from "@/components/ui/CaseStudyCard";
 
 export const metadata: Metadata = {
-  title: "Audio Advertising",
-  description: "Programmatic audio, podcast sponsorship, and streaming campaigns that drive measurable results. 2.1M+ daily audio impressions delivered.",
+  title: "Audio & Podcasting Media Buying",
+  description: "Performance audio campaigns spanning podcasts, streaming, and terrestrial radio.",
 };
 
 export default async function AudioPage() {
@@ -28,8 +28,8 @@ export default async function AudioPage() {
         headline={data.hero.headline}
         description={data.hero.description}
         accentColor={ACCENT}
-        backgroundEffect={<WaveformAnimation />}
         ctaText={data.hero.ctaText}
+        visual={<VerticalHeroVisual slug="audio" />}
       />
 
       <VerticalSection

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { JsonLd, serviceSchema, breadcrumbSchema } from "@/lib/structured-data";
 import { getVerticalPageBySlug } from "@/lib/cms";
 import VerticalHero from "@/components/verticals/VerticalHero";
+import VerticalHeroVisual from "@/components/verticals/VerticalHeroVisual";
 import VerticalSection from "@/components/verticals/VerticalSection";
 import VerticalCTA from "@/components/verticals/VerticalCTA";
 import FeatureGrid from "@/components/verticals/FeatureGrid";
@@ -10,8 +11,8 @@ import StatCard from "@/components/ui/StatCard";
 import CaseStudyCard from "@/components/ui/CaseStudyCard";
 
 export const metadata: Metadata = {
-  title: "Specialized Audiences",
-  description: "Bespoke media strategies for B2B, niche consumer segments, and complex buyer journeys.",
+  title: "Custom Media Buying Solutions",
+  description: "Bespoke media strategies for unique verticals, high-ticket items, and specialized markets.",
 };
 
 export default async function OtherPage() {
@@ -21,13 +22,14 @@ export default async function OtherPage() {
   return (
     <>
       <JsonLd data={serviceSchema({ name: data.title, slug: "/other", description: data.description })} />
-      <JsonLd data={breadcrumbSchema([{ name: "Home", slug: "/" }, { name: "Specialized Audiences", slug: "/other" }])} />
+      <JsonLd data={breadcrumbSchema([{ name: "Home", slug: "/" }, { name: "Other Solutions", slug: "/other" }])} />
       <VerticalHero
         label={data.hero.label}
         headline={data.hero.headline}
         description={data.hero.description}
         accentColor={ACCENT}
         ctaText={data.hero.ctaText}
+        visual={<VerticalHeroVisual slug="other" />}
       />
 
       <VerticalSection

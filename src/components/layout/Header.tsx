@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { NAV_ITEMS } from "@/lib/navigation";
+import BrandLogo from "@/components/ui/BrandLogo";
 import styles from "./Header.module.css";
 
 export default function Header() {
@@ -51,10 +52,7 @@ export default function Header() {
 
   return (
     <header className={headerClass}>
-      <Link href="/" className={styles.logo} aria-label="Vantor Ventures home">
-        <span className={styles.logoMain}>VANTOR</span>
-        <span className={styles.logoSub}>VENTURES</span>
-      </Link>
+      <BrandLogo className={styles.logo} width={160} height={45} />
 
       <nav className={styles.nav} aria-label="Primary">
         {NAV_ITEMS.map((item) => {

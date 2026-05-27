@@ -1,28 +1,55 @@
 .card {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: var(--space-xs);
-  padding: var(--space-md);
+  padding: var(--space-md) var(--space-lg);
   width: 100%;
-  background: var(--bg-card);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-lg);
-  transition: border-color var(--transition-base), box-shadow var(--transition-base),
-    transform var(--transition-base);
+  background: rgba(5, 5, 5, 0.85); /* Darker panel */
+  border: 1px solid rgba(0, 229, 255, 0.15);
+  border-radius: var(--radius-md);
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.9), 0 5px 15px rgba(0,0,0,0.5);
+  overflow: hidden;
+  text-align: center;
+  align-items: center;
 }
 
-.card:hover {
-  border-color: var(--border-glow);
-  box-shadow: var(--shadow-glow), 0 0 40px var(--accent-glow);
-  transform: translateY(-2px);
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.1) 2px,
+    rgba(0, 0, 0, 0.1) 4px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+.stadiumLight {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--gradient-accent);
+  box-shadow: 0 0 15px 2px var(--accent-primary);
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
+}
+
+.card:hover .stadiumLight {
+  opacity: 1;
 }
 
 .header {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  z-index: 2;
 }
 
 .icon {
@@ -33,22 +60,29 @@
   font-size: 1.5rem;
 }
 
+.valueContainer {
+  position: relative;
+  z-index: 2;
+  margin-block: 0.5rem;
+}
+
 .value {
   font-family: var(--font-heading);
-  font-size: var(--text-h1);
+  font-size: clamp(3rem, 5vw, 4rem);
   font-weight: 300;
   line-height: 0.9;
-  background: var(--gradient-accent);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
+  color: var(--accent-primary);
+  text-shadow: 0 0 15px rgba(0, 229, 255, 0.6);
+  letter-spacing: -0.02em;
 }
 
 .label {
   font-size: var(--text-body-sm);
-  font-weight: 300;
+  font-weight: 400;
   color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  z-index: 2;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -56,3 +90,4 @@
     transform: none;
   }
 }
+

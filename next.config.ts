@@ -21,6 +21,11 @@ const nextConfig: NextConfig = {
         hostname: "cms.vantorventures.com",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+        pathname: "/**",
+      },
     ],
   },
   async headers() {

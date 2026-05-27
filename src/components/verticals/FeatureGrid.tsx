@@ -20,7 +20,7 @@ export default function FeatureGrid({ items, accentColor }: FeatureGridProps) {
   return (
     <div className={styles.grid} style={style}>
       {items.map((item) => (
-        <div key={item.title} className={styles.feature}>
+        <div key={item.title} className={`${styles.feature} card-3d`}>
           <span className={styles.icon} aria-hidden="true">{item.icon}</span>
           <h3 className={styles.title}>{item.title}</h3>
           <p className={styles.description}>{item.description}</p>
@@ -29,3 +29,4 @@ export default function FeatureGrid({ items, accentColor }: FeatureGridProps) {
     </div>
   );
 }
+

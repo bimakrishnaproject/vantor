@@ -2,8 +2,8 @@ import SectionHeading from "@/components/ui/SectionHeading";
 import ServiceCard from "@/components/ui/ServiceCard";
 import styles from "./ServicesSection.module.css";
 
+import ScrollReveal from "@/components/ui/ScrollReveal";
 import { ReactNode } from "react";
-
 interface Service {
   title: string;
   description: string;
@@ -34,26 +34,31 @@ export default function ServicesSection({ data }: ServicesProps) {
   return (
     <section id="services" className={styles.section}>
       <div className={styles.inner}>
-        <div className={styles.heading}>
-          <SectionHeading
-            label="Our Ecosystem"
-            title="Five Verticals, One Vision"
-            align="center"
-          />
-        </div>
-        <div className={styles.grid}>
-          {data.map((s) => (
-            <ServiceCard
-              key={s.title}
-              title={s.title}
-              description={s.description}
-              icon={ICON_MAP[s.slug] || <NetworkIcon />}
-              href={`/${s.slug}`}
-              accentColor={ACCENT_MAP[s.slug] || "#ffffff"}
-              highlighted={s.slug === "mobile-apps"}
+        <ScrollReveal animation="fade-up">
+          <div className={styles.heading}>
+            <SectionHeading
+              label="Our Ecosystem"
+              title="Five Verticals, One Vision"
+              align="center"
             />
-          ))}
-        </div>
+          </div>
+        </ScrollReveal>
+        
+        <ScrollReveal animation="stagger-children" stagger={0.15}>
+          <div className={styles.grid}>
+            {data.map((s) => (
+              <ServiceCard
+                key={s.title}
+                title={s.title}
+                description={s.description}
+                icon={ICON_MAP[s.slug] || <NetworkIcon />}
+                href={`/${s.slug}`}
+                accentColor={ACCENT_MAP[s.slug] || "#ffffff"}
+                highlighted={s.slug === "mobile-apps"}
+              />
+            ))}
+          </div>
+        </ScrollReveal>
       </div>
     </section>
   );

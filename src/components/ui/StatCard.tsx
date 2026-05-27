@@ -31,23 +31,27 @@ export default function StatCard({
     prefix,
     suffix,
     decimals,
-    duration: 2,
+    duration: 2.5,
   });
 
   const shown = endValue !== undefined ? displayValue : value;
 
   return (
     <div
-      className={styles.card}
+      className={`${styles.card} card-3d glass-panel`}
       style={delay ? { transitionDelay: `${delay}ms` } : undefined}
     >
+      <div className={styles.stadiumLight} aria-hidden="true" />
       <div className={styles.header}>
         {icon && <span className={styles.icon}>{icon}</span>}
       </div>
-      <span ref={valueRef} className={styles.value} data-value={value}>
-        {shown}
-      </span>
+      <div className={styles.valueContainer}>
+        <span ref={valueRef} className={`${styles.value} animate-digital`} data-value={value}>
+          {shown}
+        </span>
+      </div>
       <span className={styles.label}>{label}</span>
     </div>
   );
 }
+

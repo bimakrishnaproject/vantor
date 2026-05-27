@@ -2,17 +2,17 @@ import type { Metadata } from "next";
 import { JsonLd, serviceSchema, breadcrumbSchema } from "@/lib/structured-data";
 import { getVerticalPageBySlug } from "@/lib/cms";
 import VerticalHero from "@/components/verticals/VerticalHero";
+import VerticalHeroVisual from "@/components/verticals/VerticalHeroVisual";
 import VerticalSection from "@/components/verticals/VerticalSection";
 import VerticalCTA from "@/components/verticals/VerticalCTA";
 import FeatureGrid from "@/components/verticals/FeatureGrid";
 import ProcessFlow from "@/components/verticals/ProcessFlow";
-import FloatingDevice from "@/components/verticals/FloatingDevice";
 import StatCard from "@/components/ui/StatCard";
 import CaseStudyCard from "@/components/ui/CaseStudyCard";
 
 export const metadata: Metadata = {
-  title: "Mobile App Marketing",
-  description: "Drive app installs and engagement at scale. 15M+ installs driven with $0.42 average CPI and 67% day-7 retention.",
+  title: "Mobile App User Acquisition",
+  description: "Driving high-LTV installs and post-install engagement at scale.",
 };
 
 export default async function MobileAppsPage() {
@@ -28,7 +28,7 @@ export default async function MobileAppsPage() {
         headline={data.hero.headline}
         description={data.hero.description}
         accentColor={ACCENT}
-        visual={<FloatingDevice />}
+        visual={<VerticalHeroVisual slug="mobile-apps" />}
         ctaText={data.hero.ctaText}
       />
 

@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import SectionHeading from "@/components/ui/SectionHeading";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 import styles from "./VerticalSection.module.css";
 
 interface VerticalSectionProps {
@@ -26,16 +27,22 @@ export default function VerticalSection({
   return (
     <section id={id} className={`${styles.section} ${bgClass}`}>
       <div className={styles.inner}>
-        {(label || title) && (
-          <SectionHeading
-            label={label}
-            title={title ?? ""}
-            description={description}
-            align={align}
-          />
-        )}
-        {children}
+        <ScrollReveal animation="fade-up">
+          {(label || title) && (
+            <SectionHeading
+              label={label}
+              title={title ?? ""}
+              description={description}
+              align={align}
+            />
+          )}
+        </ScrollReveal>
+        
+        <ScrollReveal animation="3d-float" delay={0.1}>
+          {children}
+        </ScrollReveal>
       </div>
     </section>
   );
 }
+

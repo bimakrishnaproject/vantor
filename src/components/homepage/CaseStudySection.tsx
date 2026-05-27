@@ -1,5 +1,6 @@
 import SectionHeading from "@/components/ui/SectionHeading";
 import CaseStudyCard from "@/components/ui/CaseStudyCard";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 import styles from "./CaseStudySection.module.css";
 
 interface CaseStudy {
@@ -18,19 +19,24 @@ export default function CaseStudySection({ data }: CaseStudySectionProps) {
   return (
     <section id="case-studies" className={styles.section}>
       <div className={styles.inner}>
-        <SectionHeading label="Proven Results" title="Case Studies" />
-        <div className={styles.grid}>
-          {data.map((s) => (
-            <CaseStudyCard
-              key={s.slug}
-              title={s.title}
-              client={s.client}
-              category={s.category}
-              slug={s.slug}
-              metrics={s.metrics}
-            />
-          ))}
-        </div>
+        <ScrollReveal animation="fade-up">
+          <SectionHeading label="Proven Results" title="Case Studies" />
+        </ScrollReveal>
+        
+        <ScrollReveal animation="stagger-children" stagger={0.2}>
+          <div className={styles.grid}>
+            {data.map((s) => (
+              <CaseStudyCard
+                key={s.slug}
+                title={s.title}
+                client={s.client}
+                category={s.category}
+                slug={s.slug}
+                metrics={s.metrics}
+              />
+            ))}
+          </div>
+        </ScrollReveal>
       </div>
     </section>
   );

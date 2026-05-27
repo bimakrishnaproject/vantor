@@ -26,32 +26,42 @@ export default function ServiceCard({
   return (
     <Link
       href={href}
-      className={styles.card}
+      className={`${styles.card} card-3d`}
       style={style}
       data-highlighted={highlighted ? "true" : undefined}
     >
-      <span className={styles.iconWrap} aria-hidden="true">
-        <span className={styles.iconGlow} />
-        <span className={styles.iconGlass}>
-          <span className={styles.icon}>{icon}</span>
-        </span>
-      </span>
-      <div className={styles.body}>
-        <h3 className={styles.title}>{title}</h3>
-        <p className={styles.description}>{description}</p>
+      <div className={styles.ambientLight} aria-hidden="true" />
+      <div className={styles.glassLayer} />
+      
+      <div className={styles.content}>
+        <div className={styles.iconWrap} aria-hidden="true">
+          <span className={styles.iconGlow} />
+          <span className={styles.iconGlass}>
+            <span className={styles.icon}>{icon}</span>
+          </span>
+        </div>
+        
+        <div className={styles.body}>
+          <h3 className={styles.title}>{title}</h3>
+          <p className={styles.description}>{description}</p>
+        </div>
       </div>
-      <span className={styles.arrow} aria-hidden="true">
-        <svg viewBox="0 0 20 20">
-          <path
-            d="M5 10h9m-3.5-3.5 3.5 3.5-3.5 3.5"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.8"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </span>
+      
+      <div className={styles.footer}>
+        <span className={styles.exploreText}>Explore</span>
+        <span className={styles.arrow} aria-hidden="true">
+          <svg viewBox="0 0 20 20">
+            <path
+              d="M5 10h9m-3.5-3.5 3.5 3.5-3.5 3.5"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </span>
+      </div>
     </Link>
   );
 }

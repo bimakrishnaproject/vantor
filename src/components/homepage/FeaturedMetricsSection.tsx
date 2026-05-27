@@ -1,5 +1,6 @@
 import SectionHeading from "@/components/ui/SectionHeading";
 import MetricRow from "@/components/ui/MetricRow";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 import styles from "./FeaturedMetricsSection.module.css";
 
 interface Metric {
@@ -15,10 +16,6 @@ interface FeaturedMetricsProps {
   };
 }
 
-// Convert string trend to number based on some logic, or change MetricRow to accept strings. 
-// Wait, let's see MetricRow first or just mock the maxValue for now since it expects maxValue.
-// Or we just map the data to the format MetricRow expects.
-
 export default function FeaturedMetricsSection({ data }: FeaturedMetricsProps) {
   const formattedMetrics = data.metrics.map(m => ({
     label: m.label,
@@ -30,11 +27,16 @@ export default function FeaturedMetricsSection({ data }: FeaturedMetricsProps) {
     <section className={styles.section}>
       <div className={styles.gridBg} aria-hidden="true" />
       <div className={styles.inner}>
-        <SectionHeading
-          label="Performance Metrics"
-          title={data.title}
-        />
-        <MetricRow metrics={formattedMetrics} />
+        <ScrollReveal animation="fade-up">
+          <SectionHeading
+            label="Performance Metrics"
+            title={data.title}
+          />
+        </ScrollReveal>
+        
+        <ScrollReveal animation="3d-float" delay={0.1}>
+          <MetricRow metrics={formattedMetrics} />
+        </ScrollReveal>
       </div>
     </section>
   );
