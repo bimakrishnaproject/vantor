@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { JsonLd, breadcrumbSchema } from "@/lib/structured-data";
+import { getContactData } from "@/lib/cms";
 import Button from "@/components/ui/Button";
 import ContactForm from "@/components/contact/ContactForm";
 import StickyContactCTA from "@/components/contact/StickyContactCTA";
@@ -13,11 +14,12 @@ const SOCIALS = [
 
 export const metadata: Metadata = {
   title: "Contact Us",
-  description:
-    "Start your next high-performance campaign. Contact Vantor Ventures for a strategy session.",
+  description: "Start your next high-performance campaign. Contact Vantor Ventures for a strategy session.",
 };
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const data = await getContactData();
+
   return (
     <>
       <JsonLd data={breadcrumbSchema([{ name: "Home", slug: "/" }, { name: "Contact", slug: "/contact" }])} />
@@ -25,36 +27,35 @@ export default function ContactPage() {
         <div className={styles.inner}>
           <div>
             <div className={styles.hero}>
-              <span className={styles.label}>Contact</span>
-              <h1 className={styles.headline}>Let&apos;s Build Together</h1>
+              <span className={styles.label}>{data.hero.label}</span>
+              <h1 className={styles.headline}>{data.hero.headline}</h1>
               <p className={styles.subtext}>
-                Tell us a little about your project. We respond within one business day.
+                {data.hero.description}
               </p>
             </div>
             <div className={styles.formCard}>
-              <ContactForm />
+              <ContactForm formConfig={data.form} />
             </div>
           </div>
 
           <aside className={styles.aside}>
-            <h2 className={styles.asideTitle}>Get in Touch</h2>
+            <h2 className={styles.asideTitle}>{data.info.title}</h2>
             <div className={styles.contactList}>
-              <div className={styles.contactRow}>
-                <span className={styles.contactLabel}>Email</span>
-                <a className={styles.contactValue} href="mailto:hello@vantorventures.com">
-                  hello@vantorventures.com
-                </a>
-              </div>
-              <div className={styles.contactRow}>
-                <span className={styles.contactLabel}>Phone</span>
-                <span className={styles.contactValue}>+1 (555) 000-0000</span>
-              </div>
-              <div className={styles.contactRow}>
-                <span className={styles.contactLabel}>Address</span>
-                <span className={styles.contactValue}>
-                  100 Performance Blvd, Suite 400, New York, NY 10001
-                </span>
-              </div>
+              {data.info.offices.map((office: any) => (
+                <div key={office.city} style={{ marginBottom: "1.5rem" }}>
+                  <div className={styles.contactRow}>
+                    <span className={styles.contactLabel}>{office.city}</span>
+                    <span className={styles.contactValue}>{office.address}</span>
+                  </div>
+                  <div className={styles.contactRow}>
+                    <span className={styles.contactLabel}>Email</span>
+                    <a className={styles.contactValue} href={`mailto:${office.email}`}>
+                      {office.email}
+                    </a>
+                  </div>
+                </div>
+              ))}
+              
               <div className={styles.socials}>
                 {SOCIALS.map((s) => (
                   <a

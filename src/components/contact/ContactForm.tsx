@@ -14,7 +14,14 @@ interface FormValues {
   message: string;
 }
 
-export default function ContactForm() {
+interface ContactFormProps {
+  formConfig?: {
+    fields: any[];
+    submitText: string;
+  };
+}
+
+export default function ContactForm({ formConfig }: ContactFormProps) {
   const [submitted, setSubmitted] = useState(false);
   const {
     register,
@@ -23,7 +30,6 @@ export default function ContactForm() {
   } = useForm<FormValues>({ mode: "onBlur" });
 
   const onSubmit = async (data: FormValues) => {
-    // TODO: integrate with WordPress REST API or transactional email service
     console.log("[contact form submission]", data);
     await new Promise((r) => setTimeout(r, 600));
     setSubmitted(true);
@@ -39,6 +45,15 @@ export default function ContactForm() {
       </div>
     );
   }
+
+  // Use config options if available, else default
+  const campaignOptions = formConfig?.fields?.find(f => f.name === 'campaignType')?.options || [
+    "Audio Advertising", "eCommerce Acceleration", "Mobile App Growth", "Casino & Gaming", "Bespoke / Other"
+  ];
+  
+  const budgetOptions = formConfig?.fields?.find(f => f.name === 'budgetRange')?.options || [
+    "$10k - $50k", "$50k - $100k", "$100k - $500k", "$500k+"
+  ];
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)} noValidate>
@@ -87,53 +102,47 @@ export default function ContactForm() {
           id="company"
           type="text"
           className={styles.input}
-          {...register("company")}
+          {...register("company", { required: "Required" })}
         />
+        {errors.company && (
+          <span className={styles.error}>{errors.company.message}</span>
+        )}
       </div>
 
       <div className={styles.row}>
         <div className={styles.field}>
-          <label className={styles.label} htmlFor="service">
-            Service Interest
+          <label className={styles.label} htmlFor="campaignType">
+            Campaign Type
           </label>
           <select
-            id="service"
+            id="campaignType"
             className={styles.select}
             defaultValue=""
             {...register("service", { required: "Pick one" })}
           >
-            <option value="" disabled>
-              Choose…
-            </option>
-            <option value="audio">Audio</option>
-            <option value="ecommerce">eCommerce</option>
-            <option value="mobile-apps">Mobile Apps</option>
-            <option value="casinos">Casinos</option>
-            <option value="other">Other</option>
-            <option value="not-sure">Not Sure</option>
+            <option value="" disabled>Choose…</option>
+            {campaignOptions.map((opt: string) => (
+              <option key={opt} value={opt}>{opt}</option>
+            ))}
           </select>
           {errors.service && (
             <span className={styles.error}>{errors.service.message}</span>
           )}
         </div>
         <div className={styles.field}>
-          <label className={styles.label} htmlFor="budget">
+          <label className={styles.label} htmlFor="budgetRange">
             Budget Range
           </label>
           <select
-            id="budget"
+            id="budgetRange"
             className={styles.select}
             defaultValue=""
             {...register("budget", { required: "Pick one" })}
           >
-            <option value="" disabled>
-              Choose…
-            </option>
-            <option value="under-10k">Under $10K</option>
-            <option value="10-50k">$10K – $50K</option>
-            <option value="50-100k">$50K – $100K</option>
-            <option value="100k+">$100K+</option>
-            <option value="na">Prefer not to say</option>
+            <option value="" disabled>Choose…</option>
+            {budgetOptions.map((opt: string) => (
+              <option key={opt} value={opt}>{opt}</option>
+            ))}
           </select>
           {errors.budget && (
             <span className={styles.error}>{errors.budget.message}</span>
@@ -160,7 +169,7 @@ export default function ContactForm() {
 
       <div className={styles.submit}>
         <Button variant="primary" size="lg" type="submit">
-          {isSubmitting ? "Sending…" : "Send Message"}
+          {isSubmitting ? "Sending…" : (formConfig?.submitText || "Send Message")}
         </Button>
       </div>
     </form>

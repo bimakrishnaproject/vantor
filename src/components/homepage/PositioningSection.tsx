@@ -8,19 +8,24 @@ const PILLARS = [
   { icon: "⌖", title: "Multi-Vertical", hint: "Audio, eCommerce, Mobile, iGaming — one team." },
 ];
 
-export default function PositioningSection() {
+interface PositioningProps {
+  data: {
+    headline: string;
+    description: string;
+  };
+}
+
+export default function PositioningSection({ data }: PositioningProps) {
   return (
     <section className={styles.section}>
       <div className={styles.inner}>
         <div className={styles.copy}>
           <span className={styles.label}>Who We Are</span>
           <TextReveal tag="h2" className={styles.headline}>
-            Strategic by Scale, Precise by Nature
+            {data.headline}
           </TextReveal>
           <p className={styles.body}>
-            We are a full-spectrum media buying powerhouse — building campaigns
-            that span continents, channels, and verticals while keeping every
-            decision rooted in measurable performance.
+            {data.description}
           </p>
         </div>
 

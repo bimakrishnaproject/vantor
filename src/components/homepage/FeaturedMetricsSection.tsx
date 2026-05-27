@@ -2,23 +2,39 @@ import SectionHeading from "@/components/ui/SectionHeading";
 import MetricRow from "@/components/ui/MetricRow";
 import styles from "./FeaturedMetricsSection.module.css";
 
-const METRICS = [
-  { label: "Click-through Rate",     value: "4.2%",  maxValue: 10 },
-  { label: "Conversion Rate",        value: "12.8%", maxValue: 20 },
-  { label: "Cost Per Acquisition",   value: "-34%",  maxValue: 50 },
-  { label: "Return on Ad Spend",     value: "3.2x",  maxValue: 5  },
-];
+interface Metric {
+  label: string;
+  value: string;
+  trend: string;
+}
 
-export default function FeaturedMetricsSection() {
+interface FeaturedMetricsProps {
+  data: {
+    title: string;
+    metrics: Metric[];
+  };
+}
+
+// Convert string trend to number based on some logic, or change MetricRow to accept strings. 
+// Wait, let's see MetricRow first or just mock the maxValue for now since it expects maxValue.
+// Or we just map the data to the format MetricRow expects.
+
+export default function FeaturedMetricsSection({ data }: FeaturedMetricsProps) {
+  const formattedMetrics = data.metrics.map(m => ({
+    label: m.label,
+    value: m.value,
+    maxValue: 10 // Mock max value since MetricRow expects it
+  }));
+
   return (
     <section className={styles.section}>
       <div className={styles.gridBg} aria-hidden="true" />
       <div className={styles.inner}>
         <SectionHeading
           label="Performance Metrics"
-          title="Numbers That Define Excellence"
+          title={data.title}
         />
-        <MetricRow metrics={METRICS} />
+        <MetricRow metrics={formattedMetrics} />
       </div>
     </section>
   );

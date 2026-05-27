@@ -1,35 +1,18 @@
 import type { Metadata } from "next";
 import { JsonLd, breadcrumbSchema } from "@/lib/structured-data";
+import { getAboutData } from "@/lib/cms";
 import styles from "./about.module.css";
 import SectionHeading from "@/components/ui/SectionHeading";
 import StatCard from "@/components/ui/StatCard";
 
-const TEAM = [
-  { name: "Maya Aldenrott", role: "Chief Strategy Officer" },
-  { name: "Liam Carrington", role: "Head of Audio" },
-  { name: "Priya Vellanki",  role: "Head of eCommerce" },
-  { name: "Tomas Riihelä",   role: "Head of Mobile" },
-  { name: "Idris Okafor",    role: "Head of iGaming" },
-  { name: "Sofia Bianchi",   role: "Head of Creative" },
-  { name: "Rashid Asker",    role: "Head of Analytics" },
-  { name: "Elena Vargas",    role: "Head of Operations" },
-];
-
-const VALUES = [
-  { icon: "◇", title: "Performance",  description: "Measurable outcomes, not vanity dashboards." },
-  { icon: "◈", title: "Craft",        description: "Strategy and creative held to the same bar." },
-  { icon: "◆", title: "Partnership",  description: "Long-term collaboration, short feedback loops." },
-];
-
-const PARTNERS = Array.from({ length: 10 }, (_, i) => `Partner ${i + 1}`);
-
 export const metadata: Metadata = {
   title: "About Us",
-  description:
-    "Meet the team behind Vantor Ventures. A full-spectrum media buying powerhouse operating across 45+ markets and 5 continents.",
+  description: "Meet the team behind Vantor Ventures. A full-spectrum media buying powerhouse operating across 45+ markets and 5 continents.",
 };
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const data = await getAboutData();
+
   return (
     <>
       <JsonLd data={breadcrumbSchema([{ name: "Home", slug: "/" }, { name: "About", slug: "/about" }])} />
@@ -40,17 +23,13 @@ export default function AboutPage() {
             <div className={styles.execPhoto} aria-hidden="true" />
             <div className={styles.execCopy}>
               <span className={styles.label}>Letter from the CEO</span>
-              <h1 className={styles.execName}>Alex Vantor</h1>
-              <span className={styles.execTitle}>Founder &amp; CEO</span>
+              <h1 className={styles.execName}>{data.team.members[0].name}</h1>
+              <span className={styles.execTitle}>{data.team.members[0].role}</span>
               <p className={styles.execBio}>
-                Vantor Ventures was built on a simple bet: that the next generation of
-                media buying lives at the intersection of cinematic creative, hard
-                performance science, and operational rigour.
+                {data.mission.description}
               </p>
               <p className={styles.execBio}>
-                Today we operate across five continents, run four core verticals, and
-                obsess about one thing — the unit economics of every dollar our clients
-                spend with us.
+                {data.hero.description}
               </p>
             </div>
           </div>
@@ -60,11 +39,11 @@ export default function AboutPage() {
       {/* Team */}
       <section className={`${styles.section} ${styles.bgSecondary}`}>
         <div className={styles.inner}>
-          <SectionHeading label="Our Team" title="The People Behind the Numbers" />
+          <SectionHeading label="Our Team" title={data.team.title} />
           <div className={styles.teamGrid}>
-            {TEAM.map((m) => (
+            {data.team.members.map((m: any) => (
               <div key={m.name} className={styles.member}>
-                <div className={styles.memberPhoto} aria-hidden="true" />
+                <div className={styles.memberPhoto} aria-hidden="true">{m.imagePlaceholder}</div>
                 <h3 className={styles.memberName}>{m.name}</h3>
                 <span className={styles.memberRole}>{m.role}</span>
               </div>
@@ -79,15 +58,6 @@ export default function AboutPage() {
           <blockquote className={styles.quote}>
             &ldquo;Strategic by scale, precise by nature.&rdquo;
           </blockquote>
-          <div className={styles.valuesGrid}>
-            {VALUES.map((v) => (
-              <div key={v.title} className={styles.value}>
-                <span className={styles.valueIcon} aria-hidden="true">{v.icon}</span>
-                <h3 className={styles.valueTitle}>{v.title}</h3>
-                <p className={styles.valueDesc}>{v.description}</p>
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -96,9 +66,18 @@ export default function AboutPage() {
         <div className={styles.inner}>
           <SectionHeading label="Network" title="Operating at Scale" align="center" />
           <div className={styles.scaleGrid}>
-            <StatCard value="5"     endValue={5}    suffix="" label="Continents" />
-            <StatCard value="45+"   endValue={45}   suffix="+" label="Markets" />
-            <StatCard value="200+"  endValue={200}  suffix="+" label="Active Partners" />
+            {data.stats.map((s: any) => (
+              <StatCard
+                key={s.label}
+                value={s.value}
+                endValue={s.endValue}
+                prefix={s.prefix}
+                suffix={s.suffix}
+                decimals={s.decimals}
+                label={s.label}
+                delay={0}
+              />
+            ))}
           </div>
         </div>
       </section>
@@ -106,12 +85,14 @@ export default function AboutPage() {
       {/* Partners */}
       <section className={styles.section}>
         <div className={styles.inner}>
-          <SectionHeading label="Partners" title="We Build Alongside" align="center" />
+          <SectionHeading label="Partners" title={data.partners.title} align="center" />
           <div className={styles.partnerGrid}>
-            {PARTNERS.map((p, i) => (
+            {data.partners.logos.map((p: any, i: number) => (
               <div key={p} className={styles.partnerLogo} aria-label={p} style={{
                 background: `linear-gradient(${135 + i * 18}deg, #2a3a55, #1a253a)`,
-              }} />
+              }}>
+                <span style={{color: 'rgba(255,255,255,0.5)', fontSize: '0.8rem'}}>{p}</span>
+              </div>
             ))}
           </div>
         </div>

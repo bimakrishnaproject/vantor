@@ -10,7 +10,16 @@ const STREAKS = [
   { left: "84%", top: "25%", delay: "1.6s" },
 ];
 
-export default function CTASection() {
+interface CTAProps {
+  data: {
+    headline: string;
+    subtext: string;
+    buttonText: string;
+    buttonLink: string;
+  };
+}
+
+export default function CTASection({ data }: CTAProps) {
   return (
     <section className={styles.section}>
       <div className={styles.spotlight} aria-hidden="true" />
@@ -27,14 +36,14 @@ export default function CTASection() {
       <div className={styles.content}>
         <span className={styles.label}>Let&apos;s Build Together</span>
         <TextReveal tag="h2" className={styles.headline}>
-          Ready to Fill the Stadium?
+          {data.headline}
         </TextReveal>
         <p className={styles.subtext}>
-          Let&apos;s build your next high-performance campaign together.
+          {data.subtext}
         </p>
         <div className={styles.actions}>
-          <Button variant="primary" size="lg" href="/contact">
-            Start a Project
+          <Button variant="primary" size="lg" href={data.buttonLink}>
+            {data.buttonText}
           </Button>
           <Button variant="outline" size="lg" href="#case-studies">
             View Our Work

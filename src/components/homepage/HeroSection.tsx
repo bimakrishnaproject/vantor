@@ -11,11 +11,25 @@ const PARTICLES = [
   { top: "56%", left: "8%",  delay: "3.0s", size: 4 },
 ];
 
-export default function HeroSection() {
+interface HeroProps {
+  data: {
+    label: string;
+    headline: string;
+    subtext: string;
+    cta: {
+      text: string;
+      link: string;
+    };
+  };
+}
+
+export default function HeroSection({ data }: HeroProps) {
   return (
     <section className={styles.hero}>
       <div className={styles.backdrop} aria-hidden="true">
+        <div className={styles.stadiumGlow} />
         <div className={styles.floodlights} />
+        <div className={styles.gridOverlay} />
         <div className={styles.grain} />
         <div className={styles.particles}>
           {PARTICLES.map((p, i) => (
@@ -35,17 +49,16 @@ export default function HeroSection() {
       </div>
 
       <div className={styles.content}>
-        <span className={styles.label}>Premium Media Buying Ecosystem</span>
+        <span className={styles.label}>{data.label}</span>
         <TextReveal tag="h1" className={styles.headline}>
-          Where Performance Meets Spectacle
+          {data.headline}
         </TextReveal>
         <p className={styles.subtext}>
-          Delivering immersive media buying solutions across Audio, eCommerce,
-          Mobile Apps, and Casino verticals.
+          {data.subtext}
         </p>
         <div className={styles.cta}>
-          <Button variant="primary" size="lg" href="#services">
-            Explore Our Ecosystem
+          <Button variant="primary" size="lg" href={data.cta.link}>
+            {data.cta.text}
           </Button>
         </div>
       </div>

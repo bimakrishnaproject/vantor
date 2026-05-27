@@ -2,46 +2,35 @@ import SectionHeading from "@/components/ui/SectionHeading";
 import ServiceCard from "@/components/ui/ServiceCard";
 import styles from "./ServicesSection.module.css";
 
-const SERVICES = [
-  {
-    title: "Audio",
-    description: "Programmatic audio, podcasts, streaming.",
-    icon: <AudioIcon />,
-    href: "/audio",
-    accent: "#00d4ff",
-  },
-  {
-    title: "eCommerce",
-    description: "Turn ad spend into measurable revenue.",
-    icon: <CommerceIcon />,
-    href: "/ecommerce",
-    accent: "#ff6b35",
-  },
-  {
-    title: "Mobile Apps",
-    description: "Downloads, engagement, retention.",
-    icon: <MobileIcon />,
-    href: "/mobile-apps",
-    accent: "#00e88f",
-    highlighted: true,
-  },
-  {
-    title: "Casinos",
-    description: "Compliant iGaming across regulated markets.",
-    icon: <CasinoIcon />,
-    href: "/casinos",
-    accent: "#f0c040",
-  },
-  {
-    title: "Other",
-    description: "Beyond the verticals — modular campaigns.",
-    icon: <NetworkIcon />,
-    href: "/other",
-    accent: "#a855f7",
-  },
-];
+import { ReactNode } from "react";
 
-export default function ServicesSection() {
+interface Service {
+  title: string;
+  description: string;
+  slug: string;
+}
+
+interface ServicesProps {
+  data: Service[];
+}
+
+const ACCENT_MAP: Record<string, string> = {
+  "audio": "#00d4ff",
+  "ecommerce": "#ff6b35",
+  "mobile-apps": "#00e88f",
+  "casinos": "#f0c040",
+  "other": "#a855f7"
+};
+
+const ICON_MAP: Record<string, ReactNode> = {
+  "audio": <AudioIcon />,
+  "ecommerce": <CommerceIcon />,
+  "mobile-apps": <MobileIcon />,
+  "casinos": <CasinoIcon />,
+  "other": <NetworkIcon />
+};
+
+export default function ServicesSection({ data }: ServicesProps) {
   return (
     <section id="services" className={styles.section}>
       <div className={styles.inner}>
@@ -53,15 +42,15 @@ export default function ServicesSection() {
           />
         </div>
         <div className={styles.grid}>
-          {SERVICES.map((s) => (
+          {data.map((s) => (
             <ServiceCard
               key={s.title}
               title={s.title}
               description={s.description}
-              icon={s.icon}
-              href={s.href}
-              accentColor={s.accent}
-              highlighted={"highlighted" in s && s.highlighted}
+              icon={ICON_MAP[s.slug] || <NetworkIcon />}
+              href={`/${s.slug}`}
+              accentColor={ACCENT_MAP[s.slug] || "#ffffff"}
+              highlighted={s.slug === "mobile-apps"}
             />
           ))}
         </div>
