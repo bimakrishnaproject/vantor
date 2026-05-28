@@ -11,14 +11,18 @@ interface BrandLogoProps {
 
 export default function BrandLogo({
   className = "",
-  variant = "logo2", // Using logo2 as default based on suggestion, can switch later
+  variant = "logo1",
   width = 180,
   height = 50,
 }: BrandLogoProps) {
   const logoSrc = `/assets/${variant}.png`;
 
   return (
-    <Link href="/" className={`${styles.logoContainer} ${className}`} aria-label="Vantor Ventures home">
+    <Link
+      href="/"
+      className={`${styles.logoContainer} ${className}`}
+      aria-label="Vantor Ventures home"
+    >
       <div className={styles.imageWrapper}>
         <Image
           src={logoSrc}

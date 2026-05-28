@@ -52,7 +52,7 @@ export default function Header() {
 
   return (
     <header className={headerClass}>
-      <BrandLogo className={styles.logo} width={160} height={45} />
+      <BrandLogo variant="logo2" className={styles.logo} width={44} height={44} />
 
       <nav className={styles.nav} aria-label="Primary">
         {NAV_ITEMS.map((item) => {
@@ -90,40 +90,57 @@ export default function Header() {
 
       {menuOpen && (
         <div className={styles.overlay}>
-          <button
-            type="button"
-            className={styles.overlayClose}
-            aria-label="Close menu"
-            onClick={() => setMenuOpen(false)}
-          >
-            <span aria-hidden="true">×</span>
-          </button>
-
-          {NAV_ITEMS.map((item, i) => {
-            const active = isActive(item.href);
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`${styles.overlayLink} ${active ? styles.overlayLinkActive : ""}`}
-                style={{ animationDelay: `${i * 50}ms` }}
+          <div className={styles.overlayPanel}>
+            <div className={styles.overlayTop}>
+              <BrandLogo variant="logo2" className={styles.overlayLogo} width={34} height={34} />
+              <button
+                type="button"
+                className={styles.overlayClose}
+                aria-label="Close menu"
                 onClick={() => setMenuOpen(false)}
-                aria-current={active ? "page" : undefined}
               >
-                {item.label}
-              </Link>
-            );
-          })}
-          <Link
-            href="/contact"
-            className={`${styles.cta} ${styles.overlayCta}`}
-            onClick={() => setMenuOpen(false)}
-          >
-            Get Started
-            <span className={styles.ctaArrow} aria-hidden="true">
-              →
-            </span>
-          </Link>
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+
+            <div className={styles.overlayIntro}>
+              <p className={styles.overlayKicker}>Premium media buying ecosystem</p>
+              <p className={styles.overlayTitle}>Navigate with clarity.</p>
+              <p className={styles.overlayBody}>
+                Explore the core verticals, learn more about the team, or start a project.
+              </p>
+            </div>
+
+            <nav className={styles.overlayNav} aria-label="Mobile primary">
+              {NAV_ITEMS.map((item, i) => {
+                const active = isActive(item.href);
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={`${styles.overlayLink} ${active ? styles.overlayLinkActive : ""}`}
+                    style={{ animationDelay: `${i * 55}ms` }}
+                    onClick={() => setMenuOpen(false)}
+                    aria-current={active ? "page" : undefined}
+                  >
+                    <span>{item.label}</span>
+                    <span className={styles.overlayLinkArrow} aria-hidden="true">→</span>
+                  </Link>
+                );
+              })}
+            </nav>
+
+            <Link
+              href="/contact"
+              className={`${styles.cta} ${styles.overlayCta}`}
+              onClick={() => setMenuOpen(false)}
+            >
+              Get Started
+              <span className={styles.ctaArrow} aria-hidden="true">
+                →
+              </span>
+            </Link>
+          </div>
         </div>
       )}
     </header>

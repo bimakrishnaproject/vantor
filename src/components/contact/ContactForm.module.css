@@ -1,8 +1,8 @@
 .form {
   display: flex;
   flex-direction: column;
-  gap: var(--space-md);
-  padding: var(--space-xl);
+  gap: var(--space-sm);
+  padding: var(--space-lg);
   background: rgba(10, 15, 25, 0.7);
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
@@ -28,7 +28,7 @@
 .row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--space-md);
+  gap: var(--space-sm);
 }
 
 @media (max-width: 640px) { .row { grid-template-columns: 1fr; } }
@@ -51,7 +51,7 @@
 .select,
 .textarea {
   width: 100%;
-  padding: 1rem;
+  padding: 0.9rem 1rem;
   background: rgba(0, 0, 0, 0.3);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: var(--radius-md);
@@ -79,7 +79,7 @@
 }
 
 .textarea {
-  min-height: 140px;
+  min-height: 120px;
   resize: vertical;
 }
 
@@ -96,11 +96,11 @@
 
 .submit {
   align-self: flex-start;
-  margin-top: var(--space-sm);
+  margin-top: var(--space-xs);
 }
 
 .success {
-  padding: var(--space-2xl);
+  padding: var(--space-xl);
   background: rgba(10, 15, 25, 0.8);
   backdrop-filter: var(--glass-blur);
   border: 1px solid var(--border-glow);
@@ -114,6 +114,16 @@
   justify-content: center;
   gap: var(--space-md);
   min-height: 400px;
+}
+
+@media (max-width: 640px) {
+  .form {
+    padding: var(--space-md);
+  }
+
+  .textarea {
+    min-height: 110px;
+  }
 }
 
 @keyframes successPop {

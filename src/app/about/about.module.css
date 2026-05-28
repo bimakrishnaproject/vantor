@@ -26,22 +26,24 @@
 
 .exec {
   display: grid;
-  grid-template-columns: 400px 1fr;
-  gap: var(--space-xl);
-  align-items: center;
+  grid-template-columns: minmax(320px, 360px) 1fr;
+  gap: var(--space-lg);
+  align-items: start;
 }
 
 .execPhoto {
-  width: 400px;
-  height: 500px;
+  width: 100%;
+  aspect-ratio: 4 / 5;
   border-radius: var(--radius-lg);
   background: linear-gradient(135deg, #1a2a44 0%, #0a1628 60%, #1a1040 100%);
   border: 1px solid var(--border-subtle);
+  overflow: hidden;
 }
 
 .execImage {
   filter: grayscale(80%) contrast(1.1) brightness(0.8);
   transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), filter 0.8s ease;
+  object-position: center top;
 }
 
 .execPhoto:hover .execImage {
@@ -52,7 +54,7 @@
 .execCopy {
   display: flex;
   flex-direction: column;
-  gap: var(--space-sm);
+  gap: 0.7rem;
 }
 
 .label {
@@ -78,7 +80,7 @@
 .execBio {
   font-size: var(--text-body);
   color: var(--text-secondary);
-  max-width: 60ch;
+  max-width: 56ch;
 }
 
 /* Team grid */
@@ -300,8 +302,14 @@
 }
 
 @media (max-width: 900px) {
-  .exec { grid-template-columns: 1fr; gap: var(--space-lg); }
-  .execPhoto { width: 100%; max-width: 320px; height: 360px; margin-inline: auto; }
+  .exec { grid-template-columns: 1fr; gap: var(--space-md); }
+  .execPhoto { max-width: 320px; margin-inline: auto; }
+}
+
+@media (max-width: 640px) {
+  .execSection { padding-block: calc(80px + var(--space-lg)) var(--space-xl); }
+  .execPhoto { max-width: 280px; }
+  .execName { font-size: clamp(2rem, 7vw, 2.8rem); }
 }
 
 @media (prefers-reduced-motion: reduce) {
