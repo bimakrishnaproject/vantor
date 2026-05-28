@@ -7,7 +7,7 @@
   padding: var(--space-2xl) var(--page-padding);
   overflow: hidden;
   isolation: isolate;
-  background: var(--bg-primary);
+  /* background removed for transparent stadium overlay */
 }
 
 .spotlight {

@@ -33,8 +33,7 @@
 
 @keyframes digitalPulse {
   0%, 100% { opacity: 1; text-shadow: 0 0 10px var(--accent-primary); }
-  50% { opacity: 0.8; text-shadow: 0 0 2px var(--accent-primary); }
-  51% { opacity: 1; text-shadow: 0 0 20px var(--accent-primary); } /* slight flicker */
+  50% { opacity: 0.92; text-shadow: 0 0 14px var(--accent-primary); }
 }
 
 /* ===== UTILITY ANIMATION CLASSES ===== */
@@ -89,4 +88,3 @@
     scroll-behavior: auto !important;
   }
 }
-

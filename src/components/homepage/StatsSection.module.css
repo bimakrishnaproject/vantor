@@ -1,7 +1,7 @@
 .section {
   position: relative;
   padding: var(--section-padding);
-  background: var(--bg-secondary);
+  /* background removed for transparent stadium overlay */
   border-block: 1px solid rgba(0, 212, 255, 0.05);
 }
 
@@ -35,14 +35,40 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-md);
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto auto;
+  gap: 1.5rem;
 }
 
-@media (max-width: 900px) {
-  .grid { grid-template-columns: repeat(2, 1fr); }
+.grid > *:nth-child(1) {
+  grid-column: 1 / -1; /* First stat spans full width */
 }
 
-@media (max-width: 480px) {
+@media (min-width: 900px) {
+  .grid {
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-rows: auto auto;
+  }
+  
+  .grid > *:nth-child(1) {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    /* Make the first stat look like a massive primary readout */
+    padding-block: 4rem;
+    background: rgba(3, 5, 12, 0.85);
+    border: 1px solid var(--accent-primary);
+    box-shadow: 0 0 40px rgba(0, 229, 255, 0.1);
+  }
+
+  /* Target the value specifically within the first card */
+  .grid > *:nth-child(1) [class*="valueContainer"] {
+    font-size: clamp(4rem, 8vw, 8rem) !important;
+    color: #fff;
+    text-shadow: 0 0 20px rgba(0, 229, 255, 0.5);
+  }
+}
+
+@media (max-width: 600px) {
   .grid { grid-template-columns: 1fr; }
+  .grid > *:nth-child(1) { grid-column: 1; }
 }

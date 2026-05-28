@@ -1,8 +1,8 @@
 export const contactData = {
   hero: {
-    label: "Get in Touch",
+    label: "Activate the Network",
     headline: "Book a Campaign",
-    description: "Ready to fill the stadium? Tell us about your goals, audience, and budget, and our team will build a custom media ecosystem for your brand."
+    description: "Ready to reach millions? Tell us about your brand, your goals, and your target audience. Our team will show you exactly where you fit inside our network."
   },
   form: {
     fields: [

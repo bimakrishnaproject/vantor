@@ -472,17 +472,6 @@
   padding: 0.15rem 0.6rem;
   border-radius: 4px;
   background: rgba(255, 51, 102, 0.1);
-  animation: livePulse 2s ease-in-out infinite;
-}
-
-@keyframes livePulse {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
 }
 
 .jumboLiveScore .scoreDisplay {
@@ -514,62 +503,29 @@
   z-index: 30;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  padding-left: clamp(2rem, 8vw, 10rem);
+  justify-content: center;
   pointer-events: none;
 }
 
 .heroContent {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  text-align: left;
-  max-width: 800px;
-  padding: 3rem;
-  margin-top: 10vh;
-  position: relative;
-  /* HUD styling */
-  background: rgba(2, 4, 8, 0.45);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-left: 4px solid var(--accent-primary);
-  border-top: 1px solid rgba(0, 229, 255, 0.2);
-  border-bottom: 1px solid rgba(0, 229, 255, 0.2);
+  align-items: center;
+  text-align: center;
+  max-width: 860px;
+  padding: 2rem;
   /* Fade out as user scrolls — driven by GSAP */
   pointer-events: auto;
 }
 
-.heroContent::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 20px;
-  height: 20px;
-  border-top: 2px solid var(--accent-primary);
-  border-right: 2px solid var(--accent-primary);
-}
-
 .label {
-  font-family: var(--font-heading);
-  font-size: 0.9rem;
-  font-weight: 700;
-  letter-spacing: 0.4em;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.3em;
   text-transform: uppercase;
   color: #00e5ff;
   text-shadow: 0 0 12px rgba(0, 229, 255, 0.6);
   margin-bottom: 1.4rem;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.label::before {
-  content: "";
-  display: inline-block;
-  width: 40px;
-  height: 2px;
-  background: var(--accent-primary);
 }
 
 .headline {
@@ -660,20 +616,20 @@
   background:
     radial-gradient(
       ellipse 62% 34% at 50% 68%,
-      rgba(45, 255, 155, 0.3),
+      rgba(45, 255, 155, 0.5),
       transparent 62%
     ),
     radial-gradient(
       ellipse 46% 24% at 50% 44%,
-      rgba(0, 229, 255, 0.16),
+      rgba(0, 229, 255, 0.28),
       transparent 70%
     ),
     radial-gradient(
       ellipse 80% 28% at 50% 88%,
-      rgba(0, 55, 42, 0.82),
+      rgba(0, 55, 42, 0.9),
       transparent 72%
     );
-  filter: blur(16px);
+  filter: blur(24px);
 }
 
 .atmosphereTopGlow {
@@ -706,19 +662,21 @@
 }
 
 .beam {
+  --light-intensity: 0.06;
   position: absolute;
   width: 38vw;
   min-width: 420px;
   height: 96vh;
-  opacity: 0.5;
-  filter: blur(12px);
+  opacity: calc(0.05 + (var(--light-intensity) * 0.48));
+  filter: blur(14px);
   background: linear-gradient(
     180deg,
-    rgba(240, 255, 255, 0.23),
-    rgba(0, 229, 255, 0.07) 48%,
+    rgba(245, 255, 246, calc(0.06 + (var(--light-intensity) * 0.2))),
+    rgba(0, 229, 255, calc(0.025 + (var(--light-intensity) * 0.075))) 48%,
     transparent 84%
   );
   clip-path: polygon(44% 0, 56% 0, 100% 100%, 0 100%);
+  transition: filter 1.6s ease;
 }
 
 .beamTL {
@@ -735,13 +693,11 @@
   top: 6vh;
   left: 4vw;
   transform: rotate(-12deg);
-  opacity: 0.34;
 }
 .beamMR {
   top: 6vh;
   right: 4vw;
   transform: rotate(12deg);
-  opacity: 0.34;
 }
 
 .pitch {
@@ -1099,6 +1055,7 @@
 }
 
 .cornerTower {
+  --light-intensity: 0.06;
   position: absolute;
   z-index: 3;
   width: 3.5%;
@@ -1107,8 +1064,10 @@
   border-radius: 50% 50% 10px 10px;
   background: linear-gradient(90deg, #07131d, #d8edf0 46%, #132833);
   box-shadow:
-    0 0 32px rgba(232, 255, 255, 0.72),
-    0 0 110px rgba(0, 229, 255, 0.34),
+    0 0 calc(12px + (var(--light-intensity) * 24px))
+      rgba(232, 255, 255, calc(0.12 + (var(--light-intensity) * 0.38))),
+    0 0 calc(30px + (var(--light-intensity) * 90px))
+      rgba(0, 229, 255, calc(0.08 + (var(--light-intensity) * 0.22))),
     0 24px 42px rgba(0, 0, 0, 0.72);
 }
 
@@ -1122,13 +1081,83 @@
   transform: translateX(-50%);
   background: linear-gradient(
     180deg,
-    rgba(245, 255, 255, 0.24),
-    rgba(0, 229, 255, 0.055) 48%,
+    rgba(245, 255, 255, calc(0.03 + (var(--light-intensity) * 0.18))),
+    rgba(0, 229, 255, calc(0.01 + (var(--light-intensity) * 0.055))) 48%,
     transparent 84%
   );
   clip-path: polygon(44% 0, 56% 0, 100% 100%, 0 100%);
-  filter: blur(10px);
-  opacity: 0.92;
+  filter: blur(12px);
+  opacity: calc(0.08 + (var(--light-intensity) * 0.84));
+}
+
+.bulbGrid {
+  position: absolute;
+  left: 50%;
+  top: -22%;
+  z-index: 2;
+  width: 84px;
+  min-width: 72px;
+  padding: 7px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+  transform: translateX(-50%) rotateX(5deg);
+  border: 1px solid rgba(211, 255, 250, 0.42);
+  border-radius: 8px;
+  background:
+    linear-gradient(180deg, rgba(210, 225, 224, 0.34), rgba(12, 28, 35, 0.94)),
+    repeating-linear-gradient(
+      90deg,
+      transparent 0 18px,
+      rgba(255, 255, 255, 0.12) 18px 19px
+    );
+  box-shadow:
+    inset 0 0 12px rgba(255, 255, 255, 0.16),
+    0 12px 26px rgba(0, 0, 0, 0.68);
+}
+
+.bulbGrid::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -11px;
+  width: 62%;
+  height: 10px;
+  transform: translateX(-50%);
+  border-radius: 2px;
+  background: linear-gradient(90deg, #061016, #c5d7d8 50%, #07131a);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.5);
+}
+
+.floodFixture {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 4px;
+  background:
+    linear-gradient(145deg, rgba(242, 255, 249, 0.2), transparent 36%),
+    linear-gradient(180deg, #15252c, #050a0e 72%);
+  border: 1px solid rgba(214, 245, 242, 0.38);
+  box-shadow:
+    inset 0 0 8px rgba(0, 0, 0, 0.8),
+    0 1px 2px rgba(255, 255, 255, 0.08);
+}
+
+.floodLens {
+  position: absolute;
+  inset: 22%;
+  border-radius: 50%;
+  background:
+    radial-gradient(
+      circle,
+      rgba(255, 255, 235, calc(0.18 + (var(--light-intensity) * 0.82))) 0 32%,
+      rgba(183, 244, 255, calc(0.1 + (var(--light-intensity) * 0.42))) 52%,
+      rgba(30, 64, 72, 0.75) 72%
+    );
+  box-shadow:
+    0 0 calc(2px + (var(--light-intensity) * 8px))
+      rgba(255, 255, 230, calc(0.18 + (var(--light-intensity) * 0.68))),
+    0 0 calc(7px + (var(--light-intensity) * 22px))
+      rgba(0, 229, 255, calc(0.08 + (var(--light-intensity) * 0.28)));
 }
 
 .cornerTowerNW {
@@ -1416,17 +1445,17 @@
   background:
     radial-gradient(
       ellipse at 50% 60%,
-      rgba(0, 150, 255, 0.46),
+      rgba(0, 150, 255, 0.65),
       transparent 56%
     ),
     radial-gradient(
       ellipse at 50% 28%,
-      rgba(0, 229, 255, 0.32),
+      rgba(0, 229, 255, 0.5),
       transparent 68%
     ),
-    radial-gradient(ellipse at 50% 90%, rgba(0, 0, 0, 0.74), transparent 62%);
-  filter: blur(48px);
-  opacity: 0.96;
+    radial-gradient(ellipse at 50% 90%, rgba(0, 0, 0, 0.85), transparent 62%);
+  filter: blur(60px);
+  opacity: 1;
 }
 
 .dustContainer {
@@ -1497,7 +1526,7 @@
 
 .scoreboard {
   position: absolute;
-  top: clamp(92px, 13vh, 150px);
+  top: clamp(60px, 8vh, 100px);
   left: 50%;
   translate: -50% 0;
   z-index: 12;
@@ -1574,7 +1603,6 @@
   letter-spacing: 0.18em;
   color: #ff4778;
   text-shadow: 0 0 12px rgba(255, 71, 120, 0.72);
-  animation: livePulse 2s ease-in-out infinite;
 }
 
 .liveScore {
@@ -1605,15 +1633,22 @@
   background:
     radial-gradient(
       ellipse 80% 64% at 50% 50%,
-      transparent 42%,
-      rgba(0, 0, 0, 0.56) 100%
+      transparent 35%,
+      rgba(0, 0, 0, 0.75) 100%
     ),
     linear-gradient(
       90deg,
-      rgba(0, 0, 0, 0.52),
-      transparent 16%,
-      transparent 84%,
-      rgba(0, 0, 0, 0.52)
+      rgba(0, 0, 0, 0.8),
+      transparent 18%,
+      transparent 82%,
+      rgba(0, 0, 0, 0.8)
+    ),
+    linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.5),
+      transparent 15%,
+      transparent 85%,
+      rgba(0, 0, 0, 0.7)
     );
 }
 

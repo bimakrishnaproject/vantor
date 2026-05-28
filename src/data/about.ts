@@ -1,30 +1,35 @@
 export const aboutData = {
   hero: {
-    headline: "The Architecture of Reach",
-    description: "We are a full-spectrum media buying powerhouse. Built at the intersection of organic community building and data-driven performance marketing, we deliver campaigns that don't just reach audiences—they move them."
+    headline: "We Are the Network",
+    description: "Vantor was built at the intersection of organic community and paid media. We own the communities, which means we provide hands-on campaign execution across sports, entertainment, music, and culture."
   },
   mission: {
-    headline: "Positioned for Scale",
-    description: "Our mission is to build campaigns that span continents, channels, and verticals while keeping every decision rooted in measurable performance. We treat attention as a premium asset, turning views into verifiable business growth."
+    headline: "Authenticity Over Interruption",
+    description: "We don't just buy ads; we engineer ecosystems. Because we own the audience, we can seamlessly integrate your brand into the content they already love."
   },
   team: {
-    title: "Executive Leadership",
+    title: "Leadership",
     members: [
-      { name: "Executive Name", role: "CEO & Founder", image: "/assets/placeholder.png" },
-      { name: "Executive Name", role: "Head of Media", image: "/assets/placeholder.png" },
-      { name: "Executive Name", role: "VP of Operations", image: "/assets/placeholder.png" }
+      { name: "Founder Name", role: "Founder & CEO", image: "/assets/placeholder.png" },
+      { name: "Partner Name", role: "Head of Media", image: "/assets/placeholder.png" }
     ]
   },
   stats: [
-    { label: "Monthly Views", value: "1B+" },
-    { label: "Followers", value: "60M+" },
-    { label: "Global Markets", value: "45+" },
-    { label: "Campaigns Delivered", value: "12K+" }
+    { label: "Monthly Views", value: "1B+", endValue: 1, suffix: "B+" },
+    { label: "Followers", value: "60M+", endValue: 60, suffix: "M+" },
+    { label: "Global Markets", value: "45+", endValue: 45, suffix: "+" },
+    { label: "Campaigns", value: "12K+", endValue: 12, suffix: "K+" }
   ],
   partners: {
     title: "Our Ecosystem Partners",
     logos: [
       "Spotify", "Apple Music", "DraftKings", "FanDuel", "FashionNova", "Gymshark"
     ]
+  },
+  cta: {
+    headline: "Activate the Network",
+    subtext: "Book a campaign and get direct access to our communities.",
+    buttonText: "Book a Campaign",
+    buttonLink: "/contact"
   }
 };

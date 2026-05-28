@@ -15,9 +15,13 @@
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
   border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
-  transition: border-color var(--transition-base), transform var(--transition-base), box-shadow var(--transition-base);
+  transition:
+    border-color var(--transition-base),
+    transform var(--transition-base),
+    box-shadow var(--transition-base),
+    background var(--transition-base);
   position: relative;
   overflow: hidden;
 }
@@ -37,8 +41,12 @@
 
 .feature:hover {
   border-color: color-mix(in srgb, var(--fg-accent) 35%, transparent);
-  transform: translateY(-5px);
-  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5), 0 10px 30px rgba(0,0,0,0.5);
+  transform: translateY(-3px);
+  background: rgba(12, 20, 30, 0.72);
+  box-shadow:
+    inset 0 0 20px rgba(0, 0, 0, 0.46),
+    0 12px 34px rgba(0, 0, 0, 0.42),
+    0 0 28px color-mix(in srgb, var(--fg-accent) 9%, transparent);
 }
 
 .feature:hover::before {
@@ -64,4 +72,3 @@
   color: var(--text-secondary);
   line-height: 1.6;
 }
-

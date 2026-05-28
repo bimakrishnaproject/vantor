@@ -4,11 +4,12 @@ import {
   createContext,
   useContext,
   useEffect,
-  useRef,
   useState,
   type ReactNode,
 } from "react";
 import Lenis from "lenis";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const LenisContext = createContext<Lenis | null>(null);
 
@@ -28,19 +29,29 @@ export default function SmoothScroll({ children }: { children: ReactNode }) {
       smoothWheel: true,
     });
   });
-  const rafRef = useRef<number | null>(null);
 
   useEffect(() => {
     if (!lenis) return;
 
-    const raf = (time: number) => {
-      lenis.raf(time);
-      rafRef.current = requestAnimationFrame(raf);
+    // ─── KEY FIX ────────────────────────────────────────────────────────────
+    // Drive Lenis from GSAP's ticker so both share the exact same rAF frame.
+    // This eliminates the dual-loop desync that caused jitter and race conditions.
+    gsap.registerPlugin(ScrollTrigger);
+
+    const onFrame = (time: number) => {
+      lenis.raf(time * 1000); // GSAP ticker time is in seconds; Lenis expects ms
     };
-    rafRef.current = requestAnimationFrame(raf);
+    gsap.ticker.add(onFrame);
+    gsap.ticker.lagSmoothing(0); // Prevent GSAP from skipping frames under load
+
+    // Notify ScrollTrigger whenever Lenis physically moves the scroll position.
+    // Without this, ScrollTrigger never knows the scroll changed (Lenis suppresses
+    // native scroll events) and the pinned hero section breaks.
+    lenis.on("scroll", ScrollTrigger.update);
 
     return () => {
-      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
+      gsap.ticker.remove(onFrame);
+      lenis.off("scroll", ScrollTrigger.update);
       lenis.destroy();
     };
   }, [lenis]);

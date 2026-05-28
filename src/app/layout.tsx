@@ -8,6 +8,7 @@ import SmoothScroll from "@/components/layout/SmoothScroll";
 import PageTransition from "@/components/layout/PageTransition";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import BackgroundStadium from "@/components/layout/BackgroundStadium";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -56,6 +57,7 @@ export default function RootLayout({
         <JsonLd data={organizationSchema()} />
         <GsapProvider>
           <SmoothScroll>
+            <BackgroundStadium />
             <Header />
             <main className="site-main">
               <PageTransition>{children}</PageTransition>

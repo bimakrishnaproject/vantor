@@ -1,7 +1,9 @@
 .footer {
   width: 100%;
-  background: var(--bg-secondary);
-  border-top: 1px solid var(--border-subtle);
+  background: linear-gradient(to top, rgba(5, 5, 5, 0.95), rgba(5, 5, 5, 0.2));
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
   padding: var(--space-xl) 0 var(--space-md);
   opacity: 0;
   transform: translateY(20px);

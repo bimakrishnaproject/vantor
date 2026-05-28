@@ -7,6 +7,7 @@ interface Metric {
   label: string;
   value: string;
   trend: string;
+  subtext?: string;
 }
 
 interface FeaturedMetricsProps {
@@ -20,7 +21,8 @@ export default function FeaturedMetricsSection({ data }: FeaturedMetricsProps) {
   const formattedMetrics = data.metrics.map(m => ({
     label: m.label,
     value: m.value,
-    maxValue: 10 // Mock max value since MetricRow expects it
+    subtext: m.subtext,
+    maxValue: 100 // Updated mock max value for percentages
   }));
 
   return (

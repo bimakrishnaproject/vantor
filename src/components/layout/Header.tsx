@@ -15,16 +15,31 @@ export default function Header() {
   const lastScrollY = useRef(0);
 
   useEffect(() => {
-    const onScroll = () => {
-      const y = window.scrollY;
-      setScrolled(y > 100);
+    let ticking = false;
 
-      if (y > 300 && y > lastScrollY.current) {
-        setHidden(true);
-      } else {
-        setHidden(false);
-      }
-      lastScrollY.current = y;
+    const onScroll = () => {
+      if (ticking) return;
+
+      ticking = true;
+      requestAnimationFrame(() => {
+        const y = window.scrollY;
+        const nextScrolled = y > 96;
+        const scrollingDown = y > lastScrollY.current + 8;
+        const scrollingUp = y < lastScrollY.current - 8;
+
+        setScrolled((current) =>
+          current === nextScrolled ? current : nextScrolled,
+        );
+
+        if (y > 320 && scrollingDown) {
+          setHidden((current) => (current ? current : true));
+        } else if (scrollingUp || y <= 240) {
+          setHidden((current) => (current ? false : current));
+        }
+
+        lastScrollY.current = y;
+        ticking = false;
+      });
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -125,14 +140,13 @@ export default function Header() {
             </div>
 
             <nav className={styles.overlayNav} aria-label="Mobile primary">
-              {NAV_ITEMS.map((item, i) => {
+              {NAV_ITEMS.map((item) => {
                 const active = isActive(item.href);
                 return (
                   <Link
                     key={item.href}
                     href={item.href}
                     className={`${styles.overlayLink} ${active ? styles.overlayLinkActive : ""}`}
-                    style={{ animationDelay: `${i * 55}ms` }}
                     onClick={() => setMenuOpen(false)}
                     aria-current={active ? "page" : undefined}
                   >

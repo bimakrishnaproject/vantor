@@ -11,6 +11,7 @@
   padding: 0 var(--page-padding);
   background: transparent;
   border-bottom: 1px solid transparent;
+  will-change: transform;
   transition:
     background var(--transition-base),
     backdrop-filter var(--transition-base),
@@ -61,11 +62,16 @@
 
 .navLink {
   position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
   font-size: var(--text-body-sm);
   font-weight: 400;
   color: var(--text-secondary);
-  transition: color var(--transition-base);
-  padding-bottom: 4px;
+  transition:
+    color var(--transition-base),
+    text-shadow var(--transition-base);
+  padding-bottom: 0;
 }
 
 .navLink::after {
@@ -81,6 +87,7 @@
 
 .navLink:hover {
   color: var(--text-primary);
+  text-shadow: 0 0 14px rgba(0, 229, 255, 0.16);
 }
 
 .navLink:hover::after {
@@ -94,12 +101,13 @@
 .activeDot {
   position: absolute;
   left: 50%;
-  bottom: -8px;
+  bottom: -6px;
   width: 4px;
   height: 4px;
   border-radius: var(--radius-full);
   background: var(--accent-primary);
   transform: translateX(-50%);
+  box-shadow: 0 0 10px rgba(0, 229, 255, 0.55);
 }
 
 /* ===== CTA ===== */
@@ -310,27 +318,13 @@
   letter-spacing: 0.01em;
   color: var(--text-primary);
   text-align: left;
-  opacity: 0;
-  transform: translateY(12px);
-  animation: overlayLinkIn 0.4s ease forwards;
+  opacity: 1;
+  transform: translateY(0);
   transition:
     color var(--transition-base),
     background var(--transition-base),
     border-color var(--transition-base),
     transform var(--transition-base);
-}
-
-/* Local keyframe — CSS Modules scope animation names, so a global
-   keyframe referenced by name here would not resolve. */
-@keyframes overlayLinkIn {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 .overlayLink:hover,
@@ -404,7 +398,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   .overlayLink {
-    animation: none;
     opacity: 1;
     transform: none;
   }

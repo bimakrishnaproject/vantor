@@ -56,8 +56,12 @@ export async function getHomepageData() {
     hero: {
       ...homepageData.hero,
       headline: acf.hero_title || homepageData.hero.headline,
-      supportHeadline: acf.hero_subtitle || homepageData.hero.supportHeadline,
-      description: acf.hero_description || homepageData.hero.description,
+      subtext: acf.hero_description || homepageData.hero.subtext,
+    },
+    cta: {
+      ...homepageData.cta,
+      buttonText: acf.secondary_cta_text || homepageData.cta.buttonText,
+      buttonLink: acf.secondary_cta_url || homepageData.cta.buttonLink,
     }
   };
 }
@@ -98,7 +102,7 @@ export async function getVerticalPageBySlug(slug: string) {
     stats: {
       label: "By The Numbers",
       title: "Proven Performance",
-      items: [
+      items: localData.metrics || [
         { value: "3.2x", endValue: 3.2, suffix: "x", decimals: 1, label: "Average ROAS" },
         { value: "45+", endValue: 45, suffix: "+", label: "Markets Reached" }
       ]
@@ -106,7 +110,15 @@ export async function getVerticalPageBySlug(slug: string) {
     caseStudies: {
       label: "Success Stories",
       title: "Client Results",
-      items: [
+      items: localData.caseStudy ? [
+        {
+          title: localData.caseStudy.title,
+          client: localData.caseStudy.client,
+          category: localData.title,
+          slug: `${slug}-case-study`,
+          metrics: localData.caseStudy.metrics
+        }
+      ] : [
         {
           title: "Global Campaign Launch",
           client: "Top Tier Brand",
@@ -120,8 +132,8 @@ export async function getVerticalPageBySlug(slug: string) {
       ]
     },
     cta: {
-      headline: acf.cta_headline || "Ready to dominate your market?",
-      subtext: acf.cta_subtext || "Let's build your next high-performance campaign together.",
+      headline: acf.cta_headline || localData.cta?.headline || "Ready to dominate your market?",
+      subtext: acf.cta_subtext || localData.cta?.subtext || "Let's build your next high-performance campaign together.",
       ctaText: acf.cta_button_text || "Get in Touch"
     }
   };

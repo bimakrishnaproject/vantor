@@ -8,6 +8,7 @@ import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import SectionHeading from "@/components/ui/SectionHeading";
 import StatCard from "@/components/ui/StatCard";
 import ScrollReveal from "@/components/ui/ScrollReveal";
+import CTASection from "@/components/homepage/CTASection";
 import styles from "./about.module.css";
 
 if (typeof window !== "undefined") {
@@ -15,7 +16,40 @@ if (typeof window !== "undefined") {
 }
 
 interface AboutClientProps {
-  data: any;
+  data: {
+    hero: {
+      headline: string;
+      description: string;
+    };
+    mission: {
+      description: string;
+    };
+    team: {
+      title: string;
+      members: {
+        name: string;
+        role: string;
+      }[];
+    };
+    stats: {
+      label: string;
+      value: string;
+      endValue?: number;
+      prefix?: string;
+      suffix?: string;
+      decimals?: number;
+    }[];
+    partners: {
+      title: string;
+      logos: string[];
+    };
+    cta?: {
+      headline: string;
+      subtext: string;
+      buttonText: string;
+      buttonLink: string;
+    };
+  };
 }
 
 const teamImages = [
@@ -65,6 +99,37 @@ export default function AboutClient({ data }: AboutClientProps) {
 
   return (
     <div ref={containerRef}>
+      <section className={`${styles.section} ${styles.heroSection}`}>
+        <div className={styles.inner}>
+          <div className={styles.aboutHero}>
+            <div className={styles.heroCopy}>
+              <span className={styles.label}>Vantor Ventures</span>
+              <h1 className={styles.heroTitle}>{data.hero.headline}</h1>
+              <p className={styles.heroText}>{data.hero.description}</p>
+            </div>
+            <div className={styles.networkBoard} aria-hidden="true">
+              <div className={styles.boardTop}>
+                <span>Network Status</span>
+                <span>Online</span>
+              </div>
+              <div className={styles.boardScreen}>
+                {data.stats.slice(0, 3).map((s) => (
+                  <div key={s.label} className={styles.boardStat}>
+                    <span>{s.value}</span>
+                    <small>{s.label}</small>
+                  </div>
+                ))}
+              </div>
+              <div className={styles.boardRails}>
+                <span />
+                <span />
+                <span />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Executive */}
       <section className={`${styles.section} ${styles.execSection}`}>
         <div className={styles.inner}>
@@ -111,7 +176,7 @@ export default function AboutClient({ data }: AboutClientProps) {
           
           <ScrollReveal animation="stagger-children" stagger={0.15}>
             <div ref={teamRef} className={styles.teamGrid}>
-              {data.team.members.map((m: any, i: number) => (
+              {data.team.members.map((m, i) => (
                 <div key={m.name} className={`${styles.member} card-3d`} style={{ animationDelay: `${i * 0.2}s` }}>
                   <div className={styles.memberPhoto} aria-hidden="true">
                     <Image 
@@ -149,7 +214,7 @@ export default function AboutClient({ data }: AboutClientProps) {
           
           <ScrollReveal animation="stagger-children" stagger={0.1}>
             <div className={styles.scaleGrid}>
-              {data.stats.map((s: any, i: number) => (
+              {data.stats.map((s, i) => (
                 <StatCard
                   key={s.label}
                   value={s.value}
@@ -175,7 +240,7 @@ export default function AboutClient({ data }: AboutClientProps) {
           
           <ScrollReveal animation="stagger-children" stagger={0.1}>
             <div className={styles.partnerGrid}>
-              {data.partners.logos.map((p: any, i: number) => (
+              {data.partners.logos.map((p) => (
                 <div key={p} className={`${styles.partnerLogo} card-3d`} aria-label={p}>
                   <span className={styles.partnerLogoText}>{p}</span>
                 </div>
@@ -184,6 +249,13 @@ export default function AboutClient({ data }: AboutClientProps) {
           </ScrollReveal>
         </div>
       </section>
+
+      {/* CTA Section */}
+      {data.cta && (
+        <section className={styles.section} style={{ padding: 0 }}>
+          <CTASection data={data.cta} />
+        </section>
+      )}
     </div>
   );
 }

@@ -7,6 +7,7 @@ export interface Metric {
   label: string;
   value: string;
   maxValue: number;
+  subtext?: string;
 }
 
 interface MetricRowProps {
@@ -44,17 +45,24 @@ export default function MetricRow({ metrics }: MetricRowProps) {
   return (
     <div ref={ref} className={styles.list}>
       {metrics.map((m) => (
-        <div key={m.label} className={styles.row}>
-          <span className={styles.label}>{m.label}</span>
-          <div className={styles.track}>
-            <div
-              className={styles.fill}
-              style={{
-                width: active ? `${percentFromValue(m.value, m.maxValue)}%` : 0,
-              }}
-            />
+        <div key={m.label} style={{ display: "flex", flexDirection: "column", gap: "0.25rem" }}>
+          <div className={styles.row}>
+            <span className={styles.label}>{m.label}</span>
+            <div className={styles.track}>
+              <div
+                className={styles.fill}
+                style={{
+                  width: active ? `${percentFromValue(m.value, m.maxValue)}%` : 0,
+                }}
+              />
+            </div>
+            <span className={styles.value}>{m.value}</span>
           </div>
-          <span className={styles.value}>{m.value}</span>
+          {m.subtext && (
+            <div style={{ fontSize: '0.9rem', color: 'rgba(255,255,255,0.7)', marginTop: '0.25rem', maxWidth: '85%' }}>
+              {m.subtext}
+            </div>
+          )}
         </div>
       ))}
     </div>

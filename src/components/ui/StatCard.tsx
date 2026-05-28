@@ -38,7 +38,7 @@ export default function StatCard({
 
   return (
     <div
-      className={`${styles.card} card-3d glass-panel`}
+      className={`${styles.card} card-3d hud-panel`}
       style={delay ? { transitionDelay: `${delay}ms` } : undefined}
     >
       <div className={styles.stadiumLight} aria-hidden="true" />

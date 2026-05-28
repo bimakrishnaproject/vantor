@@ -12,6 +12,12 @@ const SOCIALS = [
   { label: "Instagram", href: "https://instagram.com/vantorventures",          abbr: "IG" },
 ];
 
+interface Office {
+  city: string;
+  address: string;
+  email: string;
+}
+
 export const metadata: Metadata = {
   title: "Contact Us",
   description: "Start your next high-performance campaign. Contact Vantor Ventures for a strategy session.",
@@ -39,9 +45,22 @@ export default async function ContactPage() {
           </div>
 
           <aside className={styles.aside}>
+            <div className={styles.signalCard} aria-hidden="true">
+              <div className={styles.signalTop}>
+                <span>Strategy Desk</span>
+                <span>Open</span>
+              </div>
+              <div className={styles.signalScreen}>
+                <span>Audience</span>
+                <span>Creative</span>
+                <span>Placement</span>
+                <span>Scale</span>
+              </div>
+            </div>
+
             <h2 className={styles.asideTitle}>{data.info.title}</h2>
             <div className={styles.contactList}>
-              {data.info.offices.map((office: any) => (
+              {data.info.offices.map((office: Office) => (
                 <div key={office.city} style={{ marginBottom: "1.5rem" }}>
                   <div className={styles.contactRow}>
                     <span className={styles.contactLabel}>{office.city}</span>
