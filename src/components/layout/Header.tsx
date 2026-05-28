@@ -52,7 +52,12 @@ export default function Header() {
 
   return (
     <header className={headerClass}>
-      <BrandLogo variant="logo2" className={styles.logo} width={44} height={44} />
+      <BrandLogo
+        variant="logo2"
+        className={styles.logo}
+        width={44}
+        height={44}
+      />
 
       <nav className={styles.nav} aria-label="Primary">
         {NAV_ITEMS.map((item) => {
@@ -92,7 +97,12 @@ export default function Header() {
         <div className={styles.overlay}>
           <div className={styles.overlayPanel}>
             <div className={styles.overlayTop}>
-              <BrandLogo variant="logo2" className={styles.overlayLogo} width={34} height={34} />
+              <BrandLogo
+                variant="logo2"
+                className={styles.overlayLogo}
+                width={34}
+                height={34}
+              />
               <button
                 type="button"
                 className={styles.overlayClose}
@@ -104,10 +114,13 @@ export default function Header() {
             </div>
 
             <div className={styles.overlayIntro}>
-              <p className={styles.overlayKicker}>Premium media buying ecosystem</p>
+              <p className={styles.overlayKicker}>
+                Premium media buying ecosystem
+              </p>
               <p className={styles.overlayTitle}>Navigate with clarity.</p>
               <p className={styles.overlayBody}>
-                Explore the core verticals, learn more about the team, or start a project.
+                Explore the core verticals, learn more about the team, or start
+                a project.
               </p>
             </div>
 
@@ -124,7 +137,12 @@ export default function Header() {
                     aria-current={active ? "page" : undefined}
                   >
                     <span>{item.label}</span>
-                    <span className={styles.overlayLinkArrow} aria-hidden="true">→</span>
+                    <span
+                      className={styles.overlayLinkArrow}
+                      aria-hidden="true"
+                    >
+                      →
+                    </span>
                   </Link>
                 );
               })}

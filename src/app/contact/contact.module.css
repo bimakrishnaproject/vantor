@@ -11,7 +11,12 @@
   gap: var(--space-xl);
 }
 
-@media (max-width: 900px) { .inner { grid-template-columns: 1fr; gap: var(--space-md); } }
+@media (max-width: 900px) {
+  .inner {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+}
 
 .hero {
   display: flex;
@@ -97,7 +102,9 @@
   border-radius: var(--radius-full);
   border: 1px solid var(--border-subtle);
   color: var(--text-secondary);
-  transition: color var(--transition-base), border-color var(--transition-base);
+  transition:
+    color var(--transition-base),
+    border-color var(--transition-base);
 }
 
 .socialLink:hover {

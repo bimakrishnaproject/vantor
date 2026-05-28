@@ -4,11 +4,19 @@
   animation: aboutFadeIn 0.8s ease both;
 }
 
-.bgSecondary { background: var(--bg-secondary); }
+.bgSecondary {
+  background: var(--bg-secondary);
+}
 
 @keyframes aboutFadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .inner {
@@ -20,9 +28,14 @@
   gap: var(--space-lg);
 }
 
-.centered { align-items: center; text-align: center; }
+.centered {
+  align-items: center;
+  text-align: center;
+}
 
-.execSection { padding-block: calc(80px + var(--space-2xl)) var(--space-2xl); }
+.execSection {
+  padding-block: calc(80px + var(--space-2xl)) var(--space-2xl);
+}
 
 .exec {
   display: grid;
@@ -42,7 +55,9 @@
 
 .execImage {
   filter: grayscale(80%) contrast(1.1) brightness(0.8);
-  transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), filter 0.8s ease;
+  transition:
+    transform 0.8s cubic-bezier(0.25, 1, 0.5, 1),
+    filter 0.8s ease;
   object-position: center top;
 }
 
@@ -90,8 +105,16 @@
   gap: var(--space-xl);
 }
 
-@media (max-width: 900px) { .teamGrid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 540px) { .teamGrid { grid-template-columns: 1fr; } }
+@media (max-width: 900px) {
+  .teamGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 540px) {
+  .teamGrid {
+    grid-template-columns: 1fr;
+  }
+}
 
 .member {
   position: relative;
@@ -100,14 +123,19 @@
   overflow: hidden;
   background: var(--bg-primary);
   border: 1px solid rgba(255, 255, 255, 0.05);
-  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.6s ease, border-color 0.6s ease;
+  transition:
+    transform 0.6s cubic-bezier(0.25, 1, 0.5, 1),
+    box-shadow 0.6s ease,
+    border-color 0.6s ease;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
   cursor: pointer;
 }
 
 .member:hover {
   transform: translateY(-10px);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 229, 255, 0.1);
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.8),
+    0 0 30px rgba(0, 229, 255, 0.1);
   border-color: rgba(255, 255, 255, 0.15);
 }
 
@@ -119,7 +147,9 @@
 }
 
 .image {
-  transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), filter 0.8s ease;
+  transition:
+    transform 0.8s cubic-bezier(0.25, 1, 0.5, 1),
+    filter 0.8s ease;
   filter: grayscale(80%) contrast(1.1) brightness(0.8);
 }
 
@@ -131,7 +161,12 @@
 .photoOverlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(10, 15, 25, 0.95) 0%, rgba(10, 15, 25, 0.4) 40%, transparent 100%);
+  background: linear-gradient(
+    to top,
+    rgba(10, 15, 25, 0.95) 0%,
+    rgba(10, 15, 25, 0.4) 40%,
+    transparent 100%
+  );
   pointer-events: none;
   transition: opacity 0.6s ease;
 }
@@ -166,7 +201,7 @@
   font-weight: 300;
   color: var(--text-primary);
   letter-spacing: 0.02em;
-  text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
 }
 
 .memberRole {
@@ -226,7 +261,11 @@
   max-width: 960px;
 }
 
-@media (max-width: 720px) { .valuesGrid { grid-template-columns: 1fr; } }
+@media (max-width: 720px) {
+  .valuesGrid {
+    grid-template-columns: 1fr;
+  }
+}
 
 .value {
   display: flex;
@@ -260,7 +299,11 @@
   gap: var(--space-md);
 }
 
-@media (max-width: 720px) { .scaleGrid { grid-template-columns: 1fr; } }
+@media (max-width: 720px) {
+  .scaleGrid {
+    grid-template-columns: 1fr;
+  }
+}
 
 /* Partners */
 .partnerGrid {
@@ -290,7 +333,7 @@
   border-color: rgba(255, 255, 255, 0.2);
   background: rgba(255, 255, 255, 0.05);
   transform: translateY(-2px);
-  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
 }
 
 .partnerLogoText {
@@ -302,16 +345,30 @@
 }
 
 @media (max-width: 900px) {
-  .exec { grid-template-columns: 1fr; gap: var(--space-md); }
-  .execPhoto { max-width: 320px; margin-inline: auto; }
+  .exec {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+  .execPhoto {
+    max-width: 320px;
+    margin-inline: auto;
+  }
 }
 
 @media (max-width: 640px) {
-  .execSection { padding-block: calc(80px + var(--space-lg)) var(--space-xl); }
-  .execPhoto { max-width: 280px; }
-  .execName { font-size: clamp(2rem, 7vw, 2.8rem); }
+  .execSection {
+    padding-block: calc(80px + var(--space-lg)) var(--space-xl);
+  }
+  .execPhoto {
+    max-width: 280px;
+  }
+  .execName {
+    font-size: clamp(2rem, 7vw, 2.8rem);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .section { animation: none; }
+  .section {
+    animation: none;
+  }
 }
