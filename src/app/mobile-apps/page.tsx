@@ -3,8 +3,8 @@ import { getVerticalPageBySlug } from "@/lib/cms";
 import PremiumVerticalPage from "@/components/verticals/PremiumVerticalPage";
 
 export const metadata: Metadata = {
-  title: "Mobile App User Acquisition",
-  description: "Driving high-LTV installs and post-install engagement at scale.",
+  title: "Mobile App Audience Access",
+  description: "Mobile app placement inside owned, high-attention audience feeds.",
 };
 
 export default async function MobileAppsPage() {

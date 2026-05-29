@@ -46,7 +46,6 @@
 .wrapperAnimate {
   opacity: 1;
   transform: translateY(0);
-  animation: pageIn 0.35s ease both;
 }
 
 .bar {

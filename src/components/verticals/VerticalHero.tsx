@@ -31,7 +31,7 @@ export default function VerticalHero({
   accentColor,
   backgroundEffect,
   visual,
-  ctaText = "Get Started",
+  ctaText = "Request Placement",
   ctaHref = "/contact",
 }: VerticalHeroProps) {
   const sectionRef = useRef<HTMLElement>(null);
@@ -110,4 +110,3 @@ export default function VerticalHero({
     </section>
   );
 }
-

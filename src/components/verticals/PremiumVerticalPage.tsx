@@ -108,15 +108,15 @@ export default function PremiumVerticalPage({
       />
 
       <VerticalSection
-        label="Network Control"
-        title="Built like a live media command room"
-        description="Every campaign is planned through audience signals, creative placement, and measurable performance windows."
+        label="Reach That Converts"
+        title="Owned Audience Control, Not Rented Inventory"
+        description="Every placement starts with owned sports and entertainment audience surfaces, page-level context, direct media control, and hands-on execution across 1B+ monthly views."
         align="center"
       >
         <div className={styles.commandGrid}>
           <div className={styles.scoreboardPanel}>
             <div className={styles.boardHeader}>
-              <span>Campaign Board</span>
+              <span>Placement Board</span>
               <span className={styles.boardStatus}>Stable</span>
             </div>
             <div className={styles.boardBody}>
@@ -161,7 +161,7 @@ export default function PremiumVerticalPage({
 
       <VerticalSection
         label={data.process.label}
-        title="From placement to scale"
+        title="From Access to Placement"
         background="primary"
       >
         <div className={styles.processShell}>

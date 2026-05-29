@@ -1,36 +1,69 @@
-export const verticalsData: Record<string, any> = {
+export interface VerticalMetric {
+  value: string;
+  endValue: number;
+  suffix: string;
+  decimals?: number;
+  label: string;
+}
+
+export interface VerticalData {
+  title: string;
+  slug: string;
+  themeColor: string;
+  hero: {
+    headline: string;
+    description: string;
+  };
+  benefits: { title: string; description: string }[];
+  fit: {
+    title: string;
+    description: string;
+  };
+  metrics: VerticalMetric[];
+  caseStudy: {
+    title: string;
+    client: string;
+    metrics: { label: string; value: string }[];
+  };
+  cta: {
+    headline: string;
+    subtext: string;
+  };
+}
+
+export const verticalsData: Record<string, VerticalData> = {
   audio: {
     title: "Audio",
     slug: "audio",
     themeColor: "#00d4ff",
     hero: {
-      headline: "The Soundtrack of the Internet.",
-      description: "From global superstars to emerging artists, we place your audio at the center of music fandom. Drive streams, saves, and platform sign-ups through organic culture, not forced ads."
+      headline: "Owned Access to Music Fandom.",
+      description: "Vantor controls music and culture pages inside a 60M+ follower, 1B+ monthly view network where fans already discover, debate, and replay what moves them. Audio placements enter music fandom as part of the feed, not as external ads."
     },
     benefits: [
-      { title: "Viral Audio Creation", description: "Spark viral moments by leveraging engaged fan bases." },
-      { title: "Artist-Aligned Placement", description: "Place your content where the artist's fans already gather." },
-      { title: "Direct Streaming Traffic", description: "Drive direct traffic to Spotify, Apple Music, and other DSPs." }
+      { title: "Owned Music Fandom", description: "Placement across pages Vantor operates where music fans already follow artists, sounds, clips, and culture." },
+      { title: "Fan-Aligned Timing", description: "Posts are matched to the audience moment, release window, and feed behavior instead of dropped into generic inventory." },
+      { title: "Direct Listening Paths", description: "Attention moves from trusted fan context to Spotify, Apple Music, DSPs, platforms, and sign-up flows." }
     ],
     fit: {
-      title: "Why this fits your brand",
-      description: "Communities built around genuine music taste. When you launch a track in a native, community-driven way, it becomes culture."
+      title: "Why this is different",
+      description: "Most media buys sit around music content. Vantor owns the fan surfaces where music attention is already concentrated, then places releases inside the communities that set the soundtrack."
     },
     metrics: [
-      { value: "1B+", endValue: 1, suffix: "B+", label: "Monthly Audio Streams Reached" },
-      { value: "15%+", endValue: 15, suffix: "%+", label: "Average Save Rate" }
+      { value: "1B+", endValue: 1, suffix: "B+", label: "Monthly Network Views" },
+      { value: "60M+", endValue: 60, suffix: "M+", label: "Owned Follower Base" }
     ],
     caseStudy: {
-      title: "Major Label Album Launch",
-      client: "Global Record Label",
+      title: "Release Entered Music Fandom",
+      client: "Audio Network Placement",
       metrics: [
-        { label: "Playlist Adds", value: "+340%" },
-        { label: "Cost Per Stream", value: "$0.02" }
+        { label: "Fan Reach", value: "+340%" },
+        { label: "Cost Per View", value: "$0.03" }
       ]
     },
     cta: {
-      headline: "Activate Your Audio",
-      subtext: "Book a campaign and dominate the charts."
+      headline: "Place Audio Inside the Network",
+      subtext: "Bring the release to audiences already listening."
     }
   },
   ecommerce: {
@@ -38,33 +71,33 @@ export const verticalsData: Record<string, any> = {
     slug: "ecommerce",
     themeColor: "#ff6b35",
     hero: {
-      headline: "Put Your Product in the Feed They Already Trust.",
-      description: "Fan communities are passionate and impulse-driven. When a product placement feels native to the content around it, audiences don't just notice—they act."
+      headline: "Commerce Placement Inside Trusted Feeds.",
+      description: "Vantor gives products native placement inside owned sports, culture, and entertainment feeds across 60M+ followers and 1B+ monthly views. The offer appears where attention already exists, not beside it."
     },
     benefits: [
-      { title: "Impulse-Ready Audiences", description: "High-intent users accustomed to discovering products via social." },
-      { title: "Native Product Integration", description: "Creative that blends perfectly with organic sports and culture content." },
-      { title: "Retargeting Amplification", description: "Feed high-quality, top-of-funnel traffic into your conversion machine." }
+      { title: "Native Product Placement", description: "Product visibility inside audience channels Vantor controls directly, shaped to feel natural in the feed." },
+      { title: "Trusted Feed Context", description: "The placement is built around page format, audience behavior, discovery rhythm, and content cadence." },
+      { title: "Conversion-Ready Attention", description: "Traffic comes from communities already used to acting on what they discover inside sports and entertainment media." }
     ],
     fit: {
-      title: "Why this fits your brand",
-      description: "High-intent targeting within niche interest groups. We bypass ad fatigue by embedding your product into the natural scroll behavior."
+      title: "Why this is different",
+      description: "Instead of competing in auction inventory, the product enters a live audience environment Vantor already owns, manages, and places by hand."
     },
     metrics: [
-      { value: "4.8x", endValue: 4.8, suffix: "x", decimals: 1, label: "Average ROAS" },
-      { value: "-40%", endValue: -40, suffix: "%", label: "Blended CPA" }
+      { value: "1B+", endValue: 1, suffix: "B+", label: "Monthly Network Views" },
+      { value: "60M+", endValue: 60, suffix: "M+", label: "Owned Follower Base" }
     ],
     caseStudy: {
-      title: "DTC Apparel Scaling",
-      client: "Athleisure Brand",
+      title: "Product Drop Entered the Feed",
+      client: "Commerce Network Placement",
       metrics: [
-        { label: "Attributed Revenue", value: "$2.1M" },
-        { label: "Return on Ad Spend", value: "5.2x" }
+        { label: "Observed ROAS", value: "4.8x" },
+        { label: "CPA", value: "-40%" }
       ]
     },
     cta: {
-      headline: "Scale Your Sales",
-      subtext: "Plug into our network and acquire customers profitably."
+      headline: "Place Products Where Attention Already Lives",
+      subtext: "Open a commerce path through owned audience surfaces."
     }
   },
   "mobile-apps": {
@@ -72,33 +105,33 @@ export const verticalsData: Record<string, any> = {
     slug: "mobile-apps",
     themeColor: "#00e88f",
     hero: {
-      headline: "Drive Installs, Not Just Impressions.",
-      description: "Our network is mobile-first by nature. We shorten the conversion path by introducing your app through trusted sports and entertainment content."
+      headline: "Mobile Installs From Owned Attention.",
+      description: "Vantor's 60M+ follower network is already mobile-first, already scrolling, and already reacting. Apps enter trusted feed environments where the next action is one tap away."
     },
     benefits: [
-      { title: "Frictionless Acquisition", description: "100% mobile-native audiences right at the point of action." },
-      { title: "Install-Driven Creative", description: "Ad units designed specifically to maximize App Store conversion." },
-      { title: "LTV Optimization", description: "Reach engaged communities that retain longer and spend more." }
+      { title: "App Install Ecosystem", description: "Access audiences already engaging from the same device where installs, sign-ups, and reactivations happen." },
+      { title: "Placement-Led Creative", description: "App messaging is built for the owned feed it enters, not forced into a generic acquisition unit." },
+      { title: "High-Intent Audience Pockets", description: "Apps are routed into sports, entertainment, gaming, and culture communities with relevant behavior and action." }
     ],
     fit: {
-      title: "Why this fits your brand",
-      description: "Frictionless acquisition. The audience is already on their phone, scrolling content they love. A native tap is all it takes."
+      title: "Why this is different",
+      description: "Most user acquisition buys chase people across platforms. Vantor brings the app into owned communities already primed to respond across a 1B+ monthly view attention layer."
     },
     metrics: [
-      { value: "2M+", endValue: 2, suffix: "M+", label: "Monthly App Installs Driven" },
-      { value: "12%", endValue: 12, suffix: "%", label: "Avg App Store Conversion Rate" }
+      { value: "1B+", endValue: 1, suffix: "B+", label: "Monthly Network Views" },
+      { value: "60M+", endValue: 60, suffix: "M+", label: "Owned Follower Base" }
     ],
     caseStudy: {
-      title: "Sports Betting App Launch",
-      client: "Top Tier Sportsbook",
+      title: "App Entered Mobile Fan Feeds",
+      client: "Mobile App Network Placement",
       metrics: [
-        { label: "New Depositors", value: "150k" },
-        { label: "Cost Per Install", value: "-60%" }
+        { label: "Installs", value: "2M+" },
+        { label: "CPI", value: "-60%" }
       ]
     },
     cta: {
-      headline: "Grow Your User Base",
-      subtext: "Launch a user acquisition campaign today."
+      headline: "Put the App Inside the Feed",
+      subtext: "Reach mobile audiences from channels they already trust."
     }
   },
   casinos: {
@@ -106,33 +139,33 @@ export const verticalsData: Record<string, any> = {
     slug: "casinos",
     themeColor: "#f0c040",
     hero: {
-      headline: "The Audience Every Sportsbook Wants.",
-      description: "Tap into our massive sports and entertainment network. We put your brand natively in front of fans who are already watching the game and placing bets."
+      headline: "Sports and Gaming Audiences, Already Assembled.",
+      description: "Vantor operates audience surfaces where sports, odds, competition, and entertainment already overlap across 60M+ followers and 1B+ monthly views. Regulated brands enter those pockets through controlled, context-aware placement."
     },
     benefits: [
-      { title: "High-Roller Acquisition", description: "Direct access to communities where sports and odds are daily conversations." },
-      { title: "Compliance-Conscious", description: "Rigorous adherence to local and platform regulatory standards." },
-      { title: "Geo-Targeted Reach", description: "Pinpoint delivery to specific states or regions where you operate." }
+      { title: "Audience Targeting Layer", description: "Direct reach into communities where game outcomes, betting behavior, fandom, and entertainment intent are already visible." },
+      { title: "Compliance-Aware Placement", description: "Messaging is handled with regulatory, platform, and market restrictions in view." },
+      { title: "Geo-Controlled Reach", description: "Audience access can be narrowed to the states, regions, and windows where operators are live." }
     ],
     fit: {
-      title: "Why this fits your brand",
-      description: "Perfect overlap of demographic and intent. We intercept their attention with compliant, native messaging during peak engagement windows."
+      title: "Why this is different",
+      description: "The audience is not inferred from third-party targeting. It is visible in the network through the content they follow and the moments they engage with."
     },
     metrics: [
-      { value: "15M+", endValue: 15, suffix: "M+", label: "Active Sports Bettors Reached" },
-      { value: "100%", endValue: 100, suffix: "%", label: "Fully Compliant Placements" }
+      { value: "1B+", endValue: 1, suffix: "B+", label: "Monthly Network Views" },
+      { value: "60M+", endValue: 60, suffix: "M+", label: "Owned Follower Base" }
     ],
     caseStudy: {
-      title: "State Expansion Campaign",
-      client: "National Sportsbook",
+      title: "Operator Entered Sports Audience Pockets",
+      client: "Casino Network Placement",
       metrics: [
-        { label: "First Time Deposits", value: "$4.5M" },
-        { label: "Brand Lift", value: "+220%" }
+        { label: "Targeted Reach", value: "15M+" },
+        { label: "Placement Control", value: "100%" }
       ]
     },
     cta: {
-      headline: "Capture the Market",
-      subtext: "Secure your share of voice this season."
+      headline: "Enter the Sports Audience Layer",
+      subtext: "Secure controlled placement where gaming intent already exists."
     }
   },
   other: {
@@ -140,33 +173,33 @@ export const verticalsData: Record<string, any> = {
     slug: "other",
     themeColor: "#a855f7",
     hero: {
-      headline: "Built Around Your Goals.",
-      description: "If your audience watches, follows, or cares—we can reach them. Tell us who you want, and we'll build a custom placement strategy across our network."
+      headline: "Custom Audience Surfaces, Built and Operated.",
+      description: "When one vertical is not enough, Vantor routes the message through owned clipping, culture, sports, music, and entertainment surfaces across 60M+ followers and 1B+ monthly views."
     },
     benefits: [
-      { title: "Custom Clipping Networks", description: "Build tailored networks from our 1B+ monthly view inventory." },
-      { title: "Cross-Vertical Reach", description: "Bespoke content types designed for unique KPIs." },
-      { title: "Bespoke Brand Integrations", description: "From raw awareness to direct response, we engineer the ecosystem." }
+      { title: "Owned Clipping Networks", description: "Attention can be routed through pages and formats Vantor controls directly." },
+      { title: "Cross-Vertical Reach", description: "Sports, music, entertainment, commerce, gaming, and culture audiences can be combined with intent." },
+      { title: "Hands-On Integration", description: "Placement is handled manually around audience fit, format, timing, and message." }
     ],
     fit: {
-      title: "Why this fits your brand",
-      description: "No two campaigns are alike. We build a custom stadium of audience attention specifically for your message."
+      title: "Why this is different",
+      description: "This is not a menu of ad products. It is direct routing through audience infrastructure Vantor owns and operates."
     },
     metrics: [
       { value: "1B+", endValue: 1, suffix: "B+", label: "Total Monthly Views" },
       { value: "60M+", endValue: 60, suffix: "M+", label: "Global Followers" }
     ],
     caseStudy: {
-      title: "Custom Brand Awareness Play",
-      client: "Global Fortune 500",
+      title: "Message Routed Across Audience Surfaces",
+      client: "Cross-Vertical Network Placement",
       metrics: [
         { label: "Verified Impressions", value: "45M" },
         { label: "Engagement Rate", value: "8.5%" }
       ]
     },
     cta: {
-      headline: "Build Your Network",
-      subtext: "Tell us your goals and we will make it happen."
+      headline: "Route Through the Right Audience Surface",
+      subtext: "Tell us who you need to reach and we will identify the owned path in."
     }
   }
 };

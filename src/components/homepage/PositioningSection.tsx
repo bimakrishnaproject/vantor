@@ -3,9 +3,9 @@ import TextReveal from "@/components/ui/TextReveal";
 import styles from "./PositioningSection.module.css";
 
 const PILLARS = [
-  { icon: "⌬", title: "Data-Driven",  hint: "Every decision modelled, every dollar tracked." },
-  { icon: "⇡", title: "Full-Funnel",  hint: "Awareness through retention, on one P&L." },
-  { icon: "⌖", title: "Multi-Vertical", hint: "Audio, eCommerce, Mobile, iGaming — one team." },
+  { icon: "⌬", title: "Audience Ownership",  hint: "Sports and entertainment surfaces operated directly by Vantor." },
+  { icon: "⇡", title: "Seamless Integration",  hint: "Messages placed by hand into the right feed context." },
+  { icon: "⌖", title: "Results Driven", hint: "CPM accountability across 1B+ monthly network views." },
 ];
 
 interface PositioningProps {
@@ -20,7 +20,7 @@ export default function PositioningSection({ data }: PositioningProps) {
     <section className={styles.section}>
       <div className={styles.inner}>
         <div className={styles.copy}>
-          <span className={styles.label}>Who We Are</span>
+          <span className={styles.label}>Why Vantor Is Different</span>
           <TextReveal tag="h2" className={styles.headline}>
             {data.headline}
           </TextReveal>

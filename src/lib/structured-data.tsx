@@ -7,7 +7,7 @@ export function organizationSchema() {
     "@type": "Organization",
     name: "Vantor Ventures",
     url: SITE_URL,
-    description: "Premium media buying and entertainment ecosystem",
+    description: "Owned audience infrastructure for direct media placement",
     sameAs: [
       "https://linkedin.com/company/vantorventures",
       "https://twitter.com/vantorventures",

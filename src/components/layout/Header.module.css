@@ -12,17 +12,15 @@
   background: transparent;
   border-bottom: 1px solid transparent;
   will-change: transform;
+  backface-visibility: hidden;
   transition:
     background var(--transition-base),
-    backdrop-filter var(--transition-base),
     border-color var(--transition-base),
     transform var(--transition-smooth);
 }
 
 .scrolled {
   background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
   border-bottom: 1px solid var(--glass-border);
 }
 

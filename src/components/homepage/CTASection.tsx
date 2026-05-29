@@ -34,7 +34,7 @@ export default function CTASection({ data }: CTAProps) {
       </div>
 
       <div className={styles.content}>
-        <span className={styles.label}>Let&apos;s Build Together</span>
+        <span className={styles.label}>Network Access</span>
         <TextReveal tag="h2" className={styles.headline}>
           {data.headline}
         </TextReveal>
@@ -46,7 +46,7 @@ export default function CTASection({ data }: CTAProps) {
             {data.buttonText}
           </Button>
           <Button variant="outline" size="lg" href="#case-studies">
-            View Our Work
+            View Placement Records
           </Button>
         </div>
       </div>

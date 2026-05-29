@@ -19,8 +19,8 @@ interface Office {
 }
 
 export const metadata: Metadata = {
-  title: "Contact Us",
-  description: "Start your next high-performance campaign. Contact Vantor Ventures for a strategy session.",
+  title: "Request Network Access",
+  description: "Request direct placement inside Vantor Ventures owned audience network.",
 };
 
 export default async function ContactPage() {
@@ -47,7 +47,7 @@ export default async function ContactPage() {
           <aside className={styles.aside}>
             <div className={styles.signalCard} aria-hidden="true">
               <div className={styles.signalTop}>
-                <span>Strategy Desk</span>
+                <span>Access Desk</span>
                 <span>Open</span>
               </div>
               <div className={styles.signalScreen}>
@@ -94,13 +94,13 @@ export default async function ContactPage() {
             <div id="booking" className={styles.booking}>
               <span className={styles.bookingTitle}>Prefer a call?</span>
               <span className={styles.bookingHint}>
-                Pick a time that works — we&apos;ll meet you there.
+                Pick a time to map the audience surface you need.
               </span>
               <Button
                 variant="outline"
                 href="https://calendly.com/vantorventures/strategy"
               >
-                Book a Strategy Session
+                Book an Access Call
               </Button>
             </div>
           </aside>

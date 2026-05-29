@@ -3,8 +3,8 @@ import { getVerticalPageBySlug } from "@/lib/cms";
 import PremiumVerticalPage from "@/components/verticals/PremiumVerticalPage";
 
 export const metadata: Metadata = {
-  title: "Audio & Podcasting Media Buying",
-  description: "Performance audio campaigns spanning podcasts, streaming, and terrestrial radio.",
+  title: "Audio Audience Access",
+  description: "Owned music and culture audience surfaces for direct audio placement.",
 };
 
 export default async function AudioPage() {

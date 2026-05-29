@@ -9,18 +9,29 @@ export default function StickyContactCTA() {
   const [dismissed, setDismissed] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setVisible(window.scrollY > window.innerHeight * 0.5);
+    let frame: number | null = null;
+    const onScroll = () => {
+      if (frame !== null) return;
+      frame = requestAnimationFrame(() => {
+        const nextVisible = window.scrollY > window.innerHeight * 0.5;
+        setVisible((current) => (current === nextVisible ? current : nextVisible));
+        frame = null;
+      });
+    };
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (frame !== null) cancelAnimationFrame(frame);
+    };
   }, []);
 
   if (dismissed) return null;
 
   return (
     <div className={`${styles.bar} ${visible ? styles.visible : ""}`}>
-      <span className={styles.text}>Ready to start?</span>
-      <Button variant="primary" size="sm" href="#booking">Book a Call</Button>
+      <span className={styles.text}>Need audience access?</span>
+      <Button variant="primary" size="sm" href="#booking">Book Access Call</Button>
       <button
         type="button"
         className={styles.dismiss}

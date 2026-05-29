@@ -7,8 +7,10 @@
   align-items: center;
   opacity: 0;
   transform: translateY(40px);
-  transition: opacity var(--transition-smooth), transform var(--transition-smooth);
+  transition: opacity 180ms ease, transform 180ms ease;
   pointer-events: none;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
 }
 
 .visible {
@@ -24,13 +26,11 @@
   padding: 0.85rem 1.5rem;
   border-radius: var(--radius-full);
   background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
   border: 1px solid var(--accent-primary);
   color: var(--accent-primary);
   font-weight: 500;
   font-size: var(--text-body-sm);
-  animation: floatingPulse 2.6s ease-in-out infinite;
+  box-shadow: 0 0 18px rgba(0, 229, 255, 0.16);
 }
 
 .cta:hover {
@@ -70,23 +70,10 @@
   border-color: var(--border-glow);
 }
 
-@keyframes floatingPulse {
-  0%,
-  100% {
-    box-shadow: 0 0 0 0 var(--accent-glow);
-  }
-  50% {
-    box-shadow: 0 0 24px 4px var(--accent-glow);
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .wrap {
     transition: opacity var(--transition-base);
     transform: none;
-  }
-  .cta {
-    animation: none;
   }
   .cta:hover .arrow {
     transform: none;

@@ -9,12 +9,21 @@ export default function FloatingCTA() {
   const [dismissed, setDismissed] = useState(false);
 
   useEffect(() => {
+    let frame: number | null = null;
     const onScroll = () => {
-      setVisible(window.scrollY > window.innerHeight);
+      if (frame !== null) return;
+      frame = requestAnimationFrame(() => {
+        const nextVisible = window.scrollY > window.innerHeight;
+        setVisible((current) => (current === nextVisible ? current : nextVisible));
+        frame = null;
+      });
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (frame !== null) cancelAnimationFrame(frame);
+    };
   }, []);
 
   if (dismissed) return null;
@@ -22,7 +31,7 @@ export default function FloatingCTA() {
   return (
     <div className={`${styles.wrap} ${visible ? styles.visible : ""}`}>
       <Link href="/contact" className={styles.cta}>
-        Get Started
+        Request Access
         <span className={styles.arrow} aria-hidden="true">
           →
         </span>

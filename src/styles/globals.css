@@ -79,7 +79,7 @@
 
 html {
   color-scheme: dark;
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
   -webkit-text-size-adjust: 100%;
 }
 
@@ -98,6 +98,7 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  isolation: isolate;
 }
 
 /* ===== TYPOGRAPHY ===== */
@@ -176,6 +177,8 @@ button {
 }
 
 .site-main {
+  position: relative;
+  z-index: 1;
   display: block;
   min-height: 100dvh;
 }
@@ -246,4 +249,3 @@ button {
   pointer-events: none;
   z-index: 1;
 }
-

@@ -4,6 +4,7 @@ import { useRef, type ReactNode } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import { shouldReduceScrollEffects } from "@/lib/animations";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -28,6 +29,7 @@ export default function ScrollReveal({
 
   useGSAP(() => {
     if (!ref.current) return;
+    const reduceScrollEffects = shouldReduceScrollEffects();
     
     // For reducing motion, just show the content immediately.
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -41,16 +43,16 @@ export default function ScrollReveal({
       const childrenElements = trigger.children;
       gsap.from(childrenElements, {
         opacity: 0,
-        y: 40,
-        rotationX: 10,
-        duration: 0.8,
-        stagger: stagger,
-        ease: "power3.out",
+        y: reduceScrollEffects ? 18 : 32,
+        duration: reduceScrollEffects ? 0.45 : 0.7,
+        stagger: Math.min(stagger, reduceScrollEffects ? 0.035 : 0.07),
+        ease: "power2.out",
         delay,
         scrollTrigger: {
           trigger: trigger,
           start: "top 85%",
-          toggleActions: "play none none reverse",
+          toggleActions: "play none none none",
+          once: true,
         }
       });
       return;
@@ -58,16 +60,16 @@ export default function ScrollReveal({
 
     let vars: gsap.TweenVars = {
       opacity: 0,
-      y: 50,
-      duration: 1,
-      ease: "power3.out",
+      y: reduceScrollEffects ? 18 : 40,
+      duration: reduceScrollEffects ? 0.45 : 0.75,
+      ease: "power2.out",
       delay
     };
 
     if (animation === "3d-float") {
-      vars = { ...vars, rotationX: 15, y: 80, transformPerspective: 1000, transformOrigin: "bottom center" };
+      vars = { ...vars, y: reduceScrollEffects ? 20 : 48, transformOrigin: "bottom center" };
     } else if (animation === "scale-up") {
-      vars = { ...vars, scale: 0.95 };
+      vars = { ...vars, scale: reduceScrollEffects ? 0.98 : 0.96 };
     }
 
     gsap.from(trigger, {
@@ -75,7 +77,8 @@ export default function ScrollReveal({
       scrollTrigger: {
         trigger: trigger,
         start: "top 85%",
-        toggleActions: "play none none reverse", 
+        toggleActions: "play none none none",
+        once: true,
       }
     });
   }, { scope: ref });

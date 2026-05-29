@@ -31,7 +31,7 @@ export default function FeaturedMetricsSection({ data }: FeaturedMetricsProps) {
       <div className={styles.inner}>
         <ScrollReveal animation="fade-up">
           <SectionHeading
-            label="Performance Metrics"
+            label="Reach That Converts"
             title={data.title}
           />
         </ScrollReveal>

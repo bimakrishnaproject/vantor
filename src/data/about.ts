@@ -1,11 +1,11 @@
 export const aboutData = {
   hero: {
-    headline: "We Are the Network",
-    description: "Vantor was built at the intersection of organic community and paid media. We own the communities, which means we provide hands-on campaign execution across sports, entertainment, music, and culture."
+    headline: "Vantor Owns the Audience Layer",
+    description: "Vantor operates media surfaces across sports, entertainment, music, gaming, and culture. The company is not positioned around buying attention from others. It owns access, controls placement, and executes inside the network."
   },
   mission: {
-    headline: "Authenticity Over Interruption",
-    description: "We don't just buy ads; we engineer ecosystems. Because we own the audience, we can seamlessly integrate your brand into the content they already love."
+    headline: "Infrastructure Over Interruption",
+    description: "The advantage is control. Our team works at the page level: choosing the audience pocket, shaping the placement, timing the release, and managing how the message enters the feed."
   },
   team: {
     title: "Leadership",
@@ -18,18 +18,18 @@ export const aboutData = {
     { label: "Monthly Views", value: "1B+", endValue: 1, suffix: "B+" },
     { label: "Followers", value: "60M+", endValue: 60, suffix: "M+" },
     { label: "Global Markets", value: "45+", endValue: 45, suffix: "+" },
-    { label: "Campaigns", value: "12K+", endValue: 12, suffix: "K+" }
+    { label: "Placements Run", value: "12K+", endValue: 12, suffix: "K+" }
   ],
   partners: {
-    title: "Our Ecosystem Partners",
+    title: "Brands Entering the Network",
     logos: [
       "Spotify", "Apple Music", "DraftKings", "FanDuel", "FashionNova", "Gymshark"
     ]
   },
   cta: {
-    headline: "Activate the Network",
-    subtext: "Book a campaign and get direct access to our communities.",
-    buttonText: "Book a Campaign",
+    headline: "Request Network Access",
+    subtext: "Bring us the audience you cannot reach on your own.",
+    buttonText: "Request Placement",
     buttonLink: "/contact"
   }
 };

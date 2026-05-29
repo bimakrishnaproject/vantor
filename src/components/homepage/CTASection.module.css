@@ -33,7 +33,7 @@
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  opacity: 0.5;
+  opacity: 0.22;
 }
 
 .streak {
@@ -42,13 +42,7 @@
   height: 60px;
   border-radius: var(--radius-full);
   background: linear-gradient(180deg, transparent, var(--accent-primary), transparent);
-  filter: blur(1px);
-  animation: streakFloat 5s ease-in-out infinite;
-}
-
-@keyframes streakFloat {
-  0%, 100% { transform: translateY(0); opacity: 0.3; }
-  50%      { transform: translateY(-30px); opacity: 0.8; }
+  opacity: 0.35;
 }
 
 .content {
@@ -93,8 +87,4 @@
   flex-wrap: wrap;
   justify-content: center;
   margin-top: var(--space-sm);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .streak { animation: none; }
 }

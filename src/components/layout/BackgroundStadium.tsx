@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
+import { prefersReducedMotion, shouldReduceScrollEffects } from "@/lib/animations";
 import styles from "./BackgroundStadium.module.css";
 
 // Register ScrollTrigger
@@ -16,6 +17,7 @@ if (typeof window !== "undefined") {
 export default function BackgroundStadium() {
   const pathname = usePathname();
   const [mounted, setMounted] = useState(false);
+  const [paintNonce, setPaintNonce] = useState(0);
   const heroFixedRef = useRef<HTMLDivElement>(null);
   const pitchRef = useRef<HTMLDivElement>(null);
   const scoreboardRef = useRef<HTMLDivElement>(null);
@@ -38,10 +40,13 @@ export default function BackgroundStadium() {
   // ── Stadium Activation & Ambient Effects ───────────────────────────────
   useEffect(() => {
     if (!mounted) return;
+    const reduceScrollEffects = true;
     
     const scoreboard = scoreboardRef.current;
     const pitch = pitchRef.current;
     const heroFixed = heroFixedRef.current;
+    let wakeTl: gsap.core.Timeline | null = null;
+    let metricInterval: ReturnType<typeof setInterval> | null = null;
 
     // --- Part 1: Activation Wake-up Sequence ---
     const lightGroups = heroFixed?.querySelectorAll(`.${styles.povLightGroup}`);
@@ -71,31 +76,49 @@ export default function BackgroundStadium() {
       gsap.set(lightGroups, { "--light-intensity": 0.06 });
       gsap.set(scoreboardPanel, { opacity: 0, scale: 0.95, y: 10 });
 
-      const wakeTl = gsap.timeline({ paused: true });
+      wakeTl = gsap.timeline({
+        paused: true,
+        defaults: {
+          overwrite: "auto",
+        },
+      });
 
       // 1. Ambient atmosphere slowly glows
       wakeTl.to(
         [atmosphere, rings],
-        { opacity: 0.3, duration: 1.5, ease: "power2.inOut" },
+        {
+          opacity: reduceScrollEffects ? 0.18 : 0.3,
+          duration: reduceScrollEffects ? 0.8 : 1.5,
+          ease: "power2.inOut",
+        },
         0,
       );
 
       // 2. Initial hero floodlights warm up and then remain steady.
-      wakeTl.to(
-        lightGroups,
-        {
-          "--light-intensity": 0.5,
-          duration: 1.8,
-          stagger: 0.12,
-          ease: "sine.inOut",
-        },
-        0.5,
-      );
+      if (!reduceScrollEffects) {
+        wakeTl.to(
+          lightGroups,
+          {
+            "--light-intensity": 0.5,
+            duration: 1.8,
+            stagger: 0.08,
+            ease: "sine.inOut",
+          },
+          0.5,
+        );
+      } else {
+        gsap.set(lightGroups, { "--light-intensity": 0.22 });
+      }
 
       // 3. Holographic digital rings and ground nodes power up
       wakeTl.to(
         digitalElements,
-        { opacity: 1, duration: 1.5, stagger: 0.1, ease: "power2.out" },
+        {
+          opacity: reduceScrollEffects ? 0.55 : 1,
+          duration: reduceScrollEffects ? 0.7 : 1.5,
+          stagger: reduceScrollEffects ? 0 : 0.06,
+          ease: "power2.out",
+        },
         1.0,
       );
 
@@ -107,7 +130,7 @@ export default function BackgroundStadium() {
     }
 
     // --- Part 2: Ongoing Ambient UI Movement ---
-    if (scoreboard) {
+    if (scoreboard && !reduceScrollEffects && !prefersReducedMotion()) {
       // Gentle Yoyo float
       gsap.to(scoreboard, {
         y: "+=12",
@@ -122,29 +145,33 @@ export default function BackgroundStadium() {
       const activeGuests = document.getElementById("activeGuestsValue");
       if (activeGuests) {
         let val = 104514;
-        const interval = setInterval(() => {
+        metricInterval = setInterval(() => {
           val +=
             Math.random() > 0.5
               ? Math.floor(Math.random() * 8)
               : -Math.floor(Math.random() * 4);
           activeGuests.innerText = val.toLocaleString();
         }, 2000);
-        return () => clearInterval(interval);
       }
     }
-  }, [mounted]);
+
+    return () => {
+      if (metricInterval) clearInterval(metricInterval);
+      if (scoreboard) gsap.killTweensOf(scoreboard);
+      wakeTl?.kill();
+    };
+  }, [mounted, paintNonce]);
 
   // ── Cinematic Global Background Animation (ScrollTrigger) ───────────────────────────────
   useEffect(() => {
     if (!mounted) return;
+    const reduceScrollEffects = true;
     
     const pitch = pitchRef.current;
     const scoreboard = scoreboardRef.current;
     const heroFixed = heroFixedRef.current;
     if (!pitch) return;
 
-    // Reset any previous scroll triggers when route changes
-    ScrollTrigger.getAll().forEach((st) => st.kill());
     const selectLights = (className: string) =>
       Array.from(heroFixed?.querySelectorAll(`.${className}`) ?? []);
     const allLights = selectLights(styles.povLightGroup);
@@ -155,6 +182,7 @@ export default function BackgroundStadium() {
     const nearLights = selectLights(styles.lightNear);
 
     gsap.killTweensOf([pitch, scoreboard, allLights]);
+    gsap.set([pitch, scoreboard], { willChange: "transform, opacity" });
     gsap.set(allLights, { "--light-intensity": 0.06 });
 
     // Define the default/hero POV: Wide stadium reveal
@@ -187,6 +215,10 @@ export default function BackgroundStadium() {
     };
 
     const activateRouteLights = (activeLights: Element[]) => {
+      if (reduceScrollEffects) {
+        setLightIntensity(allLights, 0.24, 0.5);
+        return;
+      }
       setLightIntensity(allLights, 0.06, 1.2);
       setLightIntensity(activeLights, 0.88, 1.8);
     };
@@ -218,16 +250,21 @@ export default function BackgroundStadium() {
     // Set initial state
     gsap.set(pitch, defaultPitchVars);
     gsap.set(scoreboard, defaultScoreboardVars);
-    gsap.set(allLights, { "--light-intensity": 0.08 });
-    gsap.set(heroLights, { "--light-intensity": 0.76 });
+    gsap.set(allLights, { "--light-intensity": reduceScrollEffects ? 0.22 : 0.08 });
+    gsap.set(heroLights, { "--light-intensity": reduceScrollEffects ? 0.34 : 0.76 });
 
     // Create a single reliable timeline tied to the total scroll of the page.
     const tl = gsap.timeline({
+      defaults: {
+        overwrite: "auto",
+      },
       scrollTrigger: {
         trigger: document.documentElement,
         start: "top top",
         end: "max",
-        scrub: 1.5, // Super smooth scrubbing
+        scrub: reduceScrollEffects ? 2.4 : 1.15,
+        fastScrollEnd: true,
+        invalidateOnRefresh: true,
       },
     });
 
@@ -236,74 +273,130 @@ export default function BackgroundStadium() {
     // 0.00 -> 0.15 (Hero to Positioning Section) 
     // Push the camera deep INSIDE the stadium bowl, near the pitch, slight tilt
     tl.to(pitch, { scale: 3.2, y: 400, z: 300, rotationX: 15, rotationY: -60, rotationZ: 0, xPercent: -50, duration: 0.15, ease: "power2.inOut" }, 0.0);
-    tl.to(heroLights, { "--light-intensity": 0.16, duration: 0.12, ease: "sine.inOut" }, 0.0);
-    tl.to(nearLights, { "--light-intensity": 0.88, duration: 0.15, ease: "sine.inOut" }, 0.0);
+    if (!reduceScrollEffects) {
+      tl.to(heroLights, { "--light-intensity": 0.16, duration: 0.12, ease: "sine.inOut" }, 0.0);
+      tl.to(nearLights, { "--light-intensity": 0.88, duration: 0.15, ease: "sine.inOut" }, 0.0);
+    }
 
     // 0.15 -> 0.25 (Positioning Section - The Premium Orbit Moment)
     // Horizontal 3D pan FROM INSIDE the stadium (spins the stadium around the camera)
     tl.to(pitch, { scale: 3.2, y: 400, z: 300, rotationX: 15, rotationY: 60, rotationZ: 0, xPercent: -50, duration: 0.10, ease: "sine.inOut" }, 0.15);
-    tl.to(nearLights, { "--light-intensity": 0.3, duration: 0.1, ease: "sine.inOut" }, 0.15);
-    tl.to(leftLights, { "--light-intensity": 0.86, duration: 0.1, ease: "sine.inOut" }, 0.15);
+    if (!reduceScrollEffects) {
+      tl.to(nearLights, { "--light-intensity": 0.3, duration: 0.1, ease: "sine.inOut" }, 0.15);
+      tl.to(leftLights, { "--light-intensity": 0.86, duration: 0.1, ease: "sine.inOut" }, 0.15);
+    }
 
     // 0.25 -> 0.40 (Stats to Services Section)
     // Dive down from the orbit towards the digital pitch nodes, resetting horizontal angle
     tl.to(pitch, { scale: 2.2, xPercent: -30, y: 200, z: 200, rotationX: 25, rotationY: 0, rotationZ: 10, duration: 0.15, ease: "power2.inOut" }, 0.25);
-    tl.to(leftLights, { "--light-intensity": 0.2, duration: 0.15, ease: "sine.inOut" }, 0.25);
-    tl.to(rightLights, { "--light-intensity": 0.88, duration: 0.15, ease: "sine.inOut" }, 0.25);
+    if (!reduceScrollEffects) {
+      tl.to(leftLights, { "--light-intensity": 0.2, duration: 0.15, ease: "sine.inOut" }, 0.25);
+      tl.to(rightLights, { "--light-intensity": 0.88, duration: 0.15, ease: "sine.inOut" }, 0.25);
+    }
 
     // 0.40 -> 0.55 (Services to Featured Metrics Section)
     // Panning directly over the top
     tl.to(pitch, { scale: 2.6, xPercent: -50, y: 150, z: 150, rotationX: 45, rotationZ: 0, duration: 0.15, ease: "power2.inOut" }, 0.40);
-    tl.to(rightLights, { "--light-intensity": 0.36, duration: 0.15, ease: "sine.inOut" }, 0.40);
-    tl.to(allLights, { "--light-intensity": 0.64, duration: 0.15, ease: "sine.inOut" }, 0.40);
+    if (!reduceScrollEffects) {
+      tl.to(rightLights, { "--light-intensity": 0.36, duration: 0.15, ease: "sine.inOut" }, 0.40);
+      tl.to(allLights, { "--light-intensity": 0.64, duration: 0.15, ease: "sine.inOut" }, 0.40);
+    }
 
     // 0.55 -> 0.70 (Featured Metrics to Case Studies Section)
     // Moving towards the far end stands
     tl.to(pitch, { scale: 2.0, xPercent: -40, y: 400, z: 150, rotationX: 10, rotationZ: 5, duration: 0.15, ease: "power2.inOut" }, 0.55);
-    tl.to(allLights, { "--light-intensity": 0.16, duration: 0.15, ease: "sine.inOut" }, 0.55);
-    tl.to(farLights, { "--light-intensity": 0.9, duration: 0.15, ease: "sine.inOut" }, 0.55);
+    if (!reduceScrollEffects) {
+      tl.to(allLights, { "--light-intensity": 0.16, duration: 0.15, ease: "sine.inOut" }, 0.55);
+      tl.to(farLights, { "--light-intensity": 0.9, duration: 0.15, ease: "sine.inOut" }, 0.55);
+    }
 
     // 0.70 -> 0.85 (Case Studies to Pre-CTA)
     // Pull back out slightly and center up for the broadcast shot
     tl.to(pitch, { scale: 1.5, xPercent: -50, y: 100, z: 200, rotationX: 20, rotationZ: 0, duration: 0.15, ease: "power3.inOut" }, 0.70);
-    tl.to(farLights, { "--light-intensity": 0.42, duration: 0.15, ease: "sine.inOut" }, 0.70);
-    tl.to(heroLights, { "--light-intensity": 0.72, duration: 0.15, ease: "sine.inOut" }, 0.70);
+    if (!reduceScrollEffects) {
+      tl.to(farLights, { "--light-intensity": 0.42, duration: 0.15, ease: "sine.inOut" }, 0.70);
+      tl.to(heroLights, { "--light-intensity": 0.72, duration: 0.15, ease: "sine.inOut" }, 0.70);
+    }
 
     // 0.85 -> 1.00 (CTA Section Finale)
     // Stable shot, scoreboard drops down from above with a massive impact bounce
     tl.to(pitch, { scale: 1.2, xPercent: -50, y: 50, z: 0, rotationX: 15, rotationZ: 0, duration: 0.15, ease: "power2.out" }, 0.85);
-    tl.to(scoreboard, { opacity: 1, y: 0, rotationX: 5, scale: 1.1, duration: 0.15, ease: "bounce.out" }, 0.85);
-    tl.to(allLights, { "--light-intensity": 0.62, duration: 0.15, ease: "sine.inOut" }, 0.85);
+    tl.to(scoreboard, { opacity: 1, y: 0, rotationX: 5, scale: 1.1, duration: 0.15, ease: reduceScrollEffects ? "power2.out" : "bounce.out" }, 0.85);
+    if (!reduceScrollEffects) {
+      tl.to(allLights, { "--light-intensity": 0.62, duration: 0.15, ease: "sine.inOut" }, 0.85);
+    }
 
-    // Handle ResizeObserver to refresh ScrollTrigger dynamically when React changes DOM
-    let resizeObserver: ResizeObserver | null = null;
-    if (typeof document !== "undefined") {
-      resizeObserver = new ResizeObserver(() => {
+    let refreshFrame: number | null = null;
+    const scheduleRefresh = () => {
+      if (refreshFrame !== null) return;
+      refreshFrame = requestAnimationFrame(() => {
+        refreshFrame = null;
         ScrollTrigger.refresh();
       });
-      resizeObserver.observe(document.body);
-    }
+    };
+
+    window.addEventListener("resize", scheduleRefresh, { passive: true });
+    window.addEventListener("orientationchange", scheduleRefresh, { passive: true });
     
     // Ensure ScrollTrigger gets the right layout immediately
-    ScrollTrigger.refresh();
+    scheduleRefresh();
 
     return () => {
-      if (tl) tl.kill();
-      ScrollTrigger.getAll().forEach((st) => st.kill());
+      tl.kill();
+      window.removeEventListener("resize", scheduleRefresh);
+      window.removeEventListener("orientationchange", scheduleRefresh);
+      if (refreshFrame !== null) cancelAnimationFrame(refreshFrame);
       gsap.killTweensOf([pitch, allLights]);
-      if (resizeObserver) resizeObserver.disconnect();
+      gsap.set([pitch, scoreboard], { clearProps: "willChange" });
     };
-  }, [pathname, mounted]);
+  }, [pathname, mounted, paintNonce]);
 
   useEffect(() => {
     const frame = requestAnimationFrame(() => setMounted(true));
     return () => cancelAnimationFrame(frame);
   }, []);
 
+  useEffect(() => {
+    if (!mounted) return;
+
+    const recoverStadiumPaint = () => {
+      if (document.visibilityState === "hidden") return;
+
+      gsap.ticker.wake();
+      setPaintNonce((nonce) => nonce + 1);
+
+      requestAnimationFrame(() => {
+        ScrollTrigger.refresh(true);
+        ScrollTrigger.update();
+
+        requestAnimationFrame(() => {
+          ScrollTrigger.update();
+        });
+      });
+    };
+
+    document.addEventListener("visibilitychange", recoverStadiumPaint);
+    window.addEventListener("focus", recoverStadiumPaint);
+    window.addEventListener("pageshow", recoverStadiumPaint);
+
+    return () => {
+      document.removeEventListener("visibilitychange", recoverStadiumPaint);
+      window.removeEventListener("focus", recoverStadiumPaint);
+      window.removeEventListener("pageshow", recoverStadiumPaint);
+    };
+  }, [mounted]);
+
   if (!mounted) return null;
 
   return createPortal(
-    <div ref={heroFixedRef} className={styles.heroFixed}>
+    <div
+      key={paintNonce}
+      ref={heroFixedRef}
+      data-paint-nonce={paintNonce}
+      className={`${styles.heroFixed} ${styles.scrollOptimized} ${
+        shouldReduceScrollEffects() ? styles.performanceMode : ""
+      }`}
+    >
       <div className={styles.atmosphere}>
         <div className={styles.atmosphereCenterGlow} />
         <div className={styles.atmosphereTopGlow} />
@@ -331,7 +424,7 @@ export default function BackgroundStadium() {
           <div className={`${styles.standTier} ${styles.standEast}`} />
           <div className={`${styles.cornerTower} ${styles.cornerTowerNW} ${styles.povLightGroup} ${styles.lightHero} ${styles.lightFar} ${styles.lightLeft}`}>
             <div className={styles.bulbGrid}>
-              {[...Array(9)].map((_, j) => (
+              {[...Array(12)].map((_, j) => (
                 <div key={j} className={styles.floodFixture}>
                   <span className={styles.floodLens} />
                 </div>
@@ -340,7 +433,7 @@ export default function BackgroundStadium() {
           </div>
           <div className={`${styles.cornerTower} ${styles.cornerTowerNE} ${styles.povLightGroup} ${styles.lightHero} ${styles.lightFar} ${styles.lightRight}`}>
             <div className={styles.bulbGrid}>
-              {[...Array(9)].map((_, j) => (
+              {[...Array(12)].map((_, j) => (
                 <div key={j} className={styles.floodFixture}>
                   <span className={styles.floodLens} />
                 </div>
@@ -349,7 +442,7 @@ export default function BackgroundStadium() {
           </div>
           <div className={`${styles.cornerTower} ${styles.cornerTowerSW} ${styles.povLightGroup} ${styles.lightNear} ${styles.lightLeft}`}>
             <div className={styles.bulbGrid}>
-              {[...Array(9)].map((_, j) => (
+              {[...Array(12)].map((_, j) => (
                 <div key={j} className={styles.floodFixture}>
                   <span className={styles.floodLens} />
                 </div>
@@ -358,7 +451,7 @@ export default function BackgroundStadium() {
           </div>
           <div className={`${styles.cornerTower} ${styles.cornerTowerSE} ${styles.povLightGroup} ${styles.lightNear} ${styles.lightRight}`}>
             <div className={styles.bulbGrid}>
-              {[...Array(9)].map((_, j) => (
+              {[...Array(12)].map((_, j) => (
                 <div key={j} className={styles.floodFixture}>
                   <span className={styles.floodLens} />
                 </div>

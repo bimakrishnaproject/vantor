@@ -144,7 +144,7 @@ export default function AboutClient({ data }: AboutClientProps) {
               />
             </div>
             <div className={styles.execCopy}>
-              <span className={styles.label}>Letter from the CEO</span>
+              <span className={styles.label}>From the Network Desk</span>
               <h1 className={styles.execName}>{data.team.members[0].name}</h1>
               <span className={styles.execTitle}>{data.team.members[0].role}</span>
               <p className={styles.execBio}>
@@ -162,7 +162,7 @@ export default function AboutClient({ data }: AboutClientProps) {
       <section className={styles.section}>
         <div className={`${styles.inner} ${styles.centered}`}>
           <blockquote ref={quoteRef} className={styles.quote}>
-            &ldquo;Strategic by scale, precise by nature.&rdquo;
+            &ldquo;The advantage is not buying attention. The advantage is owning where attention already gathers.&rdquo;
           </blockquote>
         </div>
       </section>
@@ -171,7 +171,7 @@ export default function AboutClient({ data }: AboutClientProps) {
       <section className={`${styles.section} ${styles.bgSecondary}`}>
         <div className={styles.inner}>
           <ScrollReveal animation="fade-up">
-            <SectionHeading label="Our Team" title={data.team.title} />
+            <SectionHeading label="Operators" title={data.team.title} />
           </ScrollReveal>
           
           <ScrollReveal animation="stagger-children" stagger={0.15}>
@@ -194,7 +194,7 @@ export default function AboutClient({ data }: AboutClientProps) {
                       <span className={styles.memberRole}>{m.role}</span>
                       <div className={styles.memberDivider} />
                       <p className={styles.memberBio}>
-                        Driving growth, compliance, and global scaling strategies across all verticals.
+                        Operating audience access, placement control, compliance, and hands-on execution across the network.
                       </p>
                     </div>
                   </div>
@@ -209,7 +209,7 @@ export default function AboutClient({ data }: AboutClientProps) {
       <section className={`${styles.section} ${styles.bgSecondary}`}>
         <div className={styles.inner}>
           <ScrollReveal animation="fade-up">
-            <SectionHeading label="Network" title="Operating at Scale" align="center" />
+            <SectionHeading label="Owned Scale" title="The Audience Layer in Operation" align="center" />
           </ScrollReveal>
           
           <ScrollReveal animation="stagger-children" stagger={0.1}>
@@ -235,7 +235,7 @@ export default function AboutClient({ data }: AboutClientProps) {
       <section className={styles.section}>
         <div className={styles.inner}>
           <ScrollReveal animation="fade-up">
-            <SectionHeading label="Partners" title={data.partners.title} align="center" />
+            <SectionHeading label="Access" title={data.partners.title} align="center" />
           </ScrollReveal>
           
           <ScrollReveal animation="stagger-children" stagger={0.1}>

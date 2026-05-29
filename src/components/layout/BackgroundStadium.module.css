@@ -26,16 +26,26 @@
   position: fixed;
   top: 0;
   left: 0;
-  z-index: -10;
+  z-index: 0;
   width: 100%;
   height: 100vh;
   height: 100svh;
   /* background removed for transparent stadium overlay */
   overflow: hidden;
-  pointer-events: auto;
+  pointer-events: none;
   perspective: 1400px;
   perspective-origin: 50% 50%;
   transform-style: preserve-3d;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+}
+
+.performanceMode {
+  pointer-events: none;
+}
+
+.scrollOptimized {
+  pointer-events: none;
 }
 
 .heroFixed::before {
@@ -676,7 +686,6 @@
     transparent 84%
   );
   clip-path: polygon(44% 0, 56% 0, 100% 100%, 0 100%);
-  transition: filter 1.6s ease;
 }
 
 .beamTL {
@@ -717,6 +726,8 @@
   perspective: 1650px;
   perspective-origin: 50% 42%;
   transform-origin: 50% 72%;
+  will-change: transform;
+  backface-visibility: hidden;
 }
 
 .pitch::before,
@@ -767,6 +778,7 @@
   transform: rotateX(61deg) translateZ(-28px);
   transform-origin: 50% 42%;
   transform-style: preserve-3d;
+  backface-visibility: hidden;
   pointer-events: none;
 }
 
@@ -774,6 +786,8 @@
   content: "";
   position: absolute;
   inset: 4% 2% 7%;
+  transform: translate3d(0, 0, -8px);
+  backface-visibility: hidden;
   border: 2px solid rgba(150, 229, 255, 0.58);
   border-radius: 36px;
   background:
@@ -810,6 +824,8 @@
   content: "";
   position: absolute;
   inset: 17% 11% 17%;
+  transform: translate3d(0, 0, -4px);
+  backface-visibility: hidden;
   border-radius: 26px;
   background:
     radial-gradient(
@@ -829,11 +845,13 @@
   position: absolute;
   pointer-events: none;
   border-style: solid;
+  backface-visibility: hidden;
 }
 
 .stadiumOuterRim {
   inset: 0;
   z-index: 4;
+  transform: translate3d(0, 0, 10px);
   border-width: 3px;
   border-color: rgba(223, 255, 247, 0.46);
   border-radius: 42px;
@@ -865,6 +883,7 @@
 .stadiumInnerRim {
   inset: 17% 11% 17%;
   z-index: 5;
+  transform: translate3d(0, 0, 14px);
   border-width: 2px;
   border-color: rgba(230, 255, 247, 0.58);
   border-radius: 27px;
@@ -877,6 +896,7 @@
 .upperDeck {
   position: absolute;
   z-index: 3;
+  backface-visibility: hidden;
   border: 1px solid rgba(214, 255, 246, 0.3);
   border-radius: 20px;
   background:
@@ -903,6 +923,8 @@
   content: "";
   position: absolute;
   inset: 9px;
+  transform: translate3d(0, 0, 1px);
+  backface-visibility: hidden;
   border-radius: inherit;
   background:
     repeating-linear-gradient(
@@ -951,6 +973,7 @@
 .standTier {
   position: absolute;
   z-index: 6;
+  backface-visibility: hidden;
   border: 1px solid rgba(221, 255, 246, 0.42);
   border-radius: 22px;
   background:
@@ -983,6 +1006,8 @@
   content: "";
   position: absolute;
   inset: 7px;
+  transform: translate3d(0, 0, 1px);
+  backface-visibility: hidden;
   border-radius: inherit;
   background:
     linear-gradient(
@@ -1004,6 +1029,8 @@
   content: "";
   position: absolute;
   inset: 0;
+  transform: translate3d(0, 0, 2px);
+  backface-visibility: hidden;
   border-radius: inherit;
   background:
     linear-gradient(
@@ -1057,128 +1084,198 @@
 .cornerTower {
   --light-intensity: 0.06;
   position: absolute;
-  z-index: 3;
-  width: 3.5%;
-  min-width: 30px;
-  aspect-ratio: 0.45;
-  border-radius: 50% 50% 10px 10px;
-  background: linear-gradient(90deg, #07131d, #d8edf0 46%, #132833);
+  z-index: 7;
+  width: 8%;
+  min-width: 72px;
+  max-width: 118px;
+  aspect-ratio: 2.6 / 1;
+  border-radius: 6px;
+  background:
+    linear-gradient(110deg, rgba(255, 255, 255, 0.16), transparent 34%),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.08) 0 1px,
+      transparent 1px 12px
+    ),
+    linear-gradient(180deg, #203841 0%, #0b161b 58%, #04080b 100%);
+  border: 1px solid rgba(188, 220, 218, 0.24);
+  border-bottom: 3px solid rgba(3, 8, 11, 0.94);
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
   box-shadow:
-    0 0 calc(12px + (var(--light-intensity) * 24px))
-      rgba(232, 255, 255, calc(0.12 + (var(--light-intensity) * 0.38))),
-    0 0 calc(30px + (var(--light-intensity) * 90px))
-      rgba(0, 229, 255, calc(0.08 + (var(--light-intensity) * 0.22))),
-    0 24px 42px rgba(0, 0, 0, 0.72);
+    inset 0 2px 8px rgba(255, 255, 255, 0.1),
+    inset 0 -10px 14px rgba(0, 0, 0, 0.5),
+    0 14px 28px rgba(0, 0, 0, 0.62);
+}
+
+.cornerTower::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 44%;
+  z-index: 2;
+  width: 78%;
+  height: 42%;
+  transform: translateX(-50%) translateZ(2px);
+  border-inline: 2px solid rgba(190, 220, 217, 0.28);
+  border-bottom: 2px solid rgba(190, 220, 217, 0.22);
+  border-radius: 0 0 14px 14px;
+  background:
+    linear-gradient(180deg, rgba(28, 45, 51, 0.85), rgba(3, 8, 11, 0.16));
+  box-shadow: 0 8px 14px rgba(0, 0, 0, 0.38);
 }
 
 .cornerTower::before {
   content: "";
   position: absolute;
   left: 50%;
-  top: -24%;
-  width: 300px;
-  height: 430px;
-  transform: translateX(-50%);
+  top: 38%;
+  width: 240px;
+  height: 260px;
+  transform: translateX(-50%) translateZ(-1px);
   background: linear-gradient(
     180deg,
-    rgba(245, 255, 255, calc(0.03 + (var(--light-intensity) * 0.18))),
-    rgba(0, 229, 255, calc(0.01 + (var(--light-intensity) * 0.055))) 48%,
+    rgba(245, 255, 255, calc(0.008 + (var(--light-intensity) * 0.06))),
+    rgba(0, 229, 255, calc(0.004 + (var(--light-intensity) * 0.025))) 48%,
     transparent 84%
   );
-  clip-path: polygon(44% 0, 56% 0, 100% 100%, 0 100%);
-  filter: blur(12px);
-  opacity: calc(0.08 + (var(--light-intensity) * 0.84));
+  clip-path: polygon(37% 0, 63% 0, 100% 100%, 0 100%);
+  filter: blur(8px);
+  opacity: calc(0.035 + (var(--light-intensity) * 0.28));
 }
 
 .bulbGrid {
   position: absolute;
   left: 50%;
-  top: -22%;
-  z-index: 2;
-  width: 84px;
-  min-width: 72px;
-  padding: 7px;
+  bottom: 62%;
+  z-index: 3;
+  width: clamp(54px, 4.8vw, 78px);
+  min-width: 54px;
+  padding: 6px;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 5px;
-  transform: translateX(-50%) rotateX(5deg);
-  border: 1px solid rgba(211, 255, 250, 0.42);
-  border-radius: 8px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 4px;
+  transform: translateX(-50%) rotateX(8deg);
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  border: 1px solid rgba(203, 228, 226, 0.42);
+  border-bottom: 4px solid rgba(4, 9, 12, 0.96);
+  border-radius: 8px 8px 11px 11px;
   background:
-    linear-gradient(180deg, rgba(210, 225, 224, 0.34), rgba(12, 28, 35, 0.94)),
+    linear-gradient(130deg, rgba(255, 255, 255, 0.2), transparent 28%),
     repeating-linear-gradient(
-      90deg,
-      transparent 0 18px,
-      rgba(255, 255, 255, 0.12) 18px 19px
-    );
+      180deg,
+      rgba(255, 255, 255, 0.07) 0 1px,
+      transparent 1px 7px
+    ),
+    linear-gradient(180deg, #253f49 0%, #101f26 48%, #05090d 100%);
   box-shadow:
-    inset 0 0 12px rgba(255, 255, 255, 0.16),
-    0 12px 26px rgba(0, 0, 0, 0.68);
+    inset 0 2px 10px rgba(255, 255, 255, 0.14),
+    inset 0 -12px 14px rgba(0, 0, 0, 0.46),
+    0 9px 16px rgba(0, 0, 0, 0.58),
+    0 0 calc(6px + (var(--light-intensity) * 12px))
+      rgba(0, 229, 255, calc(0.025 + (var(--light-intensity) * 0.06)));
 }
 
 .bulbGrid::before {
   content: "";
   position: absolute;
   left: 50%;
-  bottom: -11px;
-  width: 62%;
-  height: 10px;
+  bottom: -14px;
+  width: 76%;
+  height: 14px;
   transform: translateX(-50%);
-  border-radius: 2px;
-  background: linear-gradient(90deg, #061016, #c5d7d8 50%, #07131a);
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.5);
+  border-inline: 3px solid rgba(166, 192, 191, 0.42);
+  border-bottom: 3px solid rgba(166, 192, 191, 0.32);
+  border-radius: 0 0 16px 16px;
+  background: linear-gradient(180deg, rgba(8, 15, 19, 0.96), rgba(3, 6, 8, 0.2));
+  box-shadow: 0 10px 14px rgba(0, 0, 0, 0.52);
+}
+
+.bulbGrid::after {
+  content: "";
+  position: absolute;
+  left: 9px;
+  right: 9px;
+  top: 7px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+  opacity: 0.42;
 }
 
 .floodFixture {
   position: relative;
-  aspect-ratio: 1;
+  aspect-ratio: 1.08 / 0.86;
   border-radius: 4px;
   background:
-    linear-gradient(145deg, rgba(242, 255, 249, 0.2), transparent 36%),
-    linear-gradient(180deg, #15252c, #050a0e 72%);
-  border: 1px solid rgba(214, 245, 242, 0.38);
+    radial-gradient(ellipse at 50% 45%, rgba(255, 255, 255, 0.08), transparent 52%),
+    linear-gradient(145deg, rgba(242, 255, 249, 0.18), transparent 30%),
+    linear-gradient(180deg, #1c3038 0%, #081015 78%);
+  border: 1px solid rgba(205, 232, 229, 0.28);
   box-shadow:
-    inset 0 0 8px rgba(0, 0, 0, 0.8),
-    0 1px 2px rgba(255, 255, 255, 0.08);
+    inset 0 0 9px rgba(0, 0, 0, 0.78),
+    inset 0 1px 4px rgba(255, 255, 255, 0.14),
+    0 1px 2px rgba(255, 255, 255, 0.07);
+}
+
+.floodFixture::before,
+.floodFixture::after {
+  content: "";
+  position: absolute;
+  left: 14%;
+  right: 14%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.floodFixture::before {
+  top: 22%;
+}
+
+.floodFixture::after {
+  bottom: 18%;
 }
 
 .floodLens {
   position: absolute;
-  inset: 22%;
+  inset: 21% 24%;
   border-radius: 50%;
   background:
     radial-gradient(
       circle,
-      rgba(255, 255, 235, calc(0.18 + (var(--light-intensity) * 0.82))) 0 32%,
-      rgba(183, 244, 255, calc(0.1 + (var(--light-intensity) * 0.42))) 52%,
-      rgba(30, 64, 72, 0.75) 72%
-    );
+      rgba(255, 255, 240, calc(0.16 + (var(--light-intensity) * 0.5))) 0 25%,
+      rgba(185, 244, 255, calc(0.12 + (var(--light-intensity) * 0.28))) 48%,
+      rgba(26, 54, 62, 0.86) 72%
+    ),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.28), transparent 40%);
+  border: 1px solid rgba(236, 255, 250, 0.3);
   box-shadow:
-    0 0 calc(2px + (var(--light-intensity) * 8px))
-      rgba(255, 255, 230, calc(0.18 + (var(--light-intensity) * 0.68))),
-    0 0 calc(7px + (var(--light-intensity) * 22px))
-      rgba(0, 229, 255, calc(0.08 + (var(--light-intensity) * 0.28)));
+    inset 0 0 5px rgba(255, 255, 255, 0.26),
+    0 0 calc(2px + (var(--light-intensity) * 5px))
+      rgba(255, 255, 230, calc(0.12 + (var(--light-intensity) * 0.34))),
+    0 0 calc(5px + (var(--light-intensity) * 13px))
+      rgba(0, 229, 255, calc(0.05 + (var(--light-intensity) * 0.16)));
 }
 
 .cornerTowerNW {
-  top: 5%;
-  left: 7%;
-  transform: translateZ(120px) rotateZ(-12deg);
+  top: 3%;
+  left: 13%;
+  transform: translateZ(-142px) translateY(-20px) rotateZ(-3deg);
 }
 .cornerTowerNE {
-  top: 5%;
-  right: 7%;
-  transform: translateZ(120px) rotateZ(12deg);
+  top: 3%;
+  right: 13%;
+  transform: translateZ(-142px) translateY(-20px) rotateZ(3deg);
 }
 .cornerTowerSW {
-  bottom: 4%;
-  left: 5%;
-  transform: translateZ(180px) rotateZ(-8deg);
+  bottom: 5%;
+  left: 12%;
+  transform: translateZ(136px) translateY(16px) rotateZ(3deg);
 }
 .cornerTowerSE {
-  bottom: 4%;
-  right: 5%;
-  transform: translateZ(180px) rotateZ(8deg);
+  bottom: 5%;
+  right: 12%;
+  transform: translateZ(136px) translateY(16px) rotateZ(-3deg);
 }
 
 .pitchBase {
@@ -1188,6 +1285,7 @@
   border-radius: 18px;
   transform: rotateX(63deg) translate3d(0, 38px, 68px);
   transform-origin: 50% 48%;
+  backface-visibility: hidden;
   background:
     linear-gradient(180deg, rgba(26, 74, 56, 0.92), rgba(2, 12, 10, 0.98) 68%),
     linear-gradient(
@@ -1219,7 +1317,7 @@
       transparent 1px 34px
     ),
     linear-gradient(180deg, rgba(0, 229, 255, 0.12), rgba(0, 0, 0, 0.78));
-  filter: blur(0.2px);
+  backface-visibility: hidden;
 }
 
 .pitchBase::before {
@@ -1267,6 +1365,7 @@
     0 0 44px rgba(0, 229, 255, 0.22);
   transform: rotateX(63deg) translateZ(138px);
   transform-origin: 50% 48%;
+  backface-visibility: hidden;
 }
 
 .pitchSurface::before {
@@ -1329,8 +1428,8 @@
   position: absolute;
   z-index: 2;
   border-color: rgba(0, 229, 255, 0.4);
-  filter: drop-shadow(0 0 10px rgba(0, 229, 255, 0.5));
   pointer-events: none;
+  backface-visibility: hidden;
 }
 
 .digitalGrid {
@@ -1355,7 +1454,6 @@
   translate: -50% -50%;
   border: 2px dashed rgba(0, 229, 255, 0.3);
   border-radius: 50%;
-  animation: slowSpin 40s linear infinite;
 }
 
 .digitalRingMedium {
@@ -1454,7 +1552,7 @@
       transparent 68%
     ),
     radial-gradient(ellipse at 50% 90%, rgba(0, 0, 0, 0.85), transparent 62%);
-  filter: blur(60px);
+  filter: blur(28px);
   opacity: 1;
 }
 
@@ -1473,7 +1571,52 @@
   background: rgba(255, 255, 255, 0.4);
   border-radius: 50%;
   box-shadow: 0 0 8px 2px rgba(0, 255, 120, 0.4);
-  animation: dustDrift infinite alternate ease-in-out;
+  opacity: 0.18;
+}
+
+.scrollOptimized .beam {
+  filter: blur(8px);
+  opacity: 0.18;
+}
+
+.scrollOptimized .dustParticle {
+  animation: none;
+}
+
+.scrollOptimized .digitalRingLarge,
+.scrollOptimized .digitalRingMedium,
+.scrollOptimized .digitalRingSmall,
+.scrollOptimized .dataNodeLeft,
+.scrollOptimized .dataNodeRight,
+.scrollOptimized .dataNodeCenter {
+  box-shadow: none;
+}
+
+.scrollOptimized .pitchGlow,
+.scrollOptimized .atmosphereCenterGlow,
+.scrollOptimized .atmosphereTopGlow {
+  filter: blur(18px);
+}
+
+.performanceMode .dustParticle {
+  animation: none;
+  opacity: 0.12;
+}
+
+.performanceMode .beam {
+  filter: blur(8px);
+  opacity: 0.18;
+}
+
+.performanceMode .atmosphereCenterGlow,
+.performanceMode .pitchGlow {
+  filter: blur(18px);
+}
+
+.performanceMode .digitalRingLarge,
+.performanceMode .digitalRingMedium,
+.performanceMode .digitalRingSmall {
+  animation-duration: 44s;
 }
 
 @keyframes dustDrift {
@@ -1856,6 +1999,23 @@
 
 /* ─── Responsive ────────────────────────────────────────────── */
 @media (max-width: 768px) {
+  .heroFixed {
+    pointer-events: none;
+  }
+  .beams,
+  .dustContainer {
+    opacity: 0.45;
+  }
+  .dustParticle {
+    animation: none;
+    opacity: 0.08;
+  }
+  .atmosphereCenterGlow,
+  .pitchGlow,
+  .pitch::before,
+  .pitch::after {
+    filter: blur(14px);
+  }
   .headline {
     font-size: 2.8rem;
   }
@@ -1885,9 +2045,19 @@
   .upperDeckEast {
     width: 12%;
   }
+  .cornerTower {
+    min-width: 54px;
+    width: 9%;
+  }
   .cornerTower::before {
-    width: 170px;
-    height: 280px;
+    width: 130px;
+    height: 180px;
+  }
+  .bulbGrid {
+    width: 56px;
+    min-width: 56px;
+    gap: 3px;
+    padding: 5px;
   }
   .standNorth,
   .standSouth {
@@ -1905,7 +2075,7 @@
 
 .heroScrollWrapper {
   position: relative;
-  z-index: 50; /* Above the -10 fixed stadium */
+  z-index: 50;
   width: 100%;
   height: 100%;
 }

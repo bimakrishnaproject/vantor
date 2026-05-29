@@ -30,10 +30,10 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
     template: "%s | Vantor Ventures",
-    default: "Vantor Ventures | Premium Media Buying & Entertainment Ecosystem",
+    default: "Vantor Ventures | Owned Audience Infrastructure",
   },
   description:
-    "Vantor Ventures delivers immersive media buying solutions across Audio, eCommerce, Mobile Apps, and Casino verticals with data-driven performance marketing.",
+    "Vantor Ventures owns and operates audience surfaces across audio, commerce, mobile apps, iGaming, sports, entertainment, and culture for direct media placement.",
   openGraph: {
     type: "website",
     siteName: "Vantor Ventures",

@@ -31,6 +31,7 @@ export function useScrollAnimation(
         scrollTrigger: {
           trigger: el,
           ...SCROLL_TRIGGER_DEFAULTS,
+          once: true,
           ...scrollTriggerOptions,
         },
       });

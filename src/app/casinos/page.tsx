@@ -3,8 +3,8 @@ import { getVerticalPageBySlug } from "@/lib/cms";
 import PremiumVerticalPage from "@/components/verticals/PremiumVerticalPage";
 
 export const metadata: Metadata = {
-  title: "Casino & iGaming Media",
-  description: "Compliance-first performance marketing for real-money gaming and social casinos.",
+  title: "Casino & iGaming Audience Access",
+  description: "Controlled placement inside owned sports, gaming, and entertainment audience surfaces.",
 };
 
 export default async function CasinosPage() {

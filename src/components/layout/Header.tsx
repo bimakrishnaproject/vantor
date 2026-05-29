@@ -16,12 +16,13 @@ export default function Header() {
 
   useEffect(() => {
     let ticking = false;
+    let frame: number | null = null;
 
     const onScroll = () => {
       if (ticking) return;
 
       ticking = true;
-      requestAnimationFrame(() => {
+      frame = requestAnimationFrame(() => {
         const y = window.scrollY;
         const nextScrolled = y > 96;
         const scrollingDown = y > lastScrollY.current + 8;
@@ -39,11 +40,15 @@ export default function Header() {
 
         lastScrollY.current = y;
         ticking = false;
+        frame = null;
       });
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (frame !== null) cancelAnimationFrame(frame);
+    };
   }, []);
 
   // Lock body scroll while mobile menu is open
@@ -93,7 +98,7 @@ export default function Header() {
 
       <div className={styles.ctaWrap}>
         <Link href="/contact" className={styles.cta}>
-          Get Started
+          Request Access
           <span className={styles.ctaArrow} aria-hidden="true">
             →
           </span>
@@ -130,12 +135,12 @@ export default function Header() {
 
             <div className={styles.overlayIntro}>
               <p className={styles.overlayKicker}>
-                Premium media buying ecosystem
+                Owned audience infrastructure
               </p>
-              <p className={styles.overlayTitle}>Navigate with clarity.</p>
+              <p className={styles.overlayTitle}>Enter the network.</p>
               <p className={styles.overlayBody}>
-                Explore the core verticals, learn more about the team, or start
-                a project.
+                Explore owned audience layers, see how placement works, or
+                request access.
               </p>
             </div>
 
@@ -167,7 +172,7 @@ export default function Header() {
               className={`${styles.cta} ${styles.overlayCta}`}
               onClick={() => setMenuOpen(false)}
             >
-              Get Started
+              Request Access
               <span className={styles.ctaArrow} aria-hidden="true">
                 →
               </span>

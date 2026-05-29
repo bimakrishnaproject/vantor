@@ -80,6 +80,31 @@ export function prefersReducedMotion(): boolean {
   );
 }
 
+export function isTouchDevice(): boolean {
+  return (
+    typeof window !== "undefined" &&
+    (window.matchMedia("(pointer: coarse)").matches ||
+      navigator.maxTouchPoints > 0)
+  );
+}
+
+export function isLowEndDevice(): boolean {
+  if (typeof window === "undefined") return false;
+
+  const nav = navigator as Navigator & { deviceMemory?: number };
+  const lowMemory = typeof nav.deviceMemory === "number" && nav.deviceMemory <= 4;
+  const lowCoreCount =
+    typeof navigator.hardwareConcurrency === "number" &&
+    navigator.hardwareConcurrency <= 4;
+
+  return lowMemory || lowCoreCount;
+}
+
+export function shouldReduceScrollEffects(): boolean {
+  if (typeof window === "undefined") return false;
+  return prefersReducedMotion() || isLowEndDevice();
+}
+
 /* ===== UTILITY FUNCTIONS ===== */
 
 type GsapTarget = gsap.DOMTarget;
@@ -184,7 +209,8 @@ export function createParallax(
   speed = 0.2
 ): gsap.core.Tween | null {
   if (prefersReducedMotion()) return null;
-  const shift = Math.min(0.5, Math.max(0.1, speed)) * 100;
+  const reducedEffects = shouldReduceScrollEffects();
+  const shift = Math.min(reducedEffects ? 0.18 : 0.5, Math.max(0.08, speed)) * 100;
 
   return gsap.fromTo(
     element,
@@ -196,7 +222,8 @@ export function createParallax(
         trigger: element as gsap.DOMTarget,
         start: "top bottom",
         end: "bottom top",
-        scrub: true,
+        scrub: reducedEffects ? 1.8 : 0.8,
+        fastScrollEnd: true,
       },
     }
   );
@@ -219,10 +246,11 @@ export function createStaggeredEntrance(
 
   return gsap.from(elements, {
     ...fromVars,
-    stagger,
+    stagger: Math.min(stagger, shouldReduceScrollEffects() ? 0.04 : 0.08),
     scrollTrigger: {
       trigger: firstEl,
       ...SCROLL_TRIGGER_DEFAULTS,
+      once: true,
     },
   });
 }

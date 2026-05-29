@@ -4,8 +4,8 @@ import { getAboutData } from "@/lib/cms";
 import AboutClient from "./AboutClient";
 
 export const metadata: Metadata = {
-  title: "About Us",
-  description: "Meet the team behind Vantor Ventures. A full-spectrum media buying powerhouse operating across 45+ markets and 5 continents.",
+  title: "About the Network",
+  description: "Vantor Ventures owns audience access across 45+ markets, operating media surfaces directly rather than renting attention from third parties.",
 };
 
 export default async function AboutPage() {
@@ -18,4 +18,3 @@ export default async function AboutPage() {
     </>
   );
 }
-

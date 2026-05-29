@@ -37,8 +37,8 @@ export default function ServicesSection({ data }: ServicesProps) {
         <ScrollReveal animation="fade-up">
           <div className={styles.heading}>
             <SectionHeading
-              label="Our Ecosystem"
-              title="Five Verticals, One Vision"
+              label="Direct Access"
+              title="Five Owned Paths Into Sports and Entertainment Audiences"
               align="center"
             />
           </div>

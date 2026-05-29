@@ -1,5 +1,6 @@
 import { homepageData } from "@/data/homepage";
 import { verticalsData } from "@/data/verticals";
+import type { VerticalData } from "@/data/verticals";
 import { aboutData } from "@/data/about";
 import { contactData } from "@/data/contact";
 
@@ -11,7 +12,12 @@ export interface PageACFData {
   primary_cta_url?: string;
   secondary_cta_text?: string;
   secondary_cta_url?: string;
-  [key: string]: any;
+  cta_headline?: string;
+  cta_subtext?: string;
+  cta_button_text?: string;
+  hero_headline?: string;
+  hero_cta_text?: string;
+  [key: string]: unknown;
 }
 
 export interface PageData {
@@ -25,6 +31,13 @@ export interface PageData {
 
 const WP_API_URL = process.env.WORDPRESS_API_URL || 'https://kols.io/wp-json/wp/v2';
 const USE_WP = process.env.USE_WORDPRESS === 'true'; // Feature flag for future integration
+const CASE_STUDY_SLUGS: Record<string, string> = {
+  audio: "streaming-launch",
+  ecommerce: "fashion-roas",
+  "mobile-apps": "marketplace-expansion",
+  casinos: "eu-sportsbook",
+  other: "global-network-placement",
+};
 
 export async function getPageBySlug(slug: string): Promise<PageData | null> {
   if (!USE_WP) return null; // Force fallback to local data for now
@@ -48,7 +61,7 @@ export async function getPageBySlug(slug: string): Promise<PageData | null> {
 
 export async function getHomepageData() {
   const wpPage = await getPageBySlug('home');
-  const acf: any = wpPage?.acf || {};
+  const acf: PageACFData = wpPage?.acf ?? {};
 
   return {
     ...homepageData,
@@ -68,80 +81,81 @@ export async function getHomepageData() {
 
 export async function getVerticalPageBySlug(slug: string) {
   const wpPage = await getPageBySlug(slug);
-  const acf: any = wpPage?.acf || {};
-  const localData = verticalsData[slug] || verticalsData.other;
+  const acf: PageACFData = wpPage?.acf ?? {};
+  const localData: VerticalData = verticalsData[slug] || verticalsData.other;
 
   return {
     ...localData,
     title: wpPage?.title?.rendered || localData.title,
+    description: localData.hero.description,
     hero: {
       ...localData.hero,
       headline: acf.hero_headline || localData.hero.headline,
       description: acf.hero_description || localData.hero.description,
-      ctaText: acf.hero_cta_text || "Start a Campaign",
+      ctaText: acf.hero_cta_text || "Request Placement",
       accentColor: localData.themeColor || "#ffffff"
     },
     features: {
-      label: "Capabilities",
-      title: "Precision Targeting & Execution",
-      items: localData.benefits.map((b: any) => ({
-        icon: "🎯",
+      label: "Audience Ownership",
+      title: "Direct Access Inside the Network",
+      items: localData.benefits.map((b) => ({
+        icon: "•",
         title: b.title,
         text: b.description
       }))
     },
     process: {
-      label: "Brand Alignment",
+      label: "Seamless Integration",
       title: localData.fit.title,
       steps: [
-        { number: 1, title: "Alignment", description: localData.fit.description },
-        { number: 2, title: "Execution", description: "We launch across premium inventory." },
-        { number: 3, title: "Scale", description: "We optimize and scale winning creatives." }
+        { number: 1, title: "Audience Map", description: localData.fit.description },
+        { number: 2, title: "Network Placement", description: "We place the message inside owned sports and entertainment channels where the audience already gathers." },
+        { number: 3, title: "Hands-On Control", description: "We manage timing, format, audience fit, and follow-through from inside the 60M+ follower network." }
       ]
     },
     stats: {
-      label: "By The Numbers",
-      title: "Proven Performance",
+      label: "Think Bigger",
+      title: "1B+ Monthly Views, 60M+ Followers",
       items: localData.metrics || [
-        { value: "3.2x", endValue: 3.2, suffix: "x", decimals: 1, label: "Average ROAS" },
-        { value: "45+", endValue: 45, suffix: "+", label: "Markets Reached" }
+        { value: "1B+", endValue: 1, suffix: "B+", label: "Monthly Network Views" },
+        { value: "60M+", endValue: 60, suffix: "M+", label: "Owned Follower Base" }
       ]
     },
     caseStudies: {
-      label: "Success Stories",
-      title: "Client Results",
+      label: "Results Driven",
+      title: "Placement Records From Owned Audience Surfaces",
       items: localData.caseStudy ? [
         {
           title: localData.caseStudy.title,
           client: localData.caseStudy.client,
           category: localData.title,
-          slug: `${slug}-case-study`,
+          slug: CASE_STUDY_SLUGS[slug] || "global-network-placement",
           metrics: localData.caseStudy.metrics
         }
       ] : [
         {
-          title: "Global Campaign Launch",
-          client: "Top Tier Brand",
+          title: "Global Network Placement",
+          client: "Cross-Vertical Network Access",
           category: localData.title,
-          slug: "global-campaign",
+          slug: "global-network-placement",
           metrics: [
-            { label: "ROAS", value: "4.8x" },
-            { label: "CPA", value: "-32%" }
+            { label: "Monthly Views", value: "1B+" },
+            { label: "Followers", value: "60M+" }
           ]
         }
       ]
     },
     cta: {
-      headline: acf.cta_headline || localData.cta?.headline || "Ready to dominate your market?",
-      subtext: acf.cta_subtext || localData.cta?.subtext || "Let's build your next high-performance campaign together.",
-      ctaText: acf.cta_button_text || "Get in Touch"
+      headline: acf.cta_headline || localData.cta?.headline || "Request access to the network",
+      subtext: acf.cta_subtext || localData.cta?.subtext || "Tell us the audience you need. We will identify the owned path across 1B+ monthly views and 60M+ followers.",
+      ctaText: acf.cta_button_text || "Request Placement"
     }
   };
 }
 
 export async function getAboutData() {
   const wpPage = await getPageBySlug('about');
-  const acf: any = wpPage?.acf || {};
+  const acf: PageACFData = wpPage?.acf ?? {};
 
   return {
     ...aboutData,
@@ -154,7 +168,7 @@ export async function getAboutData() {
 
 export async function getContactData() {
   const wpPage = await getPageBySlug('contact');
-  const acf: any = wpPage?.acf || {};
+  const acf: PageACFData = wpPage?.acf ?? {};
 
   return {
     ...contactData,

@@ -16,7 +16,10 @@ interface FormValues {
 
 interface ContactFormProps {
   formConfig?: {
-    fields: any[];
+    fields: {
+      name: string;
+      options?: string[];
+    }[];
     submitText: string;
   };
 }
@@ -40,7 +43,8 @@ export default function ContactForm({ formConfig }: ContactFormProps) {
       <div className={styles.success}>
         <h2 className={styles.successTitle}>Thank you!</h2>
         <p className={styles.successBody}>
-          We&apos;ll be in touch within 24 hours.
+          We&apos;ll map the owned audience surface and be in touch within 24
+          hours.
         </p>
       </div>
     );
@@ -48,10 +52,10 @@ export default function ContactForm({ formConfig }: ContactFormProps) {
 
   // Use config options if available, else default
   const campaignOptions = formConfig?.fields?.find(f => f.name === 'campaignType')?.options || [
-    "Audio Advertising", "eCommerce Acceleration", "Mobile App Growth", "Casino & Gaming", "Bespoke / Other"
+    "Audio Audience Access", "Commerce Feed Placement", "Mobile App Placement", "Casino & Gaming Access", "Custom Audience Surface"
   ];
   
-  const budgetOptions = formConfig?.fields?.find(f => f.name === 'budgetRange')?.options || [
+  const budgetOptions = formConfig?.fields?.find(f => f.name === 'budgetRange' || f.name === 'budget')?.options || [
     "$10k - $50k", "$50k - $100k", "$100k - $500k", "$500k+"
   ];
 
@@ -112,7 +116,7 @@ export default function ContactForm({ formConfig }: ContactFormProps) {
       <div className={styles.row}>
         <div className={styles.field}>
           <label className={styles.label} htmlFor="campaignType">
-            Campaign Type
+            Audience Layer
           </label>
           <select
             id="campaignType"
@@ -131,7 +135,7 @@ export default function ContactForm({ formConfig }: ContactFormProps) {
         </div>
         <div className={styles.field}>
           <label className={styles.label} htmlFor="budgetRange">
-            Budget Range
+            Placement Range
           </label>
           <select
             id="budgetRange"
@@ -152,14 +156,14 @@ export default function ContactForm({ formConfig }: ContactFormProps) {
 
       <div className={styles.field}>
         <label className={styles.label} htmlFor="message">
-          Message
+          Audience and Placement Need
         </label>
         <textarea
           id="message"
           rows={4}
           className={styles.textarea}
           {...register("message", {
-            required: "Tell us a bit about your project",
+            required: "Tell us who you need to reach",
           })}
         />
         {errors.message && (
@@ -169,7 +173,7 @@ export default function ContactForm({ formConfig }: ContactFormProps) {
 
       <div className={styles.submit}>
         <Button variant="primary" size="lg" type="submit">
-          {isSubmitting ? "Sending…" : (formConfig?.submitText || "Send Message")}
+          {isSubmitting ? "Sending…" : (formConfig?.submitText || "Request Access")}
         </Button>
       </div>
     </form>

@@ -1,70 +1,70 @@
 export const homepageData = {
   hero: {
-    label: "Owned Media Network",
-    headline: "Reach That Actually Converts",
-    subtext: "We don't just buy media; we own the communities. Tap into the largest sports, entertainment, and culture network to reach 60M+ passionate fans with placements that feel native and perform at scale.",
+    label: "Owned Audience Infrastructure",
+    headline: "Reach That Converts",
+    subtext: "Vantor owns the home for sports and entertainment's largest engaged communities: 60M+ followers and 1B+ monthly views across music, gaming, culture, commerce, and fan media. Brands do not rent attention through us. They enter channels we own, manage, and place by hand.",
     cta: {
-      text: "Explore Our Network",
+      text: "Enter the Network",
       link: "#services",
     },
   },
   positioning: {
-    headline: "THE NETWORK ADVANTAGE",
-    description: "Stop renting rented audiences. With 1B+ monthly views and deep roots in culture, our network gives your brand direct access to high-intent communities.",
+    headline: "THINK BIGGER",
+    description: "Most media buyers negotiate around other people's inventory. Vantor controls the audience surfaces directly, then uses 1B+ monthly views and 60M+ followers to place brands inside sports and entertainment communities that already move together.",
   },
   stats: [
     { value: "1B+", endValue: 1, suffix: "B+", label: "Monthly Views" },
     { value: "60M+", endValue: 60, suffix: "M+", label: "Followers" },
     { value: "5-10%", endValue: 10, suffix: "%", label: "Baseline Engagement" },
-    { value: "100%", endValue: 100, suffix: "%", label: "Accountable Results" },
-    { value: "3.2x", endValue: 3.2, suffix: "x", decimals: 1, label: "Average ROAS" },
-    { value: "45+", endValue: 45, suffix: "+", label: "Markets Reached" },
+    { value: "100%", endValue: 100, suffix: "%", label: "Hands-On Placement" },
+    { value: "3.2x", endValue: 3.2, suffix: "x", decimals: 1, label: "Observed ROAS" },
+    { value: "45+", endValue: 45, suffix: "+", label: "Active Markets" },
   ],
   services: [
     {
       title: "Audio",
-      description: "Where music fans actually live. From global superstars to emerging artists, our pages sit at the center of music fandom on Instagram. Whether you're promoting a release, growing streams, or driving platform sign-ups, our network puts audio brands inside the communities that set the soundtrack.",
+      description: "Music fans already gather around Vantor pages before the release cycle begins. Tracks, artists, platforms, and fan moments are placed inside owned music communities where discovery is part of the daily feed.",
       slug: "audio",
-      features: ["Create trending audio", "Artist aligned pages", "Increase streams"]
+      features: ["Owned music pages", "Artist aligned access", "Direct listening paths"]
     },
     {
       title: "eCommerce",
-      description: "Put your product in the feed they're already scrolling. Fan communities are passionate, loyal, and impulse-driven. When a placement feels native to the content around it, audiences don't just notice, they act.",
+      description: "Products move differently when they appear in channels the audience already trusts. Vantor places offers natively inside owned sports, culture, and entertainment feeds instead of cold ad inventory.",
       slug: "ecommerce",
-      features: ["Impulse ready audiences", "Native product integration", "Ability to amplify retargeting"]
+      features: ["Owned feed placement", "Impulse ready audiences", "Direct commerce paths"]
     },
     {
       title: "Mobile Apps",
-      description: "Fan communities are mobile-first by nature. When your app is introduced through content an audience already trusts, the conversion path shortens dramatically. Our network drives installs, not just impressions.",
+      description: "The network is already mobile-first, already scrolling, and already reacting. App placements enter owned feed environments as part of the content flow, shortening the path from attention to install.",
       slug: "mobile-apps",
-      features: ["Mobile first communities", "Install driven creative", "High engagement baseline"]
+      features: ["Mobile native reach", "Install ready placements", "High engagement baseline"]
     },
     {
       title: "Casinos",
-      description: "The audience every gaming and casino brand is looking for, already built. Tap into our diverse network of sports fans, entertainment audiences, and high-intent adults placed in front of your brand natively and at scale.",
+      description: "Sports and gaming intent already exists across the network. Regulated operators get direct placement into adult audience pockets where odds, competition, and entertainment are already part of the conversation.",
       slug: "casinos",
-      features: ["Audiences already placing bets", "Compliance conscious placements", "Geo targeted reach"]
+      features: ["Sports intent access", "Compliance aware placement", "Geo controlled reach"]
     },
     {
       title: "Other / Clipping",
-      description: "If your audience watches, follows, or cares we can reach them. Our network spans sports, entertainment, music, and culture. Tell us your goals and we'll show you where your brand fits inside the stadium.",
+      description: "Some audiences cannot be reached cleanly through standard media buys. Vantor routes messages through owned clipping, culture, and niche media surfaces across the 1B+ view network.",
       slug: "other",
-      features: ["Cross-vertical reach", "Custom placement strategy", "Built around your goals"]
+      features: ["Owned clipping surfaces", "Cross vertical routing", "Hands-on placement"]
     },
   ],
   featuredMetrics: {
-    title: "The Network Advantage",
+    title: "How Owned Reach Becomes Measurable Access",
     metrics: [
-      { label: "Unparalleled Engagement", value: "5-10%", trend: "up", subtext: "Real communities engage differently. When audiences are built around genuine interest, 5-10% engagement isn't a target, it's our baseline." },
-      { label: "Seamless Integration", value: "Native", trend: "up", subtext: "Audiences can smell inauthenticity and they scroll past it instantly. Every placement is crafted around the page it lives on." },
-      { label: "Results Driven", value: "CPM", trend: "up", subtext: "Our CPM model ensures every campaign is accountable to real results because reach that can't be measured isn't reach worth buying." },
-      { label: "Monthly Views", value: "1B+", trend: "up", subtext: "Backed by over a billion monthly views, our network gives brands access to the kind of reach that moves the needle." },
+      { label: "Think Bigger", value: "1B+", trend: "up", subtext: "A billion monthly views and 60M+ followers give brands access to sports and entertainment audiences they cannot assemble on demand." },
+      { label: "Unparalleled Engagement", value: "5-10%", trend: "up", subtext: "Real communities engage differently. When interest is genuine, five to ten percent engagement is the network baseline." },
+      { label: "Seamless Integration", value: "Native", trend: "up", subtext: "Every placement is crafted around the page it lives on, so the brand feels like part of the feed instead of an interruption." },
+      { label: "Results Driven", value: "CPM", trend: "up", subtext: "Direct placement is accountable to real delivery because reach that cannot be measured is not reach worth buying." },
     ],
   },
   caseStudies: [
     {
-      title: "Streaming Platform Launch",
-      client: "Audio Campaign",
+      title: "Streaming Platform Placement",
+      client: "Audio Network Access",
       category: "Audio",
       slug: "streaming-launch",
       metrics: [
@@ -74,8 +74,8 @@ export const homepageData = {
       ],
     },
     {
-      title: "Fashion Brand ROAS Boost",
-      client: "eCommerce",
+      title: "Fashion Drop Feed Placement",
+      client: "Commerce Network Access",
       category: "eCommerce",
       slug: "fashion-roas",
       metrics: [
@@ -86,9 +86,9 @@ export const homepageData = {
     },
   ],
   cta: {
-    headline: "Activate the Network",
-    subtext: "Tell us your goals and we'll place you inside the stadium.",
-    buttonText: "Book a Campaign",
+    headline: "Request Access to the Network",
+    subtext: "Tell us the audience you need. Vantor will show where that audience already lives across 60M+ followers, 1B+ monthly views, and owned sports and entertainment communities.",
+    buttonText: "Request Placement",
     buttonLink: "/contact",
   }
 };

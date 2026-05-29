@@ -11,7 +11,7 @@ interface BrandLogoProps {
 
 export default function BrandLogo({
   className = "",
-  variant = "logo1",
+  variant = "logo2",
   width = 180,
   height = 50,
 }: BrandLogoProps) {

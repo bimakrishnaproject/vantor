@@ -45,7 +45,7 @@ export default function Footer() {
           <div>
             <BrandLogo width={180} height={50} className={styles.logo} />
             <p className={styles.tagline}>
-              Premium media buying ecosystem delivering performance at scale.
+              Owned audience infrastructure for direct media placement.
             </p>
             <div className={styles.social}>
               {SOCIAL_LINKS.map((s) => (
@@ -77,9 +77,9 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Services */}
+          {/* Network */}
           <div>
-            <h2 className={styles.colTitle}>Services</h2>
+            <h2 className={styles.colTitle}>Network</h2>
             <ul className={styles.linkList}>
               {SERVICE_ITEMS.map((item) => (
                 <li key={item.href}>

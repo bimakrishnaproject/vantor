@@ -3,14 +3,14 @@ import { getVerticalPageBySlug } from "@/lib/cms";
 import PremiumVerticalPage from "@/components/verticals/PremiumVerticalPage";
 
 export const metadata: Metadata = {
-  title: "Custom Media Buying Solutions",
-  description: "Bespoke media strategies for unique verticals, high-ticket items, and specialized markets.",
+  title: "Custom Audience Surfaces",
+  description: "Owned clipping, culture, and niche media surfaces for audiences standard buys cannot reach.",
 };
 
 export default async function OtherPage() {
   const data = await getVerticalPageBySlug("other");
 
   return (
-    <PremiumVerticalPage data={data} slug="other" breadcrumbName="Other Solutions" />
+    <PremiumVerticalPage data={data} slug="other" breadcrumbName="Custom Audience Surfaces" />
   );
 }

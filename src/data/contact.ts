@@ -1,8 +1,8 @@
 export const contactData = {
   hero: {
-    label: "Activate the Network",
-    headline: "Book a Campaign",
-    description: "Ready to reach millions? Tell us about your brand, your goals, and your target audience. Our team will show you exactly where you fit inside our network."
+    label: "Network Access Desk",
+    headline: "Request Placement",
+    description: "Tell us the audience you need to reach, the market you need to enter, and the action you need from the feed. Vantor will identify where that audience already lives across 60M+ followers, 1B+ monthly views, and owned sports and entertainment communities."
   },
   form: {
     fields: [
@@ -11,34 +11,34 @@ export const contactData = {
       { name: "company", label: "Company", type: "text", required: true },
       { 
         name: "campaignType", 
-        label: "Primary Vertical", 
+        label: "Audience Layer", 
         type: "select", 
         options: ["Audio", "eCommerce", "Mobile Apps", "Casinos & iGaming", "Other / Custom"],
         required: true 
       },
       { 
         name: "budget", 
-        label: "Monthly Budget Range", 
+        label: "Monthly Placement Range", 
         type: "select", 
         options: ["$10k - $50k", "$50k - $100k", "$100k - $500k", "$500k+"],
         required: true 
       },
-      { name: "message", label: "Campaign Goals", type: "textarea", required: false }
+      { name: "message", label: "Audience, Market, and Placement Need", type: "textarea", required: false }
     ],
-    submitText: "Submit Request",
-    successMessage: "Thank you. Your request has been received. Our team will contact you shortly to discuss your campaign."
+    submitText: "Request Access",
+    successMessage: "Thank you. Your request has been received. Our team will contact you shortly to map the right owned audience surface."
   },
   info: {
-    title: "Global Operations",
+    title: "Network Operations",
     offices: [
       {
         city: "New York",
-        address: "HQ / Strategy & Media",
+        address: "HQ / Audience Access",
         email: "hello@vantorventures.com"
       },
       {
         city: "Los Angeles",
-        address: "Creative & Entertainment",
+        address: "Placement & Entertainment",
         email: "la@vantorventures.com"
       }
     ]
