@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import styles from "./CaseStudyCard.module.css";
 
@@ -27,6 +26,7 @@ export default function CaseStudyCard({
   slug,
   category,
 }: CaseStudyCardProps) {
+  const [isExpanded, setIsExpanded] = useState(false);
   const visualRef = useRef<HTMLDivElement>(null);
   const frame = useRef<number | null>(null);
 
@@ -37,6 +37,7 @@ export default function CaseStudyCard({
   }, []);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    if (isExpanded) return; // Disable hover effect when expanded
     const el = visualRef.current;
     if (!el) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -67,11 +68,12 @@ export default function CaseStudyCard({
      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80");
 
   return (
-    <Link
-      href={`/case-studies/${slug}`}
-      className={`${styles.card} card-3d`}
+    <button
+      onClick={() => setIsExpanded(!isExpanded)}
+      className={`${styles.card} card-3d ${isExpanded ? styles.expanded : ""}`}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
+      aria-expanded={isExpanded}
     >
       <div className={styles.media}>
         <span className={styles.badge}>{category}</span>
@@ -87,8 +89,16 @@ export default function CaseStudyCard({
         </div>
       </div>
       <div className={styles.body}>
-        <h3 className={styles.title}>{title}</h3>
-        <span className={styles.client}>{client}</span>
+        <div className={styles.headerRow}>
+          <div>
+            <h3 className={styles.title}>{title}</h3>
+            <span className={styles.client}>{client}</span>
+          </div>
+          <span className={styles.expandIcon} aria-hidden="true">
+            {isExpanded ? "−" : "+"}
+          </span>
+        </div>
+        
         <div className={styles.metrics}>
           {metrics.slice(0, 3).map((m) => (
             <div key={m.label} className={styles.metric}>
@@ -97,7 +107,14 @@ export default function CaseStudyCard({
             </div>
           ))}
         </div>
+
+        {/* Expandable Content Area */}
+        <div className={`${styles.expandableContent} ${isExpanded ? styles.showContent : ""}`}>
+          <p className={styles.caseStudyText}>
+            We engineered a targeted network placement strategy across our owned {category.toLowerCase()} surfaces to achieve unprecedented results for this campaign. By engaging communities naturally within their own feeds, we bypassed traditional ad friction and delivered high-intent audiences directly to the conversion point.
+          </p>
+        </div>
       </div>
-    </Link>
+    </button>
   );
 }

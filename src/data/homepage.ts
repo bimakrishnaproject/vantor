@@ -2,10 +2,10 @@ export const homepageData = {
   hero: {
     label: "Owned Audience Infrastructure",
     headline: "Reach That Converts",
-    subtext: "Vantor owns the home for sports and entertainment's largest engaged communities: 60M+ followers and 1B+ monthly views across music, gaming, culture, commerce, and fan media. Brands do not rent attention through us. They enter channels we own, manage, and place by hand.",
+    subtext: "The Home for Sports & Entertainment's Largest and Most Engaged Communities.",
     cta: {
       text: "Enter the Network",
-      link: "#services",
+      link: "#value-pillars",
     },
   },
   positioning: {

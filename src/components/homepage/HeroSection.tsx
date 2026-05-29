@@ -1,8 +1,4 @@
-"use client";
-
-import { useRef } from "react";
-import Button from "@/components/ui/Button";
-import styles from "./HeroSection.module.css";
+import CinematicScroller, { CinematicBlockData } from "@/components/layout/CinematicScroller";
 
 interface HeroProps {
   data: {
@@ -15,34 +11,66 @@ interface HeroProps {
 }
 
 export default function HeroSection({ data }: HeroProps) {
-  const sectionRef = useRef<HTMLElement>(null);
-  const overlayRef = useRef<HTMLDivElement>(null);
-  const hudRef = useRef<HTMLDivElement>(null);
+  const blocks: CinematicBlockData[] = [
+    {
+      id: "hero",
+      label: data.label,
+      title: data.headline,
+      description: data.subtext,
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
+      textAlign: "center",
+      startPercent: 0,
+      endPercent: 0.1,
+    },
+    {
+      id: "pillar1",
+      title: "Think Bigger",
+      description: "Backed by 1B+ monthly views and 60M+ followers, our network gives brands access to the kind of reach that moves the needle.",
+      top: "50%",
+      left: "10%",
+      transform: "translateY(-50%)",
+      textAlign: "left",
+      startPercent: 0.15,
+      endPercent: 0.25,
+    },
+    {
+      id: "pillar2",
+      title: "Unparalleled Engagement",
+      description: "Real communities engage differently. When audiences are built around genuine interest, 5-10% engagement isn't a target, it's our baseline.",
+      top: "50%",
+      left: "auto",
+      right: "10%",
+      transform: "translateY(-50%)",
+      textAlign: "right",
+      startPercent: 0.35,
+      endPercent: 0.45,
+    },
+    {
+      id: "pillar3",
+      title: "Seamless Integration",
+      description: "Audiences can smell inauthenticity and they scroll past it instantly. Every placement is crafted around the page it lives on, so the brand feels like a natural part of the feed, not an interruption.",
+      top: "50%",
+      left: "50%",
+      transform: "translateX(-50%)",
+      textAlign: "center",
+      startPercent: 0.55,
+      endPercent: 0.65,
+    },
+    {
+      id: "pillar4",
+      title: "Results Driven",
+      description: "Our CPM model ensures every campaign is accountable to real results because reach that can't be measured isn't reach worth buying.",
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
+      textAlign: "center",
+      maxWidth: "800px",
+      startPercent: 0.75,
+      endPercent: null, // stays until end
+    }
+  ];
 
-  return (
-    <section ref={sectionRef} className={styles.hero}>
-      {/* Background Stadium is now handled globally in app/page.tsx */}
-      
-      {/* Scrolling Interactive Content overlay */}
-      <div className={styles.heroScrollWrapper}>
-        <div ref={overlayRef} className={styles.heroOverlay}>
-          <div className={styles.heroContent}>
-            <span className={styles.label}>{data.label}</span>
-            <h1 className={styles.headline}>{data.headline}</h1>
-            <p className={styles.subtext}>{data.subtext}</p>
-            <div className={styles.ctaRow}>
-              <Button variant="primary" size="lg" href={data.cta?.link ?? "#"}>
-                {data.cta?.text ?? "Explore"}
-              </Button>
-            </div>
-          </div>
-        </div>
-
-        <div ref={hudRef} className={styles.hudContainer}>
-          <div className={styles.hudLeft}>NETWORK: ACTIVE</div>
-          <div className={styles.hudRight}>GLOBAL REACH</div>
-        </div>
-      </div>
-    </section>
-  );
+  return <CinematicScroller blocks={blocks} />;
 }
