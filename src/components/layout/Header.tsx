@@ -71,7 +71,8 @@ export default function Header() {
     .join(" ");
 
   return (
-    <header className={headerClass}>
+    <>
+      <header className={headerClass}>
       <BrandLogo
         variant="logo2"
         className={styles.logo}
@@ -112,6 +113,7 @@ export default function Header() {
         aria-expanded={menuOpen}
         onClick={() => setMenuOpen((v) => !v)}
       />
+      </header>
 
       {menuOpen && (
         <div className={styles.overlay}>
@@ -180,6 +182,6 @@ export default function Header() {
           </div>
         </div>
       )}
-    </header>
+    </>
   );
 }
