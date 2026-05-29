@@ -41,9 +41,9 @@ export const verticalsData: Record<string, VerticalData> = {
       description: "From global superstars to emerging artists, our pages sit at the center of music fandom on Instagram. Whether you're promoting a release, growing streams, or driving platform sign-ups, KOLS puts audio brands inside the communities that set the soundtrack."
     },
     benefits: [
-      { title: "Create trending audio", description: "Spark viral moments by seeding audio directly into the most influential fan communities." },
-      { title: "Artist aligned pages", description: "Match your release with dedicated pages where fans of specific genres and artists already gather." },
-      { title: "Increase streams", description: "Drive high-intent traffic directly to DSPs like Spotify and Apple Music to boost chart positions." }
+      { title: "Create trending audio", description: "" },
+      { title: "Artist aligned pages", description: "" },
+      { title: "Increase streams", description: "" }
     ],
     fit: {
       title: "Why this is a fit for Audio",
@@ -75,9 +75,9 @@ export const verticalsData: Record<string, VerticalData> = {
       description: "Fan communities are passionate, loyal, and impulse-driven. When a placement feels native to the content around it, audiences don't just notice, they act."
     },
     benefits: [
-      { title: "Impulse ready audiences", description: "Reach communities characterized by high engagement and immediate action-taking behavior." },
-      { title: "Native product integration", description: "We blend your product into the content seamlessly so it feels like a recommendation, not an interruption." },
-      { title: "Ability to amplify retargeting", description: "Use our top-of-funnel reach to build massive pixel audiences for your performance marketing campaigns." }
+      { title: "Impulse ready audiences", description: "" },
+      { title: "Native product integration", description: "" },
+      { title: "Ability to amplify retargeting", description: "" }
     ],
     fit: {
       title: "Why this is a fit for eCommerce",
@@ -109,9 +109,9 @@ export const verticalsData: Record<string, VerticalData> = {
       description: "When your app is introduced through content an audience already trusts, the conversion path shortens dramatically. Our network drives installs, not just impressions and our CPM model means you're paying for reach that can prove itself."
     },
     benefits: [
-      { title: "Mobile first communities", description: "100% of our network's engagement happens on the exact device where the app install takes place." },
-      { title: "Install driven creative", description: "We collaborate to ensure the placement format matches the feed and drives the user to the app store." },
-      { title: "High engagement baseline", description: "Tap into communities where 5-10% engagement rates are the standard, driving lower cost-per-installs." }
+      { title: "Mobile first communities", description: "" },
+      { title: "Install driven creative", description: "" },
+      { title: "High engagement baseline", description: "" }
     ],
     fit: {
       title: "Why this is a fit for Mobile Apps",
@@ -143,9 +143,9 @@ export const verticalsData: Record<string, VerticalData> = {
       description: "Tap into our diverse network of sports fans, entertainment audiences, and high-intent adults placed in front of your brand natively and at scale. Compliance-conscious placements, geo-targeting capability, and a CPM model that keeps every campaign accountable to real numbers."
     },
     benefits: [
-      { title: "Audiences already placing bets", description: "Reach directly into sports and entertainment communities where gaming intent is organically high." },
-      { title: "Compliance conscious placements", description: "We manage the creative and placement strictly according to regional and platform regulatory standards." },
-      { title: "Geo targeted reach", description: "Ensure your budget is only spent reaching users in states and territories where you are licensed to operate." }
+      { title: "Audiences already placing bets", description: "" },
+      { title: "Compliance conscious placements", description: "" },
+      { title: "Geo targeted reach", description: "" }
     ],
     fit: {
       title: "Why this is a fit for Casinos",
@@ -177,9 +177,9 @@ export const verticalsData: Record<string, VerticalData> = {
       description: "Our network spans sports, entertainment, music, and culture. Tell us your goals and we'll show you where your brand fits inside the stadium."
     },
     benefits: [
-      { title: "Cross-vertical reach", description: "Combine audiences from gaming, music, and sports to build a massive, custom targeting profile." },
-      { title: "Custom placement strategy", description: "We don't use templates. Every campaign is designed specifically for the brand's unique goals and KPIs." },
-      { title: "Built around your goals", description: "Whether you need raw brand awareness, app installs, or direct sales, we shape the placement to deliver." }
+      { title: "Cross-vertical reach", description: "" },
+      { title: "Custom placement strategy", description: "" },
+      { title: "Built around your goals", description: "" }
     ],
     fit: {
       title: "Why this is a fit for Custom Campaigns",

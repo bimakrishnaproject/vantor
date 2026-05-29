@@ -102,7 +102,7 @@
 
 .headline {
   font-family: var(--font-heading);
-  font-size: var(--text-hero);
+  font-size: var(--text-h1);
   font-weight: 300;
   line-height: 0.95;
   color: var(--text-primary);

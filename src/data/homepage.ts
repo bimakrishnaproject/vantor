@@ -9,8 +9,8 @@ export const homepageData = {
     },
   },
   positioning: {
-    headline: "THINK BIGGER",
-    description: "Most media buyers negotiate around other people's inventory. Vantor controls the audience surfaces directly, then uses 1B+ monthly views and 60M+ followers to place brands inside sports and entertainment communities that already move together.",
+    headline: "Built at the intersection of organic and paid media",
+    description: "Harnessing passionate fan communities for high-converting placements that make brands part of the culture.",
   },
   stats: [
     { value: "1B+", endValue: 1, suffix: "B+", label: "Monthly Views" },
@@ -55,10 +55,10 @@ export const homepageData = {
   featuredMetrics: {
     title: "How Owned Reach Becomes Measurable Access",
     metrics: [
-      { label: "Think Bigger", value: "1B+", trend: "up", subtext: "A billion monthly views and 60M+ followers give brands access to sports and entertainment audiences they cannot assemble on demand." },
-      { label: "Unparalleled Engagement", value: "5-10%", trend: "up", subtext: "Real communities engage differently. When interest is genuine, five to ten percent engagement is the network baseline." },
-      { label: "Seamless Integration", value: "Native", trend: "up", subtext: "Every placement is crafted around the page it lives on, so the brand feels like part of the feed instead of an interruption." },
-      { label: "Results Driven", value: "CPM", trend: "up", subtext: "Direct placement is accountable to real delivery because reach that cannot be measured is not reach worth buying." },
+      { label: "THINK BIGGER", value: "1B+", trend: "up", subtext: "Backed by 1B+ monthly views and 60M+ followers, our network gives brands access to the kind of reach that moves the needle." },
+      { label: "UNPARALLELED ENGAGEMENT", value: "5-10%", trend: "up", subtext: "Real communities engage differently. When audiences are built around genuine interest, 5-10% engagement isn't a target, it's our baseline." },
+      { label: "SEAMLESS INTEGRATION", value: "Native", trend: "up", subtext: "Audiences can smell inauthenticity and they scroll past it instantly. Every placement is crafted around the page it lives on, so the brand feels like a natural part of the feed, not an interruption." },
+      { label: "RESULTS DRIVEN", value: "CPM", trend: "up", subtext: "Our CPM model ensures every campaign is accountable to real results because reach that can't be measured isn't reach worth buying." },
     ],
   },
   caseStudies: [
