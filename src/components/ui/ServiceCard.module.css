@@ -5,7 +5,9 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: clamp(14rem, 20vw, 18rem);
+  width: 100%;
+  min-height: clamp(18rem, 24vw, 22rem);
+  height: 100%;
   padding: 1.5rem 1rem;
   background: rgba(3, 5, 12, 0.75);
   backdrop-filter: blur(12px);
@@ -37,8 +39,8 @@
   position: absolute;
   inset: 0;
   background: radial-gradient(
-    circle at 50% 0%, 
-    var(--card-glow), 
+    circle at 50% 0%,
+    var(--card-glow),
     transparent 70%
   );
   opacity: 0.3;
@@ -60,7 +62,9 @@
 .card:hover {
   transform: translateY(-4px);
   border-color: color-mix(in srgb, var(--card-accent) 50%, transparent);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.4), 0 0 15px var(--card-glow);
+  box-shadow:
+    0 10px 20px rgba(0, 0, 0, 0.4),
+    0 0 15px var(--card-glow);
 }
 
 .card:hover .ambientLight {
@@ -76,6 +80,7 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 1rem;
+  flex: 1;
 }
 
 .iconWrap {
@@ -135,6 +140,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  flex: 1;
 }
 
 .title {
@@ -143,12 +149,20 @@
   font-weight: 300;
   color: var(--text-primary);
   letter-spacing: 0.02em;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
 }
 
 .description {
   font-size: 0.85rem;
   line-height: 1.4;
   color: var(--text-secondary);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 6;
+  overflow: hidden;
 }
 
 .footer {
@@ -193,7 +207,13 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .card, .ambientLight, .glassLayer, .iconGlow, .icon, .footer, .arrow {
+  .card,
+  .ambientLight,
+  .glassLayer,
+  .iconGlow,
+  .icon,
+  .footer,
+  .arrow {
     transition: none;
   }
   .card:hover {
