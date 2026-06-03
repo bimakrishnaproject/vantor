@@ -29,6 +29,26 @@
   opacity: 0.85;
   position: absolute;
   inset: 0;
+  transition: height var(--transition-smooth), top var(--transition-smooth), transform var(--transition-smooth);
+}
+
+@media (max-width: 768px) {
+  .videoWrapper {
+    height: 75vh;
+    top: 0;
+    transform: none;
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 65%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 65%, transparent 100%);
+  }
+
+  .pillar3 {
+    top: 70% !important;
+    transform: translate(-50%, -50%) !important;
+  }
+
+  .pillar4 {
+    top: 75% !important;
+  }
 }
 
 .bgVideo {

@@ -175,8 +175,8 @@ export default function CinematicScroller({ blocks }: CinematicScrollerProps) {
     if (!ctx) return;
 
     const resizeCanvas = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      canvas.width = canvas.clientWidth || window.innerWidth;
+      canvas.height = canvas.clientHeight || window.innerHeight;
       renderFrame(frameRef.current);
     };
     window.addEventListener("resize", resizeCanvas);
@@ -311,7 +311,7 @@ export default function CinematicScroller({ blocks }: CinematicScrollerProps) {
                 ref={(el) => {
                   blockRefs.current[idx] = el;
                 }}
-                className={`${styles.cinematicBlock} ${block.className ? (styles[block.className as keyof typeof styles] || block.className) : ''}`}
+                className={`${styles.cinematicBlock} ${styles[block.id as keyof typeof styles] || ''} ${block.className ? (styles[block.className as keyof typeof styles] || block.className) : ''}`}
                 style={{ 
                   opacity: block.startPercent === 0 ? 1 : 0, 
                   top: block.top, 
