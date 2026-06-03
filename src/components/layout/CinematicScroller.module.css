@@ -23,11 +23,32 @@
   background: var(--bg-primary);
 }
 
-.bgCanvas {
+.videoWrapper {
+  width: 100%;
+  height: 100%;
+  opacity: 0.85;
+  position: absolute;
+  inset: 0;
+}
+
+.bgVideo {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0.65;
+}
+
+.bgCanvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Brighten the extracted frames to match the original video */
+  filter: brightness(1.35) contrast(1.05);
 }
 
 .vignette {
@@ -35,8 +56,8 @@
   inset: 0;
   background: radial-gradient(
     circle at center,
-    transparent 40%,
-    rgba(3, 7, 14, 0.8) 100%
+    transparent 60%,
+    rgba(3, 7, 14, 0.4) 100%
   );
   pointer-events: none;
 }
@@ -46,13 +67,23 @@
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 40vh;
+  height: 25vh;
   background: linear-gradient(
     to top,
-    var(--bg-primary) 0%,
-    rgba(3, 7, 14, 0) 100%
+    rgba(3, 7, 14, 0.6) 0%,
+    transparent 100%
   );
   pointer-events: none;
+}
+
+.watermarkBlocker {
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(circle at 95% 90%, rgba(3, 7, 14, 1) 0%, rgba(3, 7, 14, 0.95) 5%, rgba(3, 7, 14, 0.6) 12%, transparent 25%),
+    radial-gradient(circle at 5% 90%, rgba(3, 7, 14, 1) 0%, rgba(3, 7, 14, 0.95) 5%, rgba(3, 7, 14, 0.6) 12%, transparent 25%);
+  pointer-events: none;
+  z-index: 10;
 }
 
 .cinematicContainer {
@@ -109,4 +140,134 @@
   color: rgba(255, 255, 255, 0.85);
   line-height: 1.6;
   max-width: 100%;
+}
+
+.premiumScoreboardText {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1rem;
+}
+
+.premiumScoreboardText .cinematicTitle {
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.premiumScoreboardText .cinematicDesc {
+  font-weight: 500;
+  color: #f8fafc !important;
+  font-size: clamp(1rem, 1.2vw, 1.25rem);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Minimalist Futuristic Metrics Display */
+.metricsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: 100%;
+  margin: 0 auto;
+  align-items: center;
+}
+
+.metricItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem; /* Tighter gap to fit nicely on the scoreboard */
+}
+
+.metricValue {
+  font-family: var(--font-heading), -apple-system, sans-serif;
+  font-size: clamp(1.85rem, 3.2vw, 2.9rem); /* Perfectly sized to fit the billboard panels */
+  font-weight: 800; /* Bold digital scoreboard look */
+  line-height: 1;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  color: #ffffff;
+  /* Premium LED/neon glow to make it look like a physical stadium display */
+  text-shadow: 
+    0 0 6px rgba(255, 255, 255, 0.95),
+    0 0 15px rgba(0, 229, 255, 0.75),
+    0 0 35px rgba(0, 229, 255, 0.45);
+}
+
+.metricLabel {
+  font-family: var(--font-heading), -apple-system, sans-serif;
+  font-size: 0.68rem; /* Clean secondary caption size */
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 700;
+  white-space: nowrap;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.scrollIndicator {
+  margin-top: 2rem;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 500;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-6px);
+  }
+  60% {
+    transform: translateY(-3px);
+  }
+}
+
+.scoreboardTicker {
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+  margin-top: 0.65rem;
+  padding-top: 0.45rem;
+  border-top: 1.5px solid rgba(0, 229, 255, 0.15);
+  font-family: var(--font-heading), -apple-system, sans-serif;
+  font-size: 0.52rem;
+  letter-spacing: 0.15em;
+  color: #00e5ff;
+  font-weight: 700;
+  text-transform: uppercase;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  /* subtle ticker glow */
+  text-shadow: 0 0 4px rgba(0, 229, 255, 0.4);
+}
+
+.tickerTrack {
+  display: inline-flex;
+  gap: 1.5rem;
+  white-space: nowrap;
+  will-change: transform;
+  animation: scrollTicker 18s linear infinite;
+}
+
+@keyframes scrollTicker {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
 }

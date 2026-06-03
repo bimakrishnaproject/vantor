@@ -3,7 +3,7 @@ const ffmpegPath = require('ffmpeg-static');
 const fs = require('fs');
 const path = require('path');
 
-const inputPath = path.join(__dirname, '../public/assets/hero.mp4');
+const inputPath = path.join(__dirname, '../public/assets/improve_hero.mp4');
 const outputDir = path.join(__dirname, '../public/assets/frames');
 
 if (!fs.existsSync(outputDir)) {

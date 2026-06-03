@@ -17,7 +17,7 @@ export default function HeroSection({ data }: HeroProps) {
       label: data.label,
       title: data.headline,
       description: data.subtext,
-      top: "50%",
+      top: "75%",
       left: "50%",
       transform: "translate(-50%, -50%)",
       textAlign: "center",
@@ -60,15 +60,18 @@ export default function HeroSection({ data }: HeroProps) {
     },
     {
       id: "pillar4",
-      title: "Results Driven",
-      description: "Our CPM model ensures every campaign is accountable to real results because reach that can't be measured isn't reach worth buying.",
-      top: "50%",
+      metrics: [
+        { value: "1B+", label: "Monthly Views" },
+        { value: "60M+", label: "Followers" },
+        { value: "5-10%", label: "Engagement" }
+      ],
+      top: "43.5%",
       left: "50%",
       transform: "translate(-50%, -50%)",
       textAlign: "center",
-      maxWidth: "800px",
+      maxWidth: "580px",
       startPercent: 0.75,
-      endPercent: null, // stays until end
+      endPercent: null,
     }
   ];
 
