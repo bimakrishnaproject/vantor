@@ -60,16 +60,19 @@ export default function HeroSection({ data }: HeroProps) {
     },
     {
       id: "pillar4",
+      title: "Reach That Converts",
+      description: "Our owned audience infrastructure gives brands direct access to the largest and most engaged fan communities in sports & entertainment.",
       metrics: [
         { value: "1B+", label: "Monthly Views" },
         { value: "60M+", label: "Followers" },
         { value: "5-10%", label: "Engagement" }
       ],
-      top: "43.5%",
+      cta: data.cta,
+      top: "62%",
       left: "50%",
       transform: "translate(-50%, -50%)",
       textAlign: "center",
-      maxWidth: "580px",
+      maxWidth: "680px",
       startPercent: 0.75,
       endPercent: null,
     }

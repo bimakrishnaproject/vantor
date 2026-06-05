@@ -5,6 +5,8 @@ import { createPortal } from "react-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { prefersReducedMotion } from "@/lib/animations";
+import { useLenis } from "./SmoothScroll";
+import Button from "@/components/ui/Button";
 import styles from "./CinematicScroller.module.css";
 
 if (typeof window !== "undefined") {
@@ -21,6 +23,7 @@ export interface CinematicBlockData {
   title?: string;
   description?: string;
   metrics?: { value: string; label: string }[];
+  cta?: { text: string; link: string };
   top: string;
   left: string;
   right?: string;
@@ -47,10 +50,24 @@ export default function CinematicScroller({ blocks }: CinematicScrollerProps) {
   const videoRef2 = useRef<HTMLVideoElement>(null);
   const videoFadeWrapperRef = useRef<HTMLDivElement>(null);
   const blockRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const broadcastDockRef = useRef<HTMLDivElement>(null);
 
   const frameRef = useRef(1);
   const imagesRef = useRef<HTMLImageElement[]>([]);
   const [imagesLoaded, setImagesLoaded] = useState(false);
+  const [loadProgress, setLoadProgress] = useState(0);
+  const [loadingFinished, setLoadingFinished] = useState(false);
+  const lenis = useLenis();
+
+  // Scroll locking based on loading finish
+  useEffect(() => {
+    if (!lenis) return;
+    if (!loadingFinished) {
+      lenis.stop();
+    } else {
+      lenis.start();
+    }
+  }, [lenis, loadingFinished]);
 
   // Smooth loop transition for the idle video using a double-buffered crossfade
   useEffect(() => {
@@ -144,22 +161,51 @@ export default function CinematicScroller({ blocks }: CinematicScrollerProps) {
 
   // 1. Preload images
   useEffect(() => {
+    if (prefersReducedMotion()) {
+      setImagesLoaded(true);
+      setLoadingFinished(true);
+      return;
+    }
+
+    let active = true;
     const preloadImages = async () => {
+      let loadedCount = 0;
       const promises = [];
       for (let i = 1; i <= TOTAL_FRAMES; i++) {
         promises.push(
-          new Promise<HTMLImageElement>((resolve) => {
+          new Promise<void>((resolve) => {
             const img = new Image();
             img.src = ASSET_PATH(i);
-            img.onload = () => resolve(img);
+            img.onload = () => {
+              if (active) {
+                loadedCount++;
+                setLoadProgress(Math.round((loadedCount / TOTAL_FRAMES) * 100));
+              }
+              resolve();
+            };
+            img.onerror = () => {
+              if (active) {
+                loadedCount++;
+                setLoadProgress(Math.round((loadedCount / TOTAL_FRAMES) * 100));
+              }
+              resolve();
+            };
             imagesRef.current[i] = img;
           })
         );
       }
-      await Promise.all(promises.slice(0, 20));
-      setImagesLoaded(true);
+      await Promise.all(promises);
+      if (active) {
+        setImagesLoaded(true);
+        setTimeout(() => {
+          setLoadingFinished(true);
+        }, 600);
+      }
     };
     preloadImages();
+    return () => {
+      active = false;
+    };
   }, []);
 
   // 2. Set up Canvas & GSAP
@@ -221,6 +267,21 @@ export default function CinematicScroller({ blocks }: CinematicScrollerProps) {
         start: "top top",
         end: "bottom bottom",
         scrub: 1,
+        onUpdate: (self) => {
+          const progress = self.progress;
+          const v1 = videoRef1.current;
+          const v2 = videoRef2.current;
+          if (progress > 0.05) {
+            if (v1 && !v1.paused) v1.pause();
+            if (v2 && !v2.paused) v2.pause();
+          } else {
+            if (v1 && parseFloat(v1.style.opacity) > 0.5) {
+              v1.play().catch(() => {});
+            } else if (v2 && parseFloat(v2.style.opacity) > 0.5) {
+              v2.play().catch(() => {});
+            }
+          }
+        }
       },
     });
 
@@ -235,7 +296,11 @@ export default function CinematicScroller({ blocks }: CinematicScrollerProps) {
       if (block.startPercent === 0) {
         tl.to(ref, { opacity: 0, duration: 0.1 }, block.endPercent || 0.1);
       } else {
-        tl.fromTo(ref, { opacity: 0 }, { opacity: 1, duration: 0.05 }, block.startPercent);
+        if (block.id === "pillar4" && broadcastDockRef.current) {
+          tl.fromTo([ref, broadcastDockRef.current], { opacity: 0 }, { opacity: 1, duration: 0.05 }, block.startPercent);
+        } else {
+          tl.fromTo(ref, { opacity: 0 }, { opacity: 1, duration: 0.05 }, block.startPercent);
+        }
         if (block.endPercent !== null) {
           tl.to(ref, { opacity: 0, duration: 0.05 }, block.endPercent);
         }
@@ -299,6 +364,26 @@ export default function CinematicScroller({ blocks }: CinematicScrollerProps) {
 
   return (
     <>
+      {mounted && !loadingFinished && (
+        <div className={`${styles.loadingOverlay} ${imagesLoaded ? styles.fadeOut : ""}`}>
+          <div className={styles.loadingContent}>
+            <div className={styles.stadiumGlowLoader}>
+              <div className={styles.loaderSpinner} />
+            </div>
+            <div className={styles.loadingTitle}>SYSTEM INITIALIZING</div>
+            <div className={styles.progressBarContainer}>
+              <div 
+                className={styles.progressBar} 
+                style={{ width: `${loadProgress}%` }}
+              />
+            </div>
+            <div className={styles.progressStatus}>
+              <span>LOADING ECOSYSTEM</span>
+              <span className={styles.progressPct}>{loadProgress}%</span>
+            </div>
+          </div>
+        </div>
+      )}
       {mounted && createPortal(backgroundLayer, document.body)}
       <section ref={sectionRef} className={styles.scrollSequence}>
         <div className={styles.stickyContainer}>
@@ -334,37 +419,95 @@ export default function CinematicScroller({ blocks }: CinematicScrollerProps) {
                   </div>
                 )}
                 
-                {block.metrics && (
-                  <>
-                    <div className={styles.metricsGrid}>
-                      {block.metrics.map((m, i) => (
-                        <div key={i} className={styles.metricItem}>
-                          <div className={styles.metricValue}>{m.value}</div>
-                          <div className={styles.metricLabel}>{m.label}</div>
-                        </div>
-                      ))}
-                    </div>
-                    {block.id === "pillar4" && (
-                      <div className={styles.scoreboardTicker}>
-                        <div className={styles.tickerTrack}>
-                          <span>• OWNED AUDIENCE INFRASTRUCTURE</span>
-                          <span>• REACH THAT CONVERTS</span>
-                          <span>• HIGH-CONVERTING PLACEMENTS</span>
-                          <span>• SPORTS & ENTERTAINMENT SURFACES</span>
-                          <span>• CPM-BASED CAMPAIGNS</span>
-                          {/* Duplicate for seamless marquee looping */}
-                          <span>• OWNED AUDIENCE INFRASTRUCTURE</span>
-                          <span>• REACH THAT CONVERTS</span>
-                          <span>• HIGH-CONVERTING PLACEMENTS</span>
-                          <span>• SPORTS & ENTERTAINMENT SURFACES</span>
-                          <span>• CPM-BASED CAMPAIGNS</span>
-                        </div>
+                {block.metrics && block.id !== "pillar4" && (
+                  <div className={styles.metricsGrid}>
+                    {block.metrics.map((m, i) => (
+                      <div key={i} className={styles.metricItem}>
+                        <div className={styles.metricValue}>{m.value}</div>
+                        <div className={styles.metricLabel}>{m.label}</div>
                       </div>
-                    )}
-                  </>
+                    ))}
+                  </div>
                 )}
               </div>
             ))}
+
+            {/* Docked Broadcast HUD (Rendered outside map to escape parent translate transform constraints) */}
+            {mounted && (
+              <div 
+                ref={broadcastDockRef}
+                className={styles.broadcastDock}
+                style={{ opacity: 0 }}
+              >
+                {/* Screen reader only container for SEO metrics accessibility */}
+                {(() => {
+                  const pillar4 = blocks.find(b => b.id === "pillar4");
+                  if (pillar4 && pillar4.metrics) {
+                    return (
+                      <div className={styles.srOnly}>
+                        {pillar4.metrics.map((m, i) => (
+                          <div key={i}>
+                            <span>{m.value}</span>: <span>{m.label}</span>
+                          </div>
+                        ))}
+                      </div>
+                    );
+                  }
+                  return null;
+                })()}
+
+                {/* Top running ticker marquee */}
+                <div className={styles.dockTicker}>
+                  <div className={styles.tickerTrack}>
+                    <span>• OWNED AUDIENCE INFRASTRUCTURE</span>
+                    <span>• REACH THAT CONVERTS</span>
+                    <span>• HIGH-CONVERTING PLACEMENTS</span>
+                    <span>• SPORTS & ENTERTAINMENT SURFACES</span>
+                    <span>• CPM-BASED CAMPAIGNS</span>
+                    {/* Duplicate for seamless marquee looping */}
+                    <span>• OWNED AUDIENCE INFRASTRUCTURE</span>
+                    <span>• REACH THAT CONVERTS</span>
+                    <span>• HIGH-CONVERTING PLACEMENTS</span>
+                    <span>• SPORTS & ENTERTAINMENT SURFACES</span>
+                    <span>• CPM-BASED CAMPAIGNS</span>
+                  </div>
+                </div>
+
+                {/* Main control console bar */}
+                <div className={styles.dockConsole}>
+                  {/* Left: Status indicator */}
+                  <div className={styles.dockLeft}>
+                    <span className={styles.livePulse} />
+                    <span className={styles.liveLabel}>LIVE NETWORK OPERATION</span>
+                  </div>
+
+                  {/* Center: CTA Button */}
+                  {(() => {
+                    const pillar4 = blocks.find(b => b.id === "pillar4");
+                    if (pillar4 && pillar4.cta) {
+                      return (
+                        <div className={styles.dockCenter}>
+                          <Button 
+                            variant="primary" 
+                            size="lg" 
+                            href={pillar4.cta.link}
+                            className={styles.dockCtaBtn}
+                          >
+                            {pillar4.cta.text}
+                          </Button>
+                        </div>
+                      );
+                    }
+                    return null;
+                  })()}
+
+                  {/* Right: Technical system info */}
+                  <div className={styles.dockRight}>
+                    <span>VNT_STADIUM_CONSOLE_V4</span>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </section>
