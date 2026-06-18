@@ -34,11 +34,9 @@
 
 @media (max-width: 768px) {
   .videoWrapper {
-    height: 75vh;
+    height: 100vh;
     top: 0;
     transform: none;
-    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 65%, transparent 100%);
-    mask-image: linear-gradient(to bottom, #000 0%, #000 65%, transparent 100%);
   }
 
   .pillar3 {
@@ -47,7 +45,36 @@
   }
 
   .pillar4 {
-    top: 75% !important;
+    top: 64% !important;
+    left: 50% !important;
+    right: auto !important;
+    transform: translate(-50%, -50%) !important;
+    width: 100% !important;
+    max-width: min(92vw, 36rem) !important;
+    padding: 0 1rem;
+  }
+
+  .pillar4 .cinematicTitle {
+    font-size: clamp(1.55rem, 8vw, 2.35rem);
+    margin-bottom: 0.85rem;
+    text-shadow: 0 5px 18px rgba(0, 0, 0, 0.95), 0 2px 5px rgba(0, 0, 0, 0.75);
+  }
+
+  .pillar4 .cinematicDesc {
+    font-size: clamp(0.95rem, 5.6vw, 1.42rem);
+    line-height: 1.34;
+    text-shadow: 0 5px 18px rgba(0, 0, 0, 0.98), 0 2px 5px rgba(0, 0, 0, 0.8);
+  }
+
+  .bottomFade {
+    height: 66vh;
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.98) 0%,
+      rgba(3, 7, 14, 0.94) 24%,
+      rgba(3, 7, 14, 0.72) 56%,
+      transparent 100%
+    );
   }
 }
 
@@ -541,11 +568,21 @@
 
 
 @media (max-width: 768px) {
+  .broadcastDock {
+    background: linear-gradient(to top, rgba(3, 7, 14, 0.92) 0%, rgba(3, 7, 14, 0.58) 100%);
+  }
+
+  .dockTicker {
+    padding: 0.4rem 0;
+    font-size: 0.46rem;
+    letter-spacing: 0.12em;
+  }
+
   .dockConsole {
-    padding: 0.75rem 1rem;
+    padding: 0.65rem 1rem calc(0.65rem + env(safe-area-inset-bottom));
     height: auto;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 0;
   }
   
   .dockLeft, .dockRight {
@@ -558,5 +595,10 @@
   
   .dockCtaBtn {
     width: 100%;
+    min-width: 0;
+    min-height: 46px;
+    padding: 0.8rem 1rem;
+    justify-content: center;
+    font-size: 0.95rem;
   }
 }

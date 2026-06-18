@@ -79,3 +79,9 @@
     transform: none;
   }
 }
+
+@media (max-width: 768px) {
+  .wrap {
+    display: none;
+  }
+}
