@@ -235,8 +235,7 @@ export default function CinematicScroller({ blocks }: CinematicScrollerProps) {
 
       const hRatio = canvas.width / img.width;
       const vRatio = canvas.height / img.height;
-      const isMobile = canvas.width <= 768;
-      const ratio = isMobile ? Math.max(hRatio, vRatio) : Math.min(1, hRatio, vRatio);
+      const ratio = Math.max(hRatio, vRatio);
 
       const centerShift_x = (canvas.width - img.width * ratio) / 2;
       const centerShift_y = (canvas.height - img.height * ratio) / 2;
