@@ -13,7 +13,7 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-const TOTAL_FRAMES = 900;
+const TOTAL_FRAMES = 1797;
 const ASSET_PATH = (index: number) =>
   `/assets/frames/frame_${index.toString().padStart(4, "0")}.jpg`;
 

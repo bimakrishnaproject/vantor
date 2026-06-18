@@ -22,7 +22,7 @@ console.log('Extracting frames from', inputPath);
 
 ffmpeg(inputPath)
   .outputOptions([
-    '-vf fps=12,scale=1280:-1', // 12 frames per sec, 720p equivalent
+    '-vf minterpolate=fps=60:mi_mode=mci,scale=1280:-2',
     '-q:v 3' // decent quality jpeg
   ])
   .output(path.join(outputDir, 'frame_%04d.jpg'))
