@@ -56,9 +56,9 @@ export const homepageData = {
     title: "How Owned Reach Becomes Measurable Access",
     metrics: [
       { label: "THINK BIGGER", value: "1B+", trend: "up", subtext: "Backed by 1B+ monthly views and 60M+ followers, our network gives brands access to the kind of reach that moves the needle." },
-      { label: "UNPARALLELED ENGAGEMENT", value: "5-10%", trend: "up", subtext: "Real communities engage differently. When audiences are built around genuine interest, 5-10% engagement isn't a target, it's our baseline." },
-      { label: "SEAMLESS INTEGRATION", value: "Native", trend: "up", subtext: "Audiences can smell inauthenticity and they scroll past it instantly. Every placement is crafted around the page it lives on, so the brand feels like a natural part of the feed, not an interruption." },
-      { label: "RESULTS DRIVEN", value: "CPM", trend: "up", subtext: "Our CPM model ensures every campaign is accountable to real results because reach that can't be measured isn't reach worth buying." },
+      // { label: "UNPARALLELED ENGAGEMENT", value: "5-10%", trend: "up", subtext: "Real communities engage differently. When audiences are built around genuine interest, 5-10% engagement isn't a target, it's our baseline." },
+      // { label: "SEAMLESS INTEGRATION", value: "Native", trend: "up", subtext: "Audiences can smell inauthenticity and they scroll past it instantly. Every placement is crafted around the page it lives on, so the brand feels like a natural part of the feed, not an interruption." },
+      // { label: "RESULTS DRIVEN", value: "CPM", trend: "up", subtext: "Our CPM model ensures every campaign is accountable to real results because reach that can't be measured isn't reach worth buying." },
     ],
   },
   caseStudies: [

@@ -262,6 +262,8 @@ export default function CinematicScroller({ blocks }: CinematicScrollerProps) {
     };
     renderLoop();
 
+    let scoreboardDropped = false;
+
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: section,
@@ -282,6 +284,28 @@ export default function CinematicScroller({ blocks }: CinematicScrollerProps) {
               v2.play().catch(() => {});
             }
           }
+
+          // Independent Scoreboard Drop Logic
+          const pillar4Idx = blocks.findIndex(b => b.id === "pillar4");
+          const scoreboardRef = pillar4Idx >= 0 ? blockRefs.current[pillar4Idx] : null;
+          
+          if (scoreboardRef) {
+            if (progress >= 0.80 && !scoreboardDropped) {
+              scoreboardDropped = true;
+              scoreboardRef.style.pointerEvents = "all";
+              gsap.killTweensOf(scoreboardRef);
+              gsap.fromTo(
+                scoreboardRef,
+                { xPercent: -50, yPercent: -50, y: "-200vh", opacity: 1 },
+                { xPercent: -50, yPercent: -50, y: "0vh", opacity: 1, duration: 1.5, ease: "bounce.out" }
+              );
+            } else if (progress < 0.75 && scoreboardDropped) {
+              scoreboardDropped = false;
+              scoreboardRef.style.pointerEvents = "none";
+              gsap.killTweensOf(scoreboardRef);
+              gsap.to(scoreboardRef, { opacity: 0, duration: 0.3 });
+            }
+          }
         }
       },
     });
@@ -297,13 +321,16 @@ export default function CinematicScroller({ blocks }: CinematicScrollerProps) {
       if (block.startPercent === 0) {
         tl.to(ref, { opacity: 0, duration: 0.1 }, block.endPercent || 0.1);
       } else {
-        if (block.id === "pillar4" && broadcastDockRef.current) {
-          tl.fromTo([ref, broadcastDockRef.current], { opacity: 0 }, { opacity: 1, duration: 0.05 }, block.startPercent);
+        if (block.id === "pillar4") {
+          // Only animate the dock via scrub timeline, the scoreboard drops independently in onUpdate!
+          if (broadcastDockRef.current) {
+            tl.fromTo(broadcastDockRef.current, { opacity: 0 }, { opacity: 1, duration: 0.05 }, block.startPercent);
+          }
         } else {
           tl.fromTo(ref, { opacity: 0 }, { opacity: 1, duration: 0.05 }, block.startPercent);
-        }
-        if (block.endPercent !== null) {
-          tl.to(ref, { opacity: 0, duration: 0.05 }, block.endPercent);
+          if (block.endPercent !== null) {
+            tl.to(ref, { opacity: 0, duration: 0.05 }, block.endPercent);
+          }
         }
       }
     });
@@ -313,7 +340,7 @@ export default function CinematicScroller({ blocks }: CinematicScrollerProps) {
       {
         frame: TOTAL_FRAMES,
         ease: "none",
-        duration: 1,
+        duration: 0.75,
       },
       0
     );
@@ -391,47 +418,90 @@ export default function CinematicScroller({ blocks }: CinematicScrollerProps) {
           <div className={styles.cinematicContainer}>
             <div className={styles.sideGradient} aria-hidden="true" style={{ width: '100%', height: '100%', background: 'linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.2) 40%, transparent 100%)' }} />
             
-            {blocks.map((block, idx) => (
-              <div 
-                key={block.id}
-                ref={(el) => {
-                  blockRefs.current[idx] = el;
-                }}
-                className={`${styles.cinematicBlock} ${styles[block.id as keyof typeof styles] || ''} ${block.className ? (styles[block.className as keyof typeof styles] || block.className) : ''}`}
-                style={{ 
-                  opacity: block.startPercent === 0 ? 1 : 0, 
-                  top: block.top, 
-                  left: block.left, 
-                  right: block.right,
-                  transform: block.transform, 
-                  textAlign: block.textAlign,
-                  width: (block.left && block.left !== 'auto' && block.left !== '50%') ? `calc(100% - ${block.left} * 2)` : (block.right && block.right !== 'auto' ? `calc(100% - ${block.right} * 2)` : '100%'),
-                  maxWidth: block.maxWidth || '1400px',
-                }}
-              >
-                {block.label && <span className={styles.label} style={{ color: block.color }}>{block.label}</span>}
-                {block.title && <h2 className={styles.cinematicTitle} style={{ color: block.color }}>{block.title}</h2>}
-                {block.description && <p className={styles.cinematicDesc} style={{ margin: block.textAlign === 'center' ? '0 auto' : (block.textAlign === 'right' ? '0 0 0 auto' : '0'), color: block.color || 'rgba(255, 255, 255, 0.85)' }}>{block.description}</p>}
-                
-                {block.id === "hero" && (
-                  <div className={styles.scrollIndicator}>
-                    <span>Scroll to explore</span>
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                  </div>
-                )}
-                
-                {block.metrics && block.id !== "pillar4" && (
-                  <div className={styles.metricsGrid}>
-                    {block.metrics.map((m, i) => (
-                      <div key={i} className={styles.metricItem}>
-                        <div className={styles.metricValue}>{m.value}</div>
-                        <div className={styles.metricLabel}>{m.label}</div>
+            {blocks.map((block, idx) => {
+              if (block.id === "pillar4") {
+                return (
+                  <div 
+                    key={block.id}
+                    ref={(el) => { blockRefs.current[idx] = el; }}
+                    className={`${styles.cinematicBlock} ${styles.scoreboardBlock}`}
+                    style={{ 
+                      top: block.top, 
+                      left: block.left, 
+                      transform: block.transform,
+                    }}
+                  >
+                    <div className={styles.scoreboardCables}>
+                       <div className={styles.cable} />
+                       <div className={styles.cable} />
+                       <div className={styles.cable} />
+                       <div className={styles.cable} />
+                    </div>
+                    
+                    <div className={styles.scoreboardFrame}>
+                      <div className={`${styles.scoreboardScreen} ${styles.scoreboardMainScreen}`}>
+                        <h2 className={styles.scoreboardTitle}>{block.title}</h2>
                       </div>
-                    ))}
+                      
+                      {block.metrics && (
+                        <div className={styles.scoreboardMetricsRow}>
+                          {block.metrics.map((m, i) => (
+                            <div key={i} className={`${styles.scoreboardScreen} ${styles.scoreboardMetricScreen}`}>
+                               <div className={styles.scoreboardMetricValue}>{m.value}</div>
+                               <div className={styles.scoreboardMetricLabel}>{m.label}</div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                    
+                    <p className={styles.scoreboardDesc}>{block.description}</p>
                   </div>
-                )}
-              </div>
-            ))}
+                );
+              }
+
+              return (
+                <div 
+                  key={block.id}
+                  ref={(el) => {
+                    blockRefs.current[idx] = el;
+                  }}
+                  className={`${styles.cinematicBlock} ${styles[block.id as keyof typeof styles] || ''} ${block.className ? (styles[block.className as keyof typeof styles] || block.className) : ''}`}
+                  style={{ 
+                    opacity: block.startPercent === 0 ? 1 : 0, 
+                    top: block.top, 
+                    left: block.left, 
+                    right: block.right,
+                    transform: block.transform, 
+                    textAlign: block.textAlign,
+                    width: (block.left && block.left !== 'auto' && block.left !== '50%') ? `calc(100% - ${block.left} * 2)` : (block.right && block.right !== 'auto' ? `calc(100% - ${block.right} * 2)` : '100%'),
+                    maxWidth: block.maxWidth || '1400px',
+                  }}
+                >
+                  {block.label && <span className={styles.label} style={{ color: block.color }}>{block.label}</span>}
+                  {block.title && <h2 className={styles.cinematicTitle} style={{ color: block.color }}>{block.title}</h2>}
+                  {block.description && <p className={styles.cinematicDesc} style={{ margin: block.textAlign === 'center' ? '0 auto' : (block.textAlign === 'right' ? '0 0 0 auto' : '0'), color: block.color || 'rgba(255, 255, 255, 0.85)' }}>{block.description}</p>}
+                  
+                  {block.id === "hero" && (
+                    <div className={styles.scrollIndicator}>
+                      <span>Scroll to explore</span>
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                    </div>
+                  )}
+                  
+                  {block.metrics && block.id !== "pillar4" && (
+                    <div className={styles.metricsGrid}>
+                      {block.metrics.map((m, i) => (
+                        <div key={i} className={styles.metricItem}>
+                          <div className={styles.metricValue}>{m.value}</div>
+                          <div className={styles.metricLabel}>{m.label}</div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
 
             {/* Docked Broadcast HUD (Rendered outside map to escape parent translate transform constraints) */}
             {mounted && (

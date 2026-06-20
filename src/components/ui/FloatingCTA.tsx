@@ -6,6 +6,7 @@ import styles from "./FloatingCTA.module.css";
 
 export default function FloatingCTA() {
   const [visible, setVisible] = useState(false);
+  const [lifted, setLifted] = useState(false);
   const [dismissed, setDismissed] = useState(false);
 
   useEffect(() => {
@@ -14,7 +15,9 @@ export default function FloatingCTA() {
       if (frame !== null) return;
       frame = requestAnimationFrame(() => {
         const nextVisible = window.scrollY > window.innerHeight;
+        const isAtBottom = window.scrollY + window.innerHeight >= document.body.scrollHeight - 150;
         setVisible((current) => (current === nextVisible ? current : nextVisible));
+        setLifted(isAtBottom);
         frame = null;
       });
     };
@@ -29,7 +32,7 @@ export default function FloatingCTA() {
   if (dismissed) return null;
 
   return (
-    <div className={`${styles.wrap} ${visible ? styles.visible : ""}`}>
+    <div className={`${styles.wrap} ${visible ? styles.visible : ""} ${lifted ? styles.lifted : ""}`}>
       <Link href="/contact" className={styles.cta}>
         Request Access
         <span className={styles.arrow} aria-hidden="true">
