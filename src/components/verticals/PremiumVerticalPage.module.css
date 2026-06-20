@@ -1,3 +1,48 @@
+.pageBackground {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -2;
+  overflow: hidden;
+  background: #03070e;
+}
+
+.videoWrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100vw;
+  height: 100vh;
+  min-width: 177.77vh; /* 16:9 aspect ratio */
+  min-height: 56.25vw;
+}
+
+.bgVideo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: blur(4px) brightness(0.4) saturate(1.1);
+  transform: scale(1.05); /* hide blurred edges */
+}
+
+.videoOverlay {
+  position: absolute;
+  inset: 0;
+  background: 
+    linear-gradient(180deg, rgba(3, 7, 14, 0.6) 0%, rgba(3, 7, 14, 0.95) 100%),
+    radial-gradient(circle at center, transparent 0%, rgba(3, 7, 14, 0.7) 100%);
+  z-index: 1;
+}
+
+.pageContent {
+  position: relative;
+  z-index: 10;
+  padding-bottom: 8rem;
+}
+
 .commandGrid {
   display: grid;
   grid-template-columns: minmax(0, 1.05fr) minmax(280px, 0.95fr);

@@ -19,7 +19,6 @@ interface VerticalHeroProps {
   description: string;
   accentColor: string;
   backgroundEffect?: ReactNode;
-  visual?: ReactNode;
   ctaText?: string;
   ctaHref?: string;
 }
@@ -30,7 +29,6 @@ export default function VerticalHero({
   description,
   accentColor,
   backgroundEffect,
-  visual,
   ctaText = "Request Placement",
   ctaHref = "/contact",
 }: VerticalHeroProps) {
@@ -96,12 +94,6 @@ export default function VerticalHero({
             </div>
           </div>
         </ScrollReveal>
-        
-        {visual && (
-          <ScrollReveal animation="3d-float" delay={0.2} className={styles.visual}>
-            {visual}
-          </ScrollReveal>
-        )}
       </div>
       
       <div className={styles.scrollIndicator}>

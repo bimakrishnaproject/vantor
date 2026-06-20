@@ -1,6 +1,5 @@
 import { JsonLd, serviceSchema, breadcrumbSchema } from "@/lib/structured-data";
 import VerticalHero from "@/components/verticals/VerticalHero";
-import VerticalHeroVisual from "@/components/verticals/VerticalHeroVisual";
 import VerticalSection from "@/components/verticals/VerticalSection";
 import VerticalCTA from "@/components/verticals/VerticalCTA";
 import FeatureGrid from "@/components/verticals/FeatureGrid";
@@ -98,14 +97,28 @@ export default function PremiumVerticalPage({
         ])}
       />
 
-      <VerticalHero
-        label={data.hero.label ?? "Media Network"}
-        headline={data.hero.headline}
-        description={data.hero.description}
-        accentColor={accentColor}
-        ctaText={data.hero.ctaText}
-        visual={<VerticalHeroVisual slug={slug} />}
-      />
+      <div className={styles.pageBackground}>
+        <div className={styles.videoWrapper}>
+          <video 
+            src="/assets/improve_hero.mp4" 
+            autoPlay 
+            loop 
+            muted 
+            playsInline 
+            className={styles.bgVideo}
+          />
+        </div>
+        <div className={styles.videoOverlay} />
+      </div>
+
+      <div className={styles.pageContent}>
+        <VerticalHero
+          label={data.hero.label ?? "Media Network"}
+          headline={data.hero.headline}
+          description={data.hero.description}
+          accentColor={accentColor}
+          ctaText={data.hero.ctaText}
+        />
 
       {['audio', 'other'].includes(slug) && (
         <VerticalSection
@@ -163,12 +176,13 @@ export default function PremiumVerticalPage({
         </div>
       </VerticalSection>
 
-      <VerticalCTA
-        headline={data.cta.headline}
-        subtext={data.cta.subtext}
-        ctaText={data.cta.ctaText}
-        accentColor={accentColor}
-      />
+        <VerticalCTA
+          headline={data.cta.headline}
+          subtext={data.cta.subtext}
+          ctaText={data.cta.ctaText}
+          accentColor={accentColor}
+        />
+      </div>
     </>
   );
 }

@@ -115,7 +115,7 @@ export async function getVerticalPageBySlug(slug: string) {
     },
     stats: {
       label: "Think Bigger",
-      title: "1B+ Monthly Views, 60M+ Followers",
+      title: "Network Scale",
       items: localData.metrics || [
         { value: "1B+", endValue: 1, suffix: "B+", label: "Monthly Network Views" },
         { value: "60M+", endValue: 60, suffix: "M+", label: "Owned Follower Base" }
