@@ -5,6 +5,8 @@ import { motion, useScroll, useMotionValueEvent, AnimatePresence } from "framer-
 import { Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
+import RollLink from "./ui/RollLink";
+import MagneticCTA from "./ui/MagneticCTA";
 
 export default function Navbar() {
   const { scrollY } = useScroll();
@@ -53,6 +55,7 @@ export default function Navbar() {
           <Link 
             href="/" 
             onClick={closeMenu}
+            data-magnetic="true"
             className="text-offwhite font-display text-3xl md:text-4xl uppercase tracking-tighter hover:text-accent transition-colors duration-300 relative z-50 focus:outline-none focus:ring-2 focus:ring-accent rounded-sm"
             aria-label="KOLS Homepage"
           >
@@ -62,22 +65,19 @@ export default function Navbar() {
           {/* Desktop Menu */}
           <div className="hidden lg:flex items-center space-x-12">
             <div className="flex space-x-8 text-sm md:text-base font-sans text-offwhite/80 tracking-wide uppercase">
-              <Link href={isInnerPage ? "/#network" : "#network"} className="hover:text-offwhite transition-colors focus:outline-none focus:ring-2 focus:ring-accent rounded-sm px-2">Network</Link>
-              <Link href={isInnerPage ? "/#verticals" : "#verticals"} className="hover:text-offwhite transition-colors focus:outline-none focus:ring-2 focus:ring-accent rounded-sm px-2">Verticals</Link>
-              <Link href={isInnerPage ? "/#how-it-works" : "#how-it-works"} className="hover:text-offwhite transition-colors focus:outline-none focus:ring-2 focus:ring-accent rounded-sm px-2">How It Works</Link>
-              <Link href={isInnerPage ? "/#about" : "#about"} className="hover:text-offwhite transition-colors focus:outline-none focus:ring-2 focus:ring-accent rounded-sm px-2">About</Link>
-              <Link href={isInnerPage ? "/#contact" : "#contact"} className="hover:text-offwhite transition-colors focus:outline-none focus:ring-2 focus:ring-accent rounded-sm px-2">Contact</Link>
+              <RollLink href={isInnerPage ? "/#network" : "#network"} text="Network" data-magnetic="true" className="hover:text-offwhite transition-colors focus:outline-none focus:ring-2 focus:ring-accent rounded-sm px-2" />
+              <RollLink href={isInnerPage ? "/#verticals" : "#verticals"} text="Verticals" data-magnetic="true" className="hover:text-offwhite transition-colors focus:outline-none focus:ring-2 focus:ring-accent rounded-sm px-2" />
+              <RollLink href={isInnerPage ? "/#how-it-works" : "#how-it-works"} text="How It Works" data-magnetic="true" className="hover:text-offwhite transition-colors focus:outline-none focus:ring-2 focus:ring-accent rounded-sm px-2" />
+              <RollLink href={isInnerPage ? "/#about" : "#about"} text="About" data-magnetic="true" className="hover:text-offwhite transition-colors focus:outline-none focus:ring-2 focus:ring-accent rounded-sm px-2" />
+              <RollLink href={isInnerPage ? "/#contact" : "#contact"} text="Contact" data-magnetic="true" className="hover:text-offwhite transition-colors focus:outline-none focus:ring-2 focus:ring-accent rounded-sm px-2" />
             </div>
             
             <Link href={isInnerPage ? "/#contact" : "#contact"} passHref>
-              <motion.button 
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="bg-accent text-white px-6 py-3 font-sans uppercase tracking-widest text-sm font-semibold hover:bg-accent/90 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-charcoal focus:ring-accent"
-                aria-label="Launch a Campaign"
+              <MagneticCTA 
+                className="bg-accent text-white px-6 py-3 font-sans uppercase tracking-widest text-sm font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-charcoal focus:ring-accent rounded-sm"
               >
                 Launch a Campaign
-              </motion.button>
+              </MagneticCTA>
             </Link>
           </div>
 

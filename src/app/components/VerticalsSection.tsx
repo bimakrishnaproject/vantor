@@ -192,7 +192,7 @@ export default function VerticalsSection() {
                     </div>
 
                     {/* CTA Button */}
-                    <Link href={`/verticals/${vertical.title.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}`} className="flex items-center gap-2 font-sans text-[10px] md:text-xs uppercase tracking-widest font-semibold text-offwhite group-hover:text-accent transition-colors pb-4 md:pb-0">
+                    <Link href={`/verticals/${vertical.title.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}`} data-magnetic="true" className="flex items-center gap-2 font-sans text-[10px] md:text-xs uppercase tracking-widest font-semibold text-offwhite group-hover:text-accent transition-colors pb-4 md:pb-0">
                       <span>Explore Vertical</span>
                       <ArrowUpRight size={14} className="md:w-[16px] md:h-[16px]" />
                     </Link>

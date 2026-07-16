@@ -3,6 +3,7 @@
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { ArrowRight, CheckCircle2, Loader2 } from "lucide-react";
 import { useState, useRef } from "react";
+import MagneticCTA from "./ui/MagneticCTA";
 
 export default function AboutAndContact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -271,19 +272,20 @@ export default function AboutAndContact() {
                   />
                 </div>
 
-                <button 
+                <MagneticCTA 
                   type="submit" 
                   disabled={isSubmitting}
-                  aria-disabled={isSubmitting}
                   className="mt-8 flex items-center justify-between bg-accent text-white px-8 py-4 font-sans uppercase tracking-widest text-sm font-semibold hover:bg-accent/90 transition-colors group w-full md:w-auto disabled:opacity-70 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-charcoal focus:ring-accent"
                 >
-                  <span>{isSubmitting ? "Sending..." : "Submit Request"}</span>
-                  {isSubmitting ? (
-                    <Loader2 size={18} className="animate-spin" />
-                  ) : (
-                    <ArrowRight size={18} className="group-hover:translate-x-2 transition-transform" />
-                  )}
-                </button>
+                  <span className="flex items-center justify-between w-full">
+                    <span className="mr-4">{isSubmitting ? "Sending..." : "Submit Request"}</span>
+                    {isSubmitting ? (
+                      <Loader2 size={18} className="animate-spin" />
+                    ) : (
+                      <ArrowRight size={18} className="group-hover:translate-x-2 transition-transform" />
+                    )}
+                  </span>
+                </MagneticCTA>
 
               </motion.form>
             )}

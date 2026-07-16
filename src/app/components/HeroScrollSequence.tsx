@@ -444,13 +444,13 @@ export default function HeroScrollSequence() {
         {/* Bottom Gradient (Soft transition, no hard lines) */}
         <div className="absolute inset-0 w-full h-full bg-gradient-to-t from-[#0B0B0C] via-transparent to-transparent pointer-events-none" />
 
-        {/* Loading / Intro State Fallback & Skip Button */}
         <div 
           className="absolute inset-0 flex items-end justify-end p-8 md:p-12 pointer-events-none transition-opacity duration-500 z-50"
           style={{ opacity: !isIntroDone && videoLoaded ? 1 : 0 }}
         >
           <button 
             onClick={skipIntro}
+            data-magnetic="true"
             className="pointer-events-auto px-6 py-2 bg-white/5 hover:bg-white/10 backdrop-blur-md border border-white/10 text-white/50 hover:text-white text-[10px] md:text-xs uppercase tracking-[0.2em] rounded-full transition-all duration-300"
           >
             Skip Intro

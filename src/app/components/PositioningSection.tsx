@@ -1,26 +1,32 @@
 "use client";
 
-import { motion, useMotionValue, useSpring, useTransform, useMotionTemplate, useScroll } from "framer-motion";
+import { motion, useMotionValue, useSpring, useTransform, useMotionTemplate, useScroll, useReducedMotion } from "framer-motion";
 import React, { useRef } from "react";
 
 // --- 3D Split Text Helper ---
 const SplitText3D = ({ text, className }: { text: string; className?: string }) => {
   const words = text.split(" ");
+  const prefersReducedMotion = useReducedMotion();
+  
   return (
     <div className={`flex flex-wrap gap-x-[0.3em] gap-y-2 ${className}`}>
       {words.map((word, i) => (
         <span key={i} className="overflow-visible" style={{ perspective: "1000px" }}>
           <motion.span
-            className="inline-block transform-gpu"
+            className="inline-block transform-gpu will-change-transform"
             style={{ backfaceVisibility: "hidden" }}
             variants={{
-              hidden: { opacity: 0, rotateX: -90, y: 50, z: -50 },
+              hidden: prefersReducedMotion 
+                ? { opacity: 0 } 
+                : { opacity: 0, rotateX: 90, y: 20, z: -50 },
               visible: { 
                 opacity: 1, 
                 rotateX: 0, 
                 y: 0, 
                 z: 0, 
-                transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as any } 
+                transition: (prefersReducedMotion 
+                  ? { duration: 0.5 } 
+                  : { type: "spring", damping: 12, stiffness: 100 }) as any
               }
             }}
           >
@@ -47,7 +53,7 @@ function TiltCard({ num }: { num: string }) {
 
   // Extreme Parallax Depth Layers
   const cardTranslateZ = useTransform(hoverSpring, [0, 1], [0, -30]);
-  const contentTranslateZ = useTransform(hoverSpring, [0, 1], [0, 80]);
+  const contentTranslateZ = useTransform(hoverSpring, [0, 1], [0, 150]);
   const borderTranslateZ = useTransform(hoverSpring, [0, 1], [0, 40]);
 
   // Opacities & Scales
@@ -87,6 +93,7 @@ function TiltCard({ num }: { num: string }) {
       style={{ perspective: "1200px" }}
     >
       <motion.div
+        data-magnetic="true"
         onMouseMove={handleMouseMove}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
@@ -112,16 +119,23 @@ function TiltCard({ num }: { num: string }) {
           <div className="absolute inset-0 opacity-[0.03] bg-[radial-gradient(circle_at_center,_rgba(255,255,255,1)_1px,transparent_1px)] bg-[size:12px_12px]" />
         </div>
 
-        {/* LAYER 2: Floating Border Frame */}
+        {/* LAYER 2: Floating Laser Border Frame */}
         <motion.div
-          className="absolute inset-3 border border-white/10 rounded-lg pointer-events-none flex items-center justify-center"
-          style={{ z: borderTranslateZ, transformStyle: "preserve-3d" }}
+          className="absolute inset-0 rounded-xl overflow-hidden pointer-events-none transform-gpu will-change-transform shadow-[0_0_20px_rgba(255,51,0,0)]"
+          style={{ 
+            opacity: hoverSpring,
+            z: borderTranslateZ,
+            boxShadow: useMotionTemplate`0 0 20px rgba(255,51,0,${useTransform(hoverSpring, [0,1], [0,0.5])})` 
+          }}
         >
-          {/* Corner Accents */}
-          <div className="absolute top-[-1px] left-[-1px] w-2 h-2 border-t border-l border-white/50" />
-          <div className="absolute top-[-1px] right-[-1px] w-2 h-2 border-t border-r border-white/50" />
-          <div className="absolute bottom-[-1px] left-[-1px] w-2 h-2 border-b border-l border-white/50" />
-          <div className="absolute bottom-[-1px] right-[-1px] w-2 h-2 border-b border-r border-white/50" />
+          <div className="absolute inset-[-100%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_0deg,transparent_0_340deg,rgba(255,51,0,1)_360deg)]" />
+          <div className="absolute inset-[1.5px] bg-[#0B0B0C] rounded-xl" />
+          
+          {/* Corner Accents on top of the dark inner background */}
+          <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-white/50 z-10" />
+          <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-white/50 z-10" />
+          <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-white/50 z-10" />
+          <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-white/50 z-10" />
         </motion.div>
 
         {/* LAYER 3: 3D Content Number */}
@@ -144,6 +158,7 @@ function TiltCard({ num }: { num: string }) {
 
 export default function PositioningSection() {
   const sectionRef = useRef<HTMLElement>(null);
+  const prefersReducedMotion = useReducedMotion();
   
   // Track scroll position relative to this section
   const { scrollYProgress } = useScroll({
@@ -179,24 +194,44 @@ export default function PositioningSection() {
     hidden: { opacity: 0 },
     visible: { 
       opacity: 1,
-      transition: { staggerChildren: 0.1, delayChildren: 0.6 } 
+      transition: { staggerChildren: 0.08, delayChildren: 0.2 } 
+    }
+  };
+  
+  const gridItemVariants = {
+    hidden: prefersReducedMotion 
+      ? { opacity: 0 } 
+      : { opacity: 0, rotateX: 45, rotateY: -30, z: -300, scale: 0.8 },
+    visible: { 
+      opacity: 1, 
+      rotateX: 0, 
+      rotateY: 0, 
+      z: 0, 
+      scale: 1, 
+      transition: (prefersReducedMotion 
+        ? { duration: 0.5 }
+        : { type: "spring", damping: 15, stiffness: 100 }) as any 
     }
   };
 
   const textVariants = {
-    hidden: { opacity: 0, rotateX: 45, y: 40, z: -50, scale: 0.9, transformOrigin: "left center" },
+    hidden: prefersReducedMotion 
+      ? { opacity: 0 } 
+      : { opacity: 0, rotateX: 45, y: 40, z: -50, scale: 0.9, transformOrigin: "left center" },
     visible: { 
       opacity: 1, 
       rotateX: 0, 
       y: 0, 
       z: 0, 
       scale: 1, 
-      transition: { duration: 1, ease: [0.16, 1, 0.3, 1] as any } 
+      transition: prefersReducedMotion
+        ? { duration: 0.5 }
+        : { duration: 1, ease: [0.16, 1, 0.3, 1] as any } 
     }
   };
 
   return (
-    <section ref={sectionRef} id="network" className="w-full min-h-screen relative z-10 overflow-hidden flex items-center" style={{ perspective: "1200px" }}>
+    <section ref={sectionRef} id="network" className="w-full min-h-screen relative z-10 overflow-hidden flex items-center" style={{ perspective: "1500px", transformStyle: "preserve-3d" }}>
       <div className="w-full flex flex-col lg:flex-row" style={{ transformStyle: "preserve-3d" }}>
         
         {/* Left Solid Content Block */}
@@ -205,7 +240,7 @@ export default function PositioningSection() {
           whileInView={{ x: 0 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] as any }}
           className="w-full lg:w-1/2 bg-black/95 backdrop-blur-xl border-r border-white/10 min-h-screen flex flex-col justify-center p-8 md:p-16 lg:p-24"
-          style={{ perspective: "1000px", transformStyle: "preserve-3d" }}
+          style={{ perspective: "1500px", transformStyle: "preserve-3d" }}
         >
           {/* Apply Text Parallax here */}
           <motion.div 
@@ -252,12 +287,9 @@ export default function PositioningSection() {
                 {[...Array(9)].map((_, i) => (
                   <motion.div 
                     key={i}
-                    className="transform-gpu w-full h-full"
+                    className="transform-gpu w-full h-full will-change-transform"
                     style={{ backfaceVisibility: "hidden" }}
-                    variants={{
-                      hidden: { opacity: 0, scale: 0.8, rotateY: 15, z: -100 },
-                      visible: { opacity: 1, scale: 1, rotateY: 0, z: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as any } }
-                    }}
+                    variants={gridItemVariants}
                   >
                     <TiltCard num={`0${i + 1}`} />
                   </motion.div>
