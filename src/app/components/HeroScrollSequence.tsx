@@ -441,8 +441,9 @@ export default function HeroScrollSequence() {
           style={{ width: '100%', height: '100%', opacity: videoLoaded ? 1 : 0 }}
         />
 
-        {/* Bottom Gradient (Soft transition, no hard lines) */}
+        {/* Bottom Gradients (Soft transition, no hard lines) */}
         <div className="absolute inset-0 w-full h-full bg-gradient-to-t from-[#0B0B0C] via-transparent to-transparent pointer-events-none" />
+        <div className="absolute inset-0 w-full h-full bg-[radial-gradient(circle_at_bottom_right,_rgba(11,11,12,0.95)_0%,_transparent_60%)] pointer-events-none" />
 
         <div 
           className="absolute inset-0 flex items-end justify-end p-8 md:p-12 pointer-events-none transition-opacity duration-500 z-50"
