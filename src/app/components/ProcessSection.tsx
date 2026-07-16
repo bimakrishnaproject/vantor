@@ -32,7 +32,7 @@ const steps = [
 
 export default function ProcessSection() {
   return (
-    <section id="how-it-works" className="w-full bg-[#080809] py-16 md:py-32 px-6 md:px-12 relative overflow-hidden">
+    <section id="how-it-works" className="w-full bg-transparent py-16 md:py-32 px-6 md:px-12 relative z-10 overflow-hidden">
       
       {/* Background metallic mesh effect */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
@@ -45,11 +45,11 @@ export default function ProcessSection() {
           transition={{ duration: 0.6 }}
           className="mb-12 md:mb-24"
         >
-          <h2 className="text-accent uppercase tracking-widest text-[10px] md:text-sm font-semibold mb-2 md:mb-4">
-            How It Works
+          <h2 className="text-accent uppercase tracking-widest text-xs md:text-sm font-semibold mb-6 text-center drop-shadow-md">
+            The Process
           </h2>
-          <h3 className="font-display text-4xl md:text-5xl lg:text-6xl uppercase tracking-tighter text-offwhite max-w-2xl leading-[1.1]">
-            From Brief to Activation Without the Friction.
+          <h3 className="font-display text-4xl md:text-5xl lg:text-6xl text-offwhite uppercase tracking-tighter text-center max-w-3xl mx-auto drop-shadow-lg">
+            How we activate audiences at scale
           </h3>
         </motion.div>
 
@@ -69,10 +69,10 @@ export default function ProcessSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.5, delay: idx * 0.1 }}
-                className="relative flex flex-row lg:flex-col gap-6 lg:gap-0 group items-start lg:items-stretch"
+                className="relative z-10 flex flex-col lg:flex-col gap-6 lg:gap-0 bg-black/30 backdrop-blur-md p-8 rounded-2xl border border-white/10 shadow-2xl group transition-colors duration-500 hover:bg-black/40 items-start lg:items-stretch"
               >
                 {/* Number Node */}
-                <div className="w-14 h-14 md:w-20 md:h-20 shrink-0 bg-charcoal border border-white/10 flex items-center justify-center rounded-sm lg:mb-8 z-10 group-hover:border-accent group-hover:bg-[#111112] transition-colors duration-300">
+                <div className="w-14 h-14 md:w-20 md:h-20 shrink-0 bg-black/40 backdrop-blur-md border border-white/20 flex items-center justify-center rounded-xl shadow-lg lg:mb-8 z-10 group-hover:border-accent group-hover:bg-black/60 transition-colors duration-300">
                   <span className="font-display text-xl md:text-3xl text-offwhite tracking-tighter">
                     {step.num}
                   </span>

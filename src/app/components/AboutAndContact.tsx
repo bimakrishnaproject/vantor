@@ -44,7 +44,7 @@ export default function AboutAndContact() {
   };
 
   return (
-    <section id="about" className="w-full bg-[#080809] border-t border-white/5 flex flex-col lg:flex-row relative">
+    <section id="about" className="w-full bg-transparent flex flex-col lg:flex-row relative">
       
       {/* Left: About & Philosophy */}
       <div className="w-full lg:w-1/2 py-16 px-6 md:p-16 lg:p-24 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-white/5">
@@ -54,16 +54,16 @@ export default function AboutAndContact() {
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          <h2 className="text-accent uppercase tracking-widest text-xs md:text-sm font-semibold mb-8">
+          <h2 className="text-accent uppercase tracking-widest text-xs md:text-sm font-semibold mb-8 drop-shadow-md">
             The Philosophy
           </h2>
-          <h3 className="font-display text-4xl md:text-5xl uppercase tracking-tighter text-offwhite mb-8 leading-[1.1]">
+          <h3 className="font-display text-4xl md:text-5xl uppercase tracking-tighter text-offwhite mb-8 leading-[1.1] drop-shadow-lg">
             Direct access.<br />No agency layers.
           </h3>
-          <p className="font-sans text-white/60 text-base md:text-lg leading-relaxed max-w-md mb-6">
+          <p className="font-sans text-white/80 text-base md:text-lg leading-relaxed max-w-md mb-6 drop-shadow-md">
             KOLS is owner-operated. We don't act as a middleman buying ads on third-party sites. We own, grow, and activate the actual communities that shape culture. 
           </p>
-          <p className="font-sans text-white/60 text-base md:text-lg leading-relaxed max-w-md mb-16">
+          <p className="font-sans text-white/80 text-base md:text-lg leading-relaxed max-w-md mb-16 drop-shadow-md">
             When you partner with us, you get unfiltered access to the audience without the standard agency friction.
           </p>
 
@@ -83,14 +83,14 @@ export default function AboutAndContact() {
       </div>
 
       {/* Right: Contact / Conversion Form */}
-      <div id="contact" className="w-full lg:w-1/2 p-8 md:p-16 lg:p-24 bg-charcoal">
+      <div id="contact" className="w-full lg:w-1/2 p-8 md:p-16 lg:p-24 bg-black/40 backdrop-blur-xl border-t lg:border-t-0 lg:border-l border-white/20">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          <h2 className="font-display text-3xl md:text-4xl uppercase tracking-tighter text-offwhite mb-12">
+          <h2 className="font-display text-3xl md:text-4xl uppercase tracking-tighter text-offwhite mb-12 drop-shadow-lg">
             Initiate Campaign
           </h2>
 
@@ -166,12 +166,12 @@ export default function AboutAndContact() {
                     id="category"
                     value={formData.category}
                     onChange={(e) => setFormData({...formData, category: e.target.value})}
-                    className="bg-transparent border-b border-white/20 pb-2 text-white/60 font-sans text-sm focus:outline-none focus:border-accent transition-colors appearance-none"
+                    className="bg-black/20 border border-white/10 px-4 py-3 text-white/80 font-sans text-sm focus:outline-none focus:border-accent transition-all backdrop-blur-sm appearance-none"
                   >
-                    <option className="bg-charcoal">Sports</option>
-                    <option className="bg-charcoal">Entertainment & Music</option>
-                    <option className="bg-charcoal">Gaming</option>
-                    <option className="bg-charcoal">Custom</option>
+                    <option>Sports</option>
+                    <option>Entertainment & Music</option>
+                    <option>Gaming</option>
+                    <option>Custom</option>
                   </select>
                 </div>
                 <div className="flex flex-col">
@@ -180,11 +180,11 @@ export default function AboutAndContact() {
                     id="budget"
                     value={formData.budget}
                     onChange={(e) => setFormData({...formData, budget: e.target.value})}
-                    className="bg-transparent border-b border-white/20 pb-2 text-white/60 font-sans text-sm focus:outline-none focus:border-accent transition-colors appearance-none"
+                    className="bg-black/20 border border-white/10 px-4 py-3 text-white/80 font-sans text-sm focus:outline-none focus:border-accent transition-all backdrop-blur-sm appearance-none"
                   >
-                    <option className="bg-charcoal">$10k - $50k</option>
-                    <option className="bg-charcoal">$50k - $100k</option>
-                    <option className="bg-charcoal">$100k+</option>
+                    <option>$10k - $50k</option>
+                    <option>$50k - $100k</option>
+                    <option>$100k+</option>
                   </select>
                 </div>
               </div>

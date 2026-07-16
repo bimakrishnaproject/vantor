@@ -11,7 +11,7 @@ const stats = [
 
 export default function NetworkScale() {
   return (
-    <section className="w-full bg-[#111112] py-24 px-6 md:px-12 border-y border-white/5 relative overflow-hidden">
+    <section className="w-full bg-transparent py-24 px-6 md:px-12 border-y border-white/10 relative z-10 overflow-hidden">
       {/* Decorative scanning line */}
       <motion.div 
         animate={{ y: ["0%", "100%", "0%"] }}
@@ -20,7 +20,7 @@ export default function NetworkScale() {
       />
 
       <div className="max-w-[1600px] mx-auto relative z-10">
-        <h2 className="text-accent uppercase tracking-widest text-xs md:text-sm font-semibold mb-16 text-center">
+        <h2 className="text-accent uppercase tracking-widest text-xs md:text-sm font-semibold mb-16 text-center drop-shadow-md">
           Network Scale
         </h2>
 
@@ -34,11 +34,11 @@ export default function NetworkScale() {
               transition={{ duration: 0.6, delay: i * 0.1 }}
               className="flex flex-col items-center justify-center text-center px-4"
             >
-              <div className="font-sans text-[2.5rem] md:text-6xl lg:text-7xl font-light text-offwhite tracking-tighter mb-2 tabular-nums">
+              <div className="font-sans text-[2.5rem] md:text-6xl lg:text-7xl font-light text-offwhite tracking-tighter mb-2 tabular-nums drop-shadow-lg">
                 {stat.value}
-                <span className="text-accent font-display text-4xl md:text-5xl lg:text-6xl">{stat.suffix}</span>
+                <span className="text-accent font-display text-4xl md:text-5xl lg:text-6xl drop-shadow-md">{stat.suffix}</span>
               </div>
-              <div className="text-white/40 uppercase tracking-[0.2em] text-[10px] md:text-xs font-semibold">
+              <div className="text-white/80 uppercase tracking-[0.2em] text-[10px] md:text-xs font-semibold drop-shadow-md">
                 {stat.label}
               </div>
             </motion.div>

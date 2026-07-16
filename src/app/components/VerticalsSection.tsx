@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { useState } from "react";
+import Link from "next/link";
 
 const verticals = [
   {
@@ -45,18 +46,18 @@ export default function VerticalsSection() {
   };
 
   return (
-    <section id="verticals" className="w-full bg-charcoal py-16 md:py-32 px-6 md:px-12 border-y border-white/5">
+    <section id="verticals" className="w-full bg-transparent py-16 md:py-32 px-6 md:px-12 border-y border-white/10 relative z-10">
       <div className="max-w-[1600px] mx-auto">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 md:mb-16 gap-6 md:gap-8">
           <div>
-            <h2 className="text-accent uppercase tracking-widest text-[10px] md:text-sm font-semibold mb-2 md:mb-4">
+            <h2 className="text-accent uppercase tracking-widest text-[10px] md:text-sm font-semibold mb-2 md:mb-4 drop-shadow-md">
               The Verticals
             </h2>
-            <h3 className="font-display text-4xl md:text-5xl lg:text-6xl uppercase tracking-tighter text-offwhite leading-[1.1]">
+            <h3 className="font-display text-4xl md:text-5xl lg:text-6xl uppercase tracking-tighter text-offwhite leading-[1.1] drop-shadow-lg">
               Targeted.<br className="md:hidden" /> Engaged. Owned.
             </h3>
           </div>
-          <p className="font-sans text-white/50 max-w-sm text-sm md:text-base leading-relaxed">
+          <p className="font-sans text-white/80 max-w-sm text-sm md:text-base leading-relaxed drop-shadow-md">
             We do not rely on third-party exchanges. Our proprietary network ensures your message lands cleanly within highly engaged, specific communities.
           </p>
         </div>
@@ -131,10 +132,10 @@ export default function VerticalsSection() {
                     </div>
 
                     {/* CTA Button */}
-                    <button className="flex items-center gap-2 font-sans text-[10px] md:text-xs uppercase tracking-widest font-semibold text-offwhite group-hover:text-accent transition-colors pb-4 md:pb-0">
-                      <span>Request Campaign</span>
+                    <Link href={`/verticals/${vertical.title.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}`} className="flex items-center gap-2 font-sans text-[10px] md:text-xs uppercase tracking-widest font-semibold text-offwhite group-hover:text-accent transition-colors pb-4 md:pb-0">
+                      <span>Explore Vertical</span>
                       <ArrowUpRight size={14} className="md:w-[16px] md:h-[16px]" />
-                    </button>
+                    </Link>
                   </motion.div>
 
                 </div>

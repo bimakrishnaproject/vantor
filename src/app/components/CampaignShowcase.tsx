@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
+import Link from "next/link";
 
 const campaigns = [
   {
@@ -22,7 +23,7 @@ const campaigns = [
 
 export default function CampaignShowcase() {
   return (
-    <section className="w-full bg-charcoal py-16 md:py-32 px-6 md:px-12 border-t border-white/5">
+    <section className="w-full bg-transparent py-16 md:py-32 px-6 md:px-12 border-t border-white/10">
       <div className="max-w-[1600px] mx-auto">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
@@ -32,10 +33,10 @@ export default function CampaignShowcase() {
           className="mb-12 md:mb-20 flex flex-col md:flex-row md:items-end justify-between gap-6 md:gap-8"
         >
           <div>
-            <h2 className="text-accent uppercase tracking-widest text-[10px] md:text-sm font-semibold mb-2 md:mb-4">
+            <h2 className="text-accent uppercase tracking-widest text-[10px] md:text-sm font-semibold mb-2 md:mb-4 drop-shadow-md">
               Outcomes & Proof
             </h2>
-            <h3 className="font-display text-4xl md:text-5xl lg:text-6xl uppercase tracking-tighter text-offwhite max-w-2xl leading-[1.1]">
+            <h3 className="font-display text-4xl md:text-5xl lg:text-6xl uppercase tracking-tighter text-offwhite max-w-2xl leading-[1.1] drop-shadow-lg">
               Campaign Showcase
             </h3>
           </div>
@@ -57,14 +58,14 @@ export default function CampaignShowcase() {
               className={`flex flex-col gap-12 ${idx % 2 === 1 ? 'lg:flex-row-reverse' : 'lg:flex-row'} items-center`}
             >
               {/* Visual Frame */}
-              <div className="w-full lg:w-3/5 aspect-[4/3] bg-[#111112] border border-white/5 relative group overflow-hidden cursor-crosshair">
+              <Link href={`/showcase/${campaign.title.toLowerCase().replace(/ /g, '-')}`} className="w-full lg:w-3/5 aspect-[4/3] bg-black/20 backdrop-blur-md border border-white/10 shadow-2xl rounded-2xl relative group overflow-hidden cursor-crosshair block">
                 <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay" />
                 
                 {/* Simulated image/video placeholder */}
                 <motion.div 
                   whileHover={{ scale: 1.05 }}
                   transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-                  className="absolute inset-0 bg-gradient-to-br from-[#1a1a1d] to-charcoal mix-blend-luminosity flex items-center justify-center"
+                  className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent mix-blend-overlay flex items-center justify-center"
                 >
                   <span className="font-sans text-white/20 uppercase tracking-[0.3em] text-sm">Visual Asset</span>
                 </motion.div>
@@ -76,13 +77,15 @@ export default function CampaignShowcase() {
                     <ArrowUpRight size={20} className="text-accent" />
                   </div>
                 </div>
-              </div>
+              </Link>
 
               {/* Editorial Data */}
-              <div className="w-full lg:w-2/5 flex flex-col gap-8">
-                <h4 className="font-display text-4xl lg:text-5xl uppercase tracking-tighter text-offwhite">
-                  {campaign.title}
-                </h4>
+              <div className="w-full lg:w-2/5 flex flex-col gap-8 bg-black/30 backdrop-blur-md p-8 rounded-2xl shadow-2xl border border-white/10">
+                <Link href={`/showcase/${campaign.title.toLowerCase().replace(/ /g, '-')}`} className="hover:text-accent transition-colors">
+                  <h4 className="font-display text-4xl lg:text-5xl uppercase tracking-tighter drop-shadow-lg">
+                    {campaign.title}
+                  </h4>
+                </Link>
 
                 <div className="flex flex-col gap-6">
                   <div className="border-t border-white/10 pt-4">
@@ -102,9 +105,9 @@ export default function CampaignShowcase() {
                 </div>
 
                 {/* Impact Metric */}
-                <div className="mt-4 bg-[#111112] border border-white/5 p-6 flex flex-col">
-                  <span className="font-sans text-[10px] text-accent uppercase tracking-[0.2em] mb-2">Total Verified Reach</span>
-                  <span className="font-display text-5xl tracking-tighter text-offwhite">{campaign.reach}</span>
+                <div className="mt-4 bg-black/40 backdrop-blur-xl rounded-xl shadow-inner border border-white/20 p-6 flex flex-col">
+                  <span className="font-sans text-[10px] text-accent uppercase tracking-[0.2em] mb-2 drop-shadow-md">Total Verified Reach</span>
+                  <span className="font-display text-5xl tracking-tighter text-offwhite drop-shadow-lg">{campaign.reach}</span>
                 </div>
 
               </div>

@@ -69,14 +69,16 @@ export default function Navbar() {
               <Link href={isInnerPage ? "/#contact" : "#contact"} className="hover:text-offwhite transition-colors focus:outline-none focus:ring-2 focus:ring-accent rounded-sm px-2">Contact</Link>
             </div>
             
-            <motion.button 
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="bg-accent text-white px-6 py-3 font-sans uppercase tracking-widest text-sm font-semibold hover:bg-accent/90 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-charcoal focus:ring-accent"
-              aria-label="Launch a Campaign"
-            >
-              Launch a Campaign
-            </motion.button>
+            <Link href={isInnerPage ? "/#contact" : "#contact"} passHref>
+              <motion.button 
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="bg-accent text-white px-6 py-3 font-sans uppercase tracking-widest text-sm font-semibold hover:bg-accent/90 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-charcoal focus:ring-accent"
+                aria-label="Launch a Campaign"
+              >
+                Launch a Campaign
+              </motion.button>
+            </Link>
           </div>
 
           {/* Mobile Menu Toggle */}
@@ -112,12 +114,14 @@ export default function Navbar() {
               <Link href={isInnerPage ? "/#about" : "#about"} onClick={closeMenu} className="font-display text-4xl uppercase tracking-tighter focus:text-accent">About</Link>
               <Link href={isInnerPage ? "/#contact" : "#contact"} onClick={closeMenu} className="font-display text-4xl uppercase tracking-tighter focus:text-accent">Contact</Link>
               
-              <button 
-                onClick={closeMenu}
-                className="mt-8 bg-accent text-white px-8 py-4 font-sans uppercase tracking-widest text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-charcoal focus:ring-white"
-              >
-                Launch a Campaign
-              </button>
+              <Link href={isInnerPage ? "/#contact" : "#contact"} passHref>
+                <button 
+                  onClick={closeMenu}
+                  className="mt-8 bg-accent text-white px-8 py-4 font-sans uppercase tracking-widest text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-charcoal focus:ring-white"
+                >
+                  Launch a Campaign
+                </button>
+              </Link>
             </div>
           </motion.div>
         )}
