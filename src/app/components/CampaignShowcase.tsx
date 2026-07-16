@@ -30,7 +30,7 @@ export default function CampaignShowcase() {
         <motion.div
           initial={{ x: "-100%" }}
           whileInView={{ x: 0 }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] as any }}
           className="w-full lg:w-1/2 bg-black/95 backdrop-blur-xl border-r border-white/10 min-h-screen flex flex-col justify-center p-8 md:p-16 lg:p-24"
         >
           <div className="max-w-xl mx-auto w-full">

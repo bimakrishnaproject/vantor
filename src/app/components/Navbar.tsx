@@ -40,7 +40,7 @@ export default function Navbar() {
       <motion.nav 
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] as any }}
         className={`fixed top-0 w-full z-50 transition-all duration-500 ${
           isScrolled || isInnerPage || isMobileMenuOpen
             ? "bg-charcoal/95 backdrop-blur-md border-b border-white/5 py-2 md:py-4" 
@@ -102,7 +102,7 @@ export default function Navbar() {
             initial={{ opacity: 0, y: "-100%" }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: "-100%" }}
-            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] as any }}
             className="fixed inset-0 z-40 bg-charcoal flex flex-col items-center justify-center pt-20"
             role="dialog"
             aria-modal="true"

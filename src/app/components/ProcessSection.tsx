@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { useRef } from "react";
 
 const steps = [
   {
@@ -31,30 +32,62 @@ const steps = [
 ];
 
 export default function ProcessSection() {
+  const containerRef = useRef<HTMLElement>(null);
+  
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  });
+
+  const smoothProgress = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
+  
+  // Continuous Parallax & Tilt
+  const rotateX = useTransform(smoothProgress, [0, 0.5, 1], ["15deg", "0deg", "-15deg"]);
+  const translateY = useTransform(smoothProgress, [0, 0.5, 1], ["50px", "0px", "-50px"]);
+  const translateZ = useTransform(smoothProgress, [0, 0.5, 1], ["-200px", "0px", "-200px"]);
+
   return (
-    <section id="how-it-works" className="w-full min-h-screen relative z-10 overflow-hidden flex items-center">
+    <section ref={containerRef} id="how-it-works" className="w-full min-h-screen relative z-10 overflow-hidden flex items-center" style={{ perspective: "1200px" }}>
       
-      <div className="w-full flex flex-col lg:flex-row">
+      <motion.div 
+        className="w-full flex flex-col lg:flex-row transform-gpu"
+        style={{ rotateX, y: translateY, z: translateZ, transformStyle: "preserve-3d" }}
+      >
         {/* Left Empty Side */}
         <div className="hidden lg:block lg:w-1/2 bg-transparent pointer-events-none" />
 
         {/* Right Solid Content Block */}
-        <motion.div
-          initial={{ x: "100%" }}
-          whileInView={{ x: 0 }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        <div
           className="w-full lg:w-1/2 bg-black/95 backdrop-blur-xl border-l border-white/10 min-h-screen flex flex-col justify-center p-8 md:p-16 lg:p-24 relative"
         >
           {/* Background metallic mesh effect limited to the block */}
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
           
-          <div className="max-w-xl mx-auto w-full relative z-10">
-            <h2 className="text-accent uppercase tracking-widest text-xs md:text-sm font-semibold mb-6 text-center lg:text-left drop-shadow-md">
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false, margin: "-100px" }}
+            variants={{ visible: { transition: { staggerChildren: 0.15, delayChildren: 0.4 } } }}
+            className="max-w-xl mx-auto w-full relative z-10 perspective-[1000px]"
+          >
+            <motion.h2 
+              variants={{
+                hidden: { opacity: 0, rotateX: 45, y: 40, z: -50, scale: 0.9, transformOrigin: "right center" },
+                visible: { opacity: 1, rotateX: 0, y: 0, z: 0, scale: 1, transition: { duration: 1, ease: [0.16, 1, 0.3, 1] as any } }
+              }}
+              className="text-accent uppercase tracking-widest text-xs md:text-sm font-semibold mb-6 text-center lg:text-left drop-shadow-md"
+            >
               The Process
-            </h2>
-            <h3 className="font-display text-4xl md:text-5xl lg:text-6xl text-offwhite uppercase tracking-tighter text-center lg:text-left mb-16 drop-shadow-lg">
+            </motion.h2>
+            <motion.h3 
+              variants={{
+                hidden: { opacity: 0, rotateX: 45, y: 40, z: -50, scale: 0.9, transformOrigin: "right center" },
+                visible: { opacity: 1, rotateX: 0, y: 0, z: 0, scale: 1, transition: { duration: 1, ease: [0.16, 1, 0.3, 1] as any } }
+              }}
+              className="font-display text-4xl md:text-5xl lg:text-6xl text-offwhite uppercase tracking-tighter text-center lg:text-left mb-16 drop-shadow-lg"
+            >
               How we activate audiences at scale
-            </h3>
+            </motion.h3>
 
             {/* Vertical Timeline Layout */}
             <div className="relative">
@@ -65,9 +98,10 @@ export default function ProcessSection() {
                 {steps.map((step, idx) => (
                   <motion.div 
                     key={idx}
-                    initial={{ opacity: 0, x: 30 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.5, delay: idx * 0.1 }}
+                    variants={{
+                      hidden: { opacity: 0, rotateX: 45, y: 40, z: -50, scale: 0.9, transformOrigin: "right center" },
+                      visible: { opacity: 1, rotateX: 0, y: 0, z: 0, scale: 1, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as any } }
+                    }}
                     className="relative z-10 flex flex-row gap-6 md:gap-8 group items-start"
                   >
                     {/* Number Node */}
@@ -90,9 +124,9 @@ export default function ProcessSection() {
                 ))}
               </div>
             </div>
-          </div>
-        </motion.div>
-      </div>
+          </motion.div>
+        </div>
+      </motion.div>
     </section>
   );
 }

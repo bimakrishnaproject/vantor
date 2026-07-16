@@ -1,8 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Link from "next/link";
 
 const verticals = [
@@ -40,48 +40,82 @@ const verticals = [
 
 export default function VerticalsSection() {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(0);
+  const containerRef = useRef<HTMLElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  });
+
+  const smoothProgress = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
+  
+  // Continuous Parallax & Tilt
+  const rotateX = useTransform(smoothProgress, [0, 0.5, 1], ["10deg", "0deg", "-10deg"]);
+  const rotateY = useTransform(smoothProgress, [0, 0.5, 1], ["-5deg", "0deg", "5deg"]);
+  const translateY = useTransform(smoothProgress, [0, 0.5, 1], ["50px", "0px", "-50px"]);
+  const translateZ = useTransform(smoothProgress, [0, 0.5, 1], ["-200px", "0px", "-200px"]);
 
   const toggleExpand = (idx: number) => {
     setExpandedIndex(expandedIndex === idx ? null : idx);
   };
 
   return (
-    <section id="verticals" className="w-full min-h-screen relative z-10 overflow-hidden flex items-center justify-center">
+    <section ref={containerRef} id="verticals" className="w-full min-h-screen relative z-10 overflow-hidden flex items-center justify-center" style={{ perspective: "1200px" }}>
       
       {/* Background Doors (Slide in to form a full solid block) */}
       <div className="absolute inset-0 flex w-full h-full pointer-events-none">
         <motion.div 
           initial={{ x: "-100%" }}
           whileInView={{ x: 0 }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] as any }}
           className="w-1/2 h-full bg-black/95 backdrop-blur-xl border-r border-white/5"
         />
         <motion.div 
           initial={{ x: "100%" }}
           whileInView={{ x: 0 }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] as any }}
           className="w-1/2 h-full bg-black/95 backdrop-blur-xl border-l border-white/5"
         />
       </div>
 
       <motion.div 
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.4 }}
-        className="relative z-10 w-full max-w-[1200px] mx-auto px-6 md:px-12 py-24"
+        className="relative z-10 w-full max-w-[1200px] mx-auto px-6 md:px-12 py-24 transform-gpu"
+        style={{ perspective: "1200px", rotateX, rotateY, y: translateY, z: translateZ, transformStyle: "preserve-3d" }}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: false, margin: "-100px" }}
+        variants={{ visible: { transition: { staggerChildren: 0.15, delayChildren: 0.3 } } }}
       >
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6 md:gap-8">
           <div>
-            <h2 className="text-accent uppercase tracking-widest text-[10px] md:text-sm font-semibold mb-2 md:mb-4 drop-shadow-md">
+            <motion.h2 
+              variants={{
+                hidden: { opacity: 0, rotateX: 45, y: 40, z: -50, scale: 0.9, transformOrigin: "left center" },
+                visible: { opacity: 1, rotateX: 0, y: 0, z: 0, scale: 1, transition: { duration: 1, ease: [0.16, 1, 0.3, 1] as any } }
+              }}
+              className="text-accent uppercase tracking-widest text-[10px] md:text-sm font-semibold mb-2 md:mb-4 drop-shadow-md"
+            >
               The Verticals
-            </h2>
-            <h3 className="font-display text-4xl md:text-5xl lg:text-6xl uppercase tracking-tighter text-offwhite leading-[1.1] drop-shadow-lg">
+            </motion.h2>
+            <motion.h3 
+              variants={{
+                hidden: { opacity: 0, rotateX: 45, y: 40, z: -50, scale: 0.9, transformOrigin: "left center" },
+                visible: { opacity: 1, rotateX: 0, y: 0, z: 0, scale: 1, transition: { duration: 1, ease: [0.16, 1, 0.3, 1] as any } }
+              }}
+              className="font-display text-4xl md:text-5xl lg:text-6xl uppercase tracking-tighter text-offwhite leading-[1.1] drop-shadow-lg"
+            >
               Targeted.<br className="md:hidden" /> Engaged. Owned.
-            </h3>
+            </motion.h3>
           </div>
-          <p className="font-sans text-white/80 max-w-sm text-sm md:text-base leading-relaxed drop-shadow-md">
+          <motion.p 
+            variants={{
+                hidden: { opacity: 0, rotateX: 45, y: 40, z: -50, scale: 0.9, transformOrigin: "left center" },
+                visible: { opacity: 1, rotateX: 0, y: 0, z: 0, scale: 1, transition: { duration: 1, ease: [0.16, 1, 0.3, 1] as any } }
+            }}
+            className="font-sans text-white/80 max-w-sm text-sm md:text-base leading-relaxed drop-shadow-md"
+          >
             We do not rely on third-party exchanges. Our proprietary network ensures your message lands cleanly within highly engaged, specific communities.
-          </p>
+          </motion.p>
         </div>
 
         {/* Editorial Accordion System */}
@@ -90,8 +124,12 @@ export default function VerticalsSection() {
             const isExpanded = expandedIndex === idx;
             
             return (
-              <div 
+              <motion.div 
                 key={idx}
+                variants={{
+                  hidden: { opacity: 0, rotateX: -30, y: 30, z: -20, scale: 0.95, transformOrigin: "top center" },
+                  visible: { opacity: 1, rotateX: 0, y: 0, z: 0, scale: 1, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as any } }
+                }}
                 onMouseEnter={() => window.innerWidth >= 768 && setExpandedIndex(idx)}
                 onClick={() => window.innerWidth < 768 && toggleExpand(idx)}
                 className="group border-b border-white/10 relative overflow-hidden"
@@ -161,7 +199,7 @@ export default function VerticalsSection() {
                   </motion.div>
 
                 </div>
-              </div>
+              </motion.div>
             );
           })}
         </div>

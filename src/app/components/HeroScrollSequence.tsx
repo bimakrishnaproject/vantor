@@ -37,10 +37,14 @@ export default function HeroScrollSequence() {
   useEffect(() => {
     isComponentMounted.current = true;
     lastTime.current = Date.now();
-    
-    // Scroll lock during intro
+    // Scroll lock and force to top during intro
+    if (typeof window !== 'undefined' && 'scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
     document.body.style.overflow = "hidden";
     window.scrollTo(0, 0);
+    // Force scroll to top again slightly after mount to fight Next.js scroll restoration
+    setTimeout(() => window.scrollTo(0, 0), 50);
 
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
@@ -160,6 +164,10 @@ export default function HeroScrollSequence() {
             if (targetScroll.current < 0.99 && !pendingState.current) {
               pendingState.current = 'scrub';
             }
+            // Keep lerping the main scroll so text doesn't get stuck!
+            currentScroll.current += (targetScroll.current - currentScroll.current) * 0.08;
+            setScrollProgress(currentScroll.current);
+
             // LERP global scroll for the second video
             globalCurrentScroll.current += (globalTargetScroll.current - globalCurrentScroll.current) * 0.08;
           }
@@ -176,6 +184,13 @@ export default function HeroScrollSequence() {
                     setIsIntroDone(true);
                     document.body.style.overflow = ""; // Unlock scroll
                     if (idleVideoRef.current) idleVideoRef.current.currentTime = 0;
+                    
+                    // Immediately grab current scroll position in case of page reload
+                    if (containerRef.current) {
+                      const rect = containerRef.current.getBoundingClientRect();
+                      const scrollHeight = rect.height - window.innerHeight;
+                      targetScroll.current = Math.max(0, Math.min(1, -rect.top / scrollHeight));
+                    }
                  } else if (introState.current === 'scrub') {
                     if (idleVideoRef.current) idleVideoRef.current.pause();
                  }
@@ -281,6 +296,12 @@ export default function HeroScrollSequence() {
     };
   }, [isMobile, prefersReducedMotion]);
 
+  const skipIntro = () => {
+    if (!isIntroDone && pendingState.current !== 'idle') {
+      pendingState.current = 'idle';
+    }
+  };
+
   // -------------------------
   // REDUCED MOTION STATIC RENDER
   // -------------------------
@@ -334,7 +355,7 @@ export default function HeroScrollSequence() {
             opacity: mobileMoment === 1 ? 1 : 0, 
             x: mobileMoment === 1 ? 0 : -50 
           }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] as any }}
           className="absolute inset-0 flex flex-col items-start justify-end pb-[25vh] z-10 px-6 pointer-events-none"
         >
           <div className="bg-[#111112]/90 backdrop-blur-md p-6 border border-white/10 w-full max-w-md">
@@ -352,7 +373,7 @@ export default function HeroScrollSequence() {
         <motion.div 
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: mobileMoment === 2 ? 1 : 0, y: mobileMoment === 2 ? 0 : 50 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] as any }}
           className="absolute inset-0 flex flex-col justify-end pb-24 px-6 z-10 pointer-events-none"
         >
           <div className="bg-[#111112]/90 backdrop-blur-md p-6 border border-white/10 w-full">
@@ -423,32 +444,35 @@ export default function HeroScrollSequence() {
         {/* Bottom Gradient (Soft transition, no hard lines) */}
         <div className="absolute inset-0 w-full h-full bg-gradient-to-t from-[#0B0B0C] via-transparent to-transparent pointer-events-none" />
 
-        {/* Loading / Intro State Fallback */}
+        {/* Loading / Intro State Fallback & Skip Button */}
         <div 
-          className="absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-500"
+          className="absolute inset-0 flex items-end justify-end p-8 md:p-12 pointer-events-none transition-opacity duration-500 z-50"
           style={{ opacity: !isIntroDone && videoLoaded ? 1 : 0 }}
         >
-          <div className="flex flex-col items-center">
-            {/* You can add an intro text or spinner here if needed */}
-          </div>
+          <button 
+            onClick={skipIntro}
+            className="pointer-events-auto px-6 py-2 bg-white/5 hover:bg-white/10 backdrop-blur-md border border-white/10 text-white/50 hover:text-white text-[10px] md:text-xs uppercase tracking-[0.2em] rounded-full transition-all duration-300"
+          >
+            Skip Intro
+          </button>
         </div>
 
         {/* Text Overlays (Only visible after intro is done) */}
         <div 
           className="absolute inset-0 pointer-events-none transition-opacity duration-1000"
-          style={{ opacity: isIntroDone ? 1 : 0 }}
+          style={{ opacity: isIntroDone && scrollProgress < 0.98 ? 1 : 0 }}
         >
-          {/* Step 2 & 3 (Now Step 1 since we removed "WE OWN THE AUDIENCES") */}
+          {/* Step 2 & 3 */}
           <div 
             className="absolute inset-0 flex flex-col justify-end pb-[25vh] px-6 md:px-12 pointer-events-none transition-opacity duration-300"
             style={{
               opacity: scrollProgress <= 0.70 ? 
                        (scrollProgress < 0.15 ? scrollProgress / 0.15 : 
                        (scrollProgress > 0.6 ? 1 - (scrollProgress - 0.6) / 0.1 : 1)) : 0,
-              transform: `translateX(${scrollProgress < 0.15 ? -50 : 0}px)`
+              transform: `perspective(1200px) translateX(${scrollProgress < 0.15 ? -50 : 0}px) translateZ(${scrollProgress * 200}px) rotateY(${scrollProgress * 10}deg) rotateX(${scrollProgress * -5}deg)`
             }}
           >
-            <div className="bg-[#111112]/80 backdrop-blur-md p-6 md:p-8 border border-white/10 max-w-lg">
+            <div className="bg-[#111112]/80 backdrop-blur-md p-6 md:p-8 border border-white/10 max-w-lg shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
               <h3 className="font-sans text-[10px] md:text-xs uppercase tracking-[0.2em] text-white/50 mb-2">Core Philosophy</h3>
               <p className="font-display text-3xl md:text-5xl uppercase tracking-tighter text-offwhite mb-4 leading-[1.1]">
                 Not Just Another<br/>Media Buying Agency
@@ -466,10 +490,10 @@ export default function HeroScrollSequence() {
               opacity: scrollProgress > 0.70 && scrollProgress < 0.99 ? 
                        (scrollProgress < 0.75 ? (scrollProgress - 0.70) / 0.05 : 
                         scrollProgress > 0.90 ? (0.99 - scrollProgress) / 0.09 : 1) : 0,
-              transform: `translateX(${scrollProgress > 0.70 ? 0 : 50}px)`
+              transform: `perspective(1200px) translateX(${scrollProgress > 0.70 ? 0 : 50}px) translateZ(${(scrollProgress - 0.7) * 300}px) rotateY(${(0.85 - scrollProgress) * 20}deg) rotateX(${(scrollProgress - 0.8) * 10}deg)`
             }}
           >
-            <div className="bg-[#111112]/80 backdrop-blur-md p-8 border border-white/10 max-w-md ml-auto">
+            <div className="bg-[#111112]/80 backdrop-blur-md p-8 border border-white/10 max-w-md ml-auto shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
               <h3 className="font-sans text-xs uppercase tracking-[0.2em] text-white/50 mb-2">Final Proof Point</h3>
               <p className="font-display text-4xl md:text-5xl uppercase tracking-tighter text-offwhite mb-4">
                 120M+ Live Network Scale
