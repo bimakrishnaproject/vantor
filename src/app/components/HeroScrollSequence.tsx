@@ -11,8 +11,7 @@ export default function HeroScrollSequence() {
   const contentVideoRef = useRef<HTMLVideoElement>(null);
   
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
-  const [mobileMoment, setMobileMoment] = useState(0);
+
   const [videoLoaded, setVideoLoaded] = useState(false);
   const [isIntroDone, setIsIntroDone] = useState(false);
   
@@ -46,14 +45,8 @@ export default function HeroScrollSequence() {
     // Force scroll to top again slightly after mount to fight Next.js scroll restoration
     setTimeout(() => window.scrollTo(0, 0), 50);
 
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    checkMobile();
-
     const handleResize = () => {
-      checkMobile();
-      if (window.innerWidth < 768 || prefersReducedMotion) return;
+      if (prefersReducedMotion) return;
       if (!canvasRef.current) return;
       const canvas = canvasRef.current;
 
@@ -84,9 +77,9 @@ export default function HeroScrollSequence() {
       document.body.style.overflow = "";
     }, 8000);
 
-    // Desktop Scroll logic
+    // Scroll logic
     const handleScroll = () => {
-      if (window.innerWidth < 768 || !containerRef.current) return;
+      if (!containerRef.current) return;
       if (introState.current === 'forward' || introState.current === 'reverse') return; // Ignore scroll during intro
 
       const rect = containerRef.current.getBoundingClientRect();
@@ -108,7 +101,7 @@ export default function HeroScrollSequence() {
       }
     };
 
-    if (!isMobile && !prefersReducedMotion) {
+    if (!prefersReducedMotion) {
       window.addEventListener("scroll", handleScroll, { passive: true });
       handleScroll();
     }
@@ -117,7 +110,7 @@ export default function HeroScrollSequence() {
     const renderLoop = () => {
       if (!isComponentMounted.current) return;
       
-      if (window.innerWidth >= 768 && !prefersReducedMotion) {
+      if (!prefersReducedMotion) {
         const video = videoRef.current;
         const canvas = canvasRef.current;
         
@@ -269,20 +262,8 @@ export default function HeroScrollSequence() {
       requestRef.current = requestAnimationFrame(renderLoop);
     };
     
-    if (!isMobile && !prefersReducedMotion) {
+    if (!prefersReducedMotion) {
       requestRef.current = requestAnimationFrame(renderLoop);
-    } else if (isMobile && !prefersReducedMotion) {
-      // Mobile auto-play sequence
-      const t1 = setTimeout(() => setMobileMoment(1), 2500);
-      const t2 = setTimeout(() => setMobileMoment(2), 5000);
-      
-      return () => {
-        isComponentMounted.current = false;
-        document.body.style.overflow = "";
-        window.removeEventListener("resize", handleResize);
-        clearTimeout(t1);
-        clearTimeout(t2);
-      };
     }
 
     return () => {
@@ -294,7 +275,7 @@ export default function HeroScrollSequence() {
       clearInterval(readyCheck);
       clearTimeout(failsafe);
     };
-  }, [isMobile, prefersReducedMotion]);
+  }, [prefersReducedMotion]);
 
   const skipIntro = () => {
     if (!isIntroDone && pendingState.current !== 'idle') {
@@ -333,68 +314,12 @@ export default function HeroScrollSequence() {
     );
   }
 
-  // -------------------------
-  // MOBILE AUTOPLAY RENDER
-  // -------------------------
-  if (isMobile) {
-    return (
-      <div className="relative w-full h-[100vh] bg-charcoal overflow-hidden flex flex-col justify-center items-center">
-        <video 
-          src="/assets/Cinematic_slow_continuous_push.mp4" 
-          autoPlay 
-          loop 
-          muted 
-          playsInline 
-          className="absolute inset-0 w-full h-full object-cover z-0 opacity-40"
-        />
-
-        {/* Moment 1 */}
-        <motion.div 
-          initial={{ opacity: 0, x: -50 }}
-          animate={{ 
-            opacity: mobileMoment === 1 ? 1 : 0, 
-            x: mobileMoment === 1 ? 0 : -50 
-          }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] as any }}
-          className="absolute inset-0 flex flex-col items-start justify-end pb-[25vh] z-10 px-6 pointer-events-none"
-        >
-          <div className="bg-[#111112]/90 backdrop-blur-md p-6 border border-white/10 w-full max-w-md">
-            <h3 className="font-sans text-[10px] uppercase tracking-[0.2em] text-white/50 mb-2">Core Philosophy</h3>
-            <p className="font-display text-3xl uppercase tracking-tighter text-offwhite mb-3 leading-[1.1]">
-              Not Just Another<br/>Media Buying Agency
-            </p>
-            <div className="w-full h-1 bg-accent/30 overflow-hidden">
-              <div className="h-full bg-accent w-[45%]" />
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Moment 2 */}
-        <motion.div 
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: mobileMoment === 2 ? 1 : 0, y: mobileMoment === 2 ? 0 : 50 }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] as any }}
-          className="absolute inset-0 flex flex-col justify-end pb-24 px-6 z-10 pointer-events-none"
-        >
-          <div className="bg-[#111112]/90 backdrop-blur-md p-6 border border-white/10 w-full">
-            <h3 className="font-sans text-[10px] uppercase tracking-[0.2em] text-white/50 mb-2">Final Proof Point</h3>
-            <p className="font-display text-3xl uppercase tracking-tighter text-offwhite mb-3">
-              120M+ Live Network Scale
-            </p>
-            <div className="w-full h-1 bg-accent/30 overflow-hidden">
-              <div className="h-full bg-accent w-2/3" />
-            </div>
-          </div>
-        </motion.div>
-      </div>
-    );
-  }
 
   // -------------------------
   // DESKTOP SCROLL RENDER
   // -------------------------
   return (
-    <div ref={containerRef} className="relative w-full h-[500vh] bg-transparent hidden md:block" aria-hidden="true">
+    <div ref={containerRef} className="relative w-full h-[250vh] md:h-[500vh] bg-transparent" aria-hidden="true">
       {/* Hidden Video element for source data */}
       <video
         key="cinematic-video"
@@ -465,7 +390,7 @@ export default function HeroScrollSequence() {
         >
           {/* Step 2 & 3 */}
           <div 
-            className="absolute inset-0 flex flex-col justify-end pb-[25vh] px-6 md:px-12 pointer-events-none transition-opacity duration-300"
+            className="absolute inset-0 flex flex-col justify-end pb-12 md:pb-[25vh] px-6 md:px-12 pointer-events-none transition-opacity duration-300"
             style={{
               opacity: scrollProgress <= 0.70 ? 
                        (scrollProgress < 0.15 ? scrollProgress / 0.15 : 
